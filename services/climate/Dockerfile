@@ -9,6 +9,7 @@ ENV PYTHONUNBUFFERED 1
 
 # Installing system dependencies
 RUN apt-get update \
+  && apt-get -y install netcat gcc \
   && apt-get clean
 
 # Installing dependencies
