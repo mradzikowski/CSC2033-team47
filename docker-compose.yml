@@ -30,3 +30,31 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  api_climate:
+    build:
+      context: ./services/climate
+      dockerfile: Dockerfile
+    entrypoint: [ '/usr/src/app/entrypoint.sh']
+    volumes:
+      - ./services/climate:/usr/src/app
+    ports:
+      - 5005:5000
+    environment:
+      - #TODO: write environmental variables
+    depends_on:
+      - api_climate_db
+
+
+  api_climate_db:
+    build:
+      context: ./services/climate/db
+      dockerfile: Dockerfile
+    restart: always
+    expose:
+      - 27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongodb
+      - MONGO_INITDB_ROOT_PASSWORD=mongodb
+
+  #TODO: add client service
