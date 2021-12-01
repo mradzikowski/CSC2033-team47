@@ -1,8 +1,6 @@
-exclude: '^$'
-fail_fast: false
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-  - rev: v4.0.1
+    rev: v4.0.1
     hooks:
       - id: check-json
         name: Checking json syntax
@@ -45,9 +43,11 @@ repos:
     hooks:
       - id: black
         description: Refactoring the Python syntax.
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.910-1
-    hooks:
-      - id: mypy
-        additional_dependencies: [ types-all ]
-        description: Type checking.
+# TODO: To be added when we start developing and when we will improve the codebase
+# Type checking is very useful tool to implement (type-hinting)
+#  - repo: https://github.com/pre-commit/mirrors-mypy
+#    rev: v0.910-1
+#    hooks:
+#      - id: mypy
+#        additional_dependencies: [ types-all ]
+#        description: Type checking.

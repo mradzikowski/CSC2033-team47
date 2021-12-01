@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, jsonify
+from flask import Flask
 from flask_restx import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
 
@@ -11,14 +11,14 @@ app = Flask(__name__)
 api = Api(app)
 
 # Taking application settings from dockerfile while running
-app_settings = os.getenv('APP_SETTINGS')
+app_settings = os.getenv("APP_SETTINGS")
 app.config.from_object(app_settings)
 
 db = SQLAlchemy(app)
 
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(128), nullable=False)
     email = db.Column(db.String(128), nullable=False)
@@ -29,9 +29,9 @@ class User(db.Model):
 class Ping(Resource):
     def get(self):
         return {
-            'status': 'success',
-            'message': 'pong!'
+            "status": "success",
+            "message": "pong!",
         }
 
 
-api.add_resource(Ping, '/ping')
+api.add_resource(Ping, "/ping")
