@@ -1,0 +1,53 @@
+exclude: '^$'
+fail_fast: false
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+  - rev: v4.0.1
+    hooks:
+      - id: check-json
+        name: Checking json syntax
+        description: Attempts to load all json files to verify syntax.
+      - id: check-yaml
+        name: Checking yaml files syntax
+        description: Attempts to load all yaml files to verify syntax.
+      - id: pretty-format-json
+        args: [--autofix]
+        name: Checking for sorted yaml files
+        description: Checks that all your JSON files are pretty. (Sorted and indented)
+      - id: trailing-whitespace
+        name: Trim trailing whitespace
+        description: Trimming trailing whitespace.
+      - id: mixed-line-ending
+        name: Replacing or checking mixed line endings
+        description: Replaces or checks mixed line ending.
+      - id: check-merge-conflict
+        name: Checking for merge conflict
+        description: Check for files that contain merge conflict strings.
+      - id: end-of-file-fixer
+        name: Newline at the end of file
+        description: Makes sure files end in a newline and only a newline.
+      - id: requirements-txt-fixer
+        name: Sorting entries at requirements.txt
+        description: Sorts entries in requirements.txt.
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        additional_dependencies: [ flake8-typing-imports==1.7.0 ]
+        description: Checks for Python style.
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.2.1
+    hooks:
+      - id: add-trailing-comma
+        args: [ --py36-plus ]
+  - repo: https://github.com/python/black
+    rev: 21.11b1
+    hooks:
+      - id: black
+        description: Refactoring the Python syntax.
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.910-1
+    hooks:
+      - id: mypy
+        additional_dependencies: [ types-all ]
+        description: Type checking.
