@@ -1,8 +1,7 @@
 import os
 
 from flask import Flask
-from flask_restx import Resource, Api
-
+from flask_restx import Api, Resource
 
 app = Flask(__name__)
 
@@ -17,7 +16,7 @@ class Ping(Resource):
     def get(self):
         return {
             "status": "success",
-            "message": "pong!",
+            "message": "pong from the climate extractor microservice!",
         }
 
 
