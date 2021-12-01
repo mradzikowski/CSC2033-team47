@@ -129,3 +129,13 @@ docker-compose exec client npm run lint
 ```
 
 Name of services could be found in **docker-compose.yaml** file.
+
+# Basic testing of the routes
+
+In the microservices there are implemented ping routes to check if the services are responsive.
+
+To check for working users microservice go to [ping endpoint](http://localhost:5004/ping) or [link](http://localhost:5004/)
+
+To check for working climate microservice go to [ping endpoint](http://localhost:5005/ping) or [link](http://localhost:5005/)
+
+To check for working client microservice and see the basic react app go to [link](http://localhost:3007/)
