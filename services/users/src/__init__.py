@@ -29,7 +29,7 @@ class Ping(Resource):
     def get(self):
         return {
             "status": "success",
-            "message": "pong!",
+            "message": "pong from the users microservice!",
         }
 
 
