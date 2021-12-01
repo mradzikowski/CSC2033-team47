@@ -61,6 +61,13 @@ docker-compose -v
 To install them refer to this [link](https://docs.docker.com/get-docker/). This will help you install them
 regarding your operating system.
 
+Set the environmental variables used in **docker-compose.yaml** file
+
+```shell
+export REACT_APP_USERS_SERVICE_URL=http://localhost:5004
+export REACT_APP_CLIMATE_SERVICE_URL=http://localhost:5005
+```
+
 To build the images run:
 
 ```shell
