@@ -1,14 +1,5 @@
 ci:
-  autofix_commit_msg: |
-    [pre-commit.ci] auto fixes from pre-commit.com hooks
-
-    for more information, see https://pre-commit.ci
-    autofix_prs: true
-    autoupdate_branch: ''
-    autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
-    autoupdate_schedule: weekly
-    skip: []
-    submodules: false
+  skip: [flake8]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -39,22 +30,32 @@ repos:
       - id: requirements-txt-fixer
         name: Sorting entries at requirements.txt
         description: Sorts entries in requirements.txt.
+      - id: check-ast
+        description: Checking for valid Python code
   - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:
       - id: flake8
-        additional_dependencies: [ flake8-typing-imports==1.7.0 ]
+        additional_dependencies: [flake8-typing-imports==1.7.0]
         description: Checks for Python style.
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.2.1
     hooks:
       - id: add-trailing-comma
-        args: [ --py36-plus ]
+        args: [--py36-plus]
   - repo: https://github.com/python/black
     rev: 21.11b1
     hooks:
       - id: black
         description: Refactoring the Python syntax.
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.4.2
+    hooks:
+      - id: isort
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.4.1
+    hooks:
+      - id: prettier
 # TODO: To be added when we start developing and when we will improve the codebase
 # Type checking is very useful tool to implement (type-hinting)
 #  - repo: https://github.com/pre-commit/mirrors-mypy
