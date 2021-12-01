@@ -1,9 +1,8 @@
 import os
 
 from flask import Flask
-from flask_restx import Resource, Api
+from flask_restx import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
-
 from sqlalchemy.sql import func
 
 app = Flask(__name__)
