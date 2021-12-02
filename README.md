@@ -5,7 +5,7 @@
 We have divided our system for extracting the data into three services (for now), because it would speed up the
 development in our team and it will help to keep the code clean and modularised.
 There are services: users (for managing logging, adding users, deleting, updating) and stuff related to users,
-climate (This microservice will take care about uploading and retrieving files in differents formats),
+climate (This microservice will take care about uploading and retrieving files in different formats),
 client (This microservice will be a frontend app that will interact with other microservices)
 
 # Before the developing
@@ -34,19 +34,19 @@ pip install -r requirements.txt
 
 We have added pre-commit automation tool to help us keep the consistency of the code.
 It contains git hooks that ensure good coding style. It will provide us a good coding styles
-that are maintained also in other projects. We could focus more on writing the code isntead of
+that are maintained also in other projects. We could focus more on writing the code instead of
 taking care of the small mistakes. Pre-commit tools will ensure that they are minimised.
 
 ### To install precommit
 
 By installing the requirements for the project pre-commit will also be installed.
-You can double check if it is installed by `pre-commit --version`
+You can double-check if it is installed by `pre-commit --version`
 
 You can always refer to [Pre-commit documentation](https://pre-commit.com/) for any help.
 The config file for pre-commit is in root folder **pre-commit-config.yaml** file.
 
-It will run on your commits but you can also use `pre-commit run --all-files`
-It consists of some chers and reformatting tools. It might change the code that you have added,
+It will run on your commits, but you can also use `pre-commit run --all-files`
+It consists of some checks and reformatting tools. It might change the code that you have added,
 so you can apply changes and commit them to the codebase.
 
 # Using docker and starting the project
