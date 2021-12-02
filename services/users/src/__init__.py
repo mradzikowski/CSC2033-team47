@@ -24,6 +24,10 @@ class User(db.Model):
     date_created = db.Column(db.DateTime, default=func.now())
     # TODO: Add more columns (think about database design)
 
+    def __init__(self, username, email):
+        self.username = username
+        self.email = email
+
 
 class Ping(Resource):
     def get(self):
