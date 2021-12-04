@@ -146,3 +146,75 @@ To check for working users microservice go to [ping endpoint](http://localhost:5
 To check for working climate microservice go to [ping endpoint](http://localhost:5005/ping) or [link](http://localhost:5005/)
 
 To check for working client microservice and see the basic react app go to [link](http://localhost:3007/)
+
+# Test routes
+
+Before testing you should create the database
+
+```shell
+docker-compose api_users python manage.py recreate_db
+```
+
+You can seed the database with given users by
+
+```shell
+docker-compose api_users python manage.py seed_db
+```
+
+You can go into the postgreSQL command line by and see the tables
+
+```shell
+docker-compose exec api_users_db psql -U postgres
+\c api_users_dev
+\dt
+```
+
+To test routes you can use
+
+```shell
+docker-compose exec api_users python -m pytest "src/tests"
+```
+
+To run last failed tests use
+
+```shell
+docker-compose exec api_users python -m pytest "src/tests" --lf
+```
+
+To test the users' route go to [link](http://localhost:5004/users)
+You should see
+
+```json
+[
+  {
+    "user_id": 1,
+    "username": "Mateusz",
+    "email": "mateusz@email.com",
+    "date_created": "2021-12-04T16:33:17.836632"
+  },
+  {
+    "user_id": 2,
+    "username": "Toby",
+    "email": "toby@email.com",
+    "date_created": "2021-12-04T16:33:17.836632"
+  },
+  {
+    "user_id": 3,
+    "username": "Melissa",
+    "email": "melissa@email.com",
+    "date_created": "2021-12-04T16:33:17.836632"
+  },
+  {
+    "user_id": 4,
+    "username": "Joseph",
+    "email": "joseph@email.com",
+    "date_created": "2021-12-04T16:33:17.836632"
+  },
+  {
+    "user_id": 5,
+    "username": "Chloe",
+    "email": "chloe@email.com",
+    "date_created": "2021-12-04T16:33:17.836632"
+  }
+]
+```
