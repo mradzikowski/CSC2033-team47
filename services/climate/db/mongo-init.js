@@ -1,14 +1,14 @@
-db.auth('mongodb', 'mongodb')
+db.auth("mongodb", "mongodb");
 
-db = db.getSiblingDB('db')
+db = db.getSiblingDB("db");
 
 db.createUser({
-    user: "user",
-    pwd: "password",
-    roles: [
-        {
-            role: "readWrite",
-            db: "db"
-        }
-    ]
+  user: "user",
+  pwd: "password",
+  roles: [
+    {
+      role: "readWrite",
+      db: "db",
+    },
+  ],
 });
