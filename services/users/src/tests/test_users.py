@@ -1,5 +1,6 @@
 import json
 
+import pytest
 from src.api.models import User
 
 
@@ -21,35 +22,26 @@ def test_add_user(test_app, test_database):
     assert "mateusz@email.com was added!" in data["message"]
 
 
-def test_add_user_invalid_json(test_app, test_database):
+@pytest.mark.parametrize(
+    "payload, status_code, message",
+    [
+        # Checking for invalid json
+        [{}, 400, "Input payload validation failed"],
+        # Checking for invalid json keys
+        [{"email": "mateusz@email.com"}, 400, "Input payload validation failed"],
+    ],
+)
+def test_add_user_invalid(test_app, test_database, payload, status_code, message):
     client = test_app.test_client()
     resp = client.post(
         "/users",
-        data=json.dumps({}),
+        data=json.dumps(payload),
         content_type="application/json",
     )
     data = json.loads(resp.data.decode())
 
-    assert resp.status_code == 400
-    assert "Input payload validation failed" in data["message"]
-
-
-def test_add_user_invalid_keys(test_app, test_database):
-    client = test_app.test_client()
-    resp = client.post(
-        "/users",
-        data=json.dumps(
-            {
-                "email": "mateusz@email.com",
-            },
-        ),
-        content_type="application/json",
-    )
-
-    data = json.loads(resp.data.decode())
-
-    assert resp.status_code == 400
-    assert "Input payload validation failed" in data["message"]
+    assert resp.status_code == status_code
+    assert message in data["message"]
 
 
 def test_add_user_duplicate_email(test_app, test_database):
@@ -175,30 +167,37 @@ def test_update_user(test_app, test_database, add_user):
     assert "johny_changed_email@email.com" in data["email"]
 
 
-def test_update_user_invalid_json(test_app, test_database):
-    client = test_app.test_client()
-    resp = client.put(
-        "/users/1",
-        data=json.dumps({}),
-        content_type="application/json",
-    )
-    data = json.loads(resp.data.decode())
-    assert resp.status_code == 400
-    assert "Input payload validation failed" in data["message"]
-
-
-def test_update_user_does_not_exist(test_app, test_database):
-    client = test_app.test_client()
-    resp_two = client.put(
-        "/users/9999",
-        data=json.dumps(
+@pytest.mark.parametrize(
+    "user_id, payload, status_code, message",
+    [
+        # Checking for invalid json
+        [1, {}, 400, "Input payload validation failed"],
+        # Checking for user that does not exist
+        [
+            99999,
             {
                 "username": "Mateusz",
                 "email": "mateusz_my_email_does_exist@email.com",
             },
-        ),
+            404,
+            "User 99999 does not exist",
+        ],
+    ],
+)
+def test_update_user_invalid(
+    test_app,
+    test_database,
+    user_id,
+    payload,
+    status_code,
+    message,
+):
+    client = test_app.test_client()
+    resp = client.put(
+        f"/users/{user_id}",
+        data=json.dumps(payload),
         content_type="application/json",
     )
-    data = json.loads(resp_two.data.decode())
-    assert resp_two.status_code == 404
-    assert "User 9999 does not exist" in data["message"]
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == status_code
+    assert message in data["message"]
