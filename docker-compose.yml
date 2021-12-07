@@ -28,33 +28,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
-  api_climate:
-    build:
-      context: ./services/climate
-      dockerfile: Dockerfile
-    entrypoint: ["bash", "/usr/src/app/entrypoint.sh"]
-    volumes:
-      - ./services/climate:/usr/src/app
-    ports:
-      - 5005:5000
-    environment:
-      - FLASK_APP=src/__init__.py
-      - FLASK_ENV=development
-      - APP_SETTINGS=src.config.DevelopmentConfig
-    depends_on:
-      - api_climate_db
-
-  api_climate_db:
-    build:
-      context: ./services/climate/db
-      dockerfile: Dockerfile
-    restart: always
-    expose:
-      - 27017
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=mongodb
-      - MONGO_INITDB_ROOT_PASSWORD=mongodb
-
   client:
     stdin_open: true
     build:
@@ -68,7 +41,5 @@ services:
     environment:
       - NODE_ENV=development
       - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
-      - REACT_APP_CLIMATE_SERVICE_URL=${REACT_APP_CLIMATE_SERVICE_URL}
     depends_on:
       - api_users
-      - api_climate
