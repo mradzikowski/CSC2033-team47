@@ -1,7 +1,9 @@
 import json
 
 import pytest
+from src.api.crud import get_user_by_id
 from src.api.models import User
+from werkzeug.security import check_password_hash
 
 
 def test_add_user(test_app, test_database):
@@ -12,6 +14,7 @@ def test_add_user(test_app, test_database):
             {
                 "username": "Mateusz",
                 "email": "mateusz@email.com",
+                "password": "simple_password",
             },
         ),
         content_type="application/json",
@@ -52,6 +55,7 @@ def test_add_user_duplicate_email(test_app, test_database):
             {
                 "username": "Mateusz",
                 "email": "mateusz@email.com",
+                "password": "simple_password",
             },
         ),
         content_type="application/json",
@@ -62,6 +66,7 @@ def test_add_user_duplicate_email(test_app, test_database):
             {
                 "username": "Mateusz",
                 "email": "mateusz@email.com",
+                "password": "simple_password",
             },
         ),
         content_type="application/json",
@@ -69,18 +74,6 @@ def test_add_user_duplicate_email(test_app, test_database):
     data = json.loads(resp.data.decode())
     assert resp.status_code == 400
     assert "The email already exists." in data["message"]
-
-
-def test_single_user(test_app, test_database, add_user):
-    user = add_user(username="Andrew", email="andrew@email.com")
-
-    client = test_app.test_client()
-    resp = client.get(f"/users/{user.user_id}")
-    data = json.loads(resp.data.decode())
-
-    assert resp.status_code == 200
-    assert "Andrew" in data["username"]
-    assert "andrew@email.com" in data["email"]
 
 
 def test_single_user_incorrect_id(test_app, test_database):
@@ -93,8 +86,8 @@ def test_single_user_incorrect_id(test_app, test_database):
 
 def test_all_users(test_app, test_database, add_user):
     test_database.session.query(User).delete()
-    add_user("Johny", "johny@email.com")
-    add_user("Toby", "toby@email.com")
+    add_user("Johny", "johny@email.com", "simple_password")
+    add_user("Toby", "toby@email.com", "simple_password")
     client = test_app.test_client()
 
     resp = client.get("/users")
@@ -109,7 +102,7 @@ def test_all_users(test_app, test_database, add_user):
 
 def test_remove_user(test_app, test_database, add_user):
     test_database.session.query(User).delete()
-    user = add_user("Johny", "johny@email.com")
+    user = add_user("Johny", "johny@email.com", "simple_password")
     client = test_app.test_client()
 
     resp_one = client.get("/users")
@@ -138,7 +131,7 @@ def test_remove_user_incorrect_id(test_app, test_database):
 
 def test_update_user(test_app, test_database, add_user):
     test_database.session.query(User).delete()
-    user = add_user("Johny", "johny@email.com")
+    user = add_user("Johny", "johny@email.com", "simple_password")
     client = test_app.test_client()
 
     resp_one = client.get("/users")
@@ -152,6 +145,7 @@ def test_update_user(test_app, test_database, add_user):
             {
                 "username": "Johny",
                 "email": "johny_changed_email@email.com",
+                "password": "simple_password",
             },
         ),
         content_type="application/json",
@@ -178,6 +172,7 @@ def test_update_user(test_app, test_database, add_user):
             {
                 "username": "Mateusz",
                 "email": "mateusz_my_email_does_exist@email.com",
+                "password": "simple_password",
             },
             404,
             "User 99999 does not exist",
@@ -201,3 +196,48 @@ def test_update_user_invalid(
     data = json.loads(resp.data.decode())
     assert resp.status_code == status_code
     assert message in data["message"]
+
+
+def test_single_user(test_app, test_database, add_user):
+    user = add_user(
+        username="Matthew",
+        email="matthew@email.com",
+        password="simple_password",
+    )
+    client = test_app.test_client()
+    resp = client.get(f"/users/{user.user_id}")
+    data = json.loads(resp.data.decode())
+    assert resp.status_code == 200
+    assert "Matthew" in data["username"]
+    assert "matthew@email.com" in data["email"]
+    assert "password" not in data
+
+
+def test_update_user_not_changing_password(test_app, test_database, add_user):
+    password_one = "not_changed_password"
+    password_two = "not_going_to_be_set"
+
+    user = add_user(username="Matthew", email="matt@email.com", password=password_one)
+
+    assert check_password_hash(user.password, password_one)
+
+    client = test_app.test_client()
+
+    resp = client.put(
+        f"/users/{user.user_id}",
+        data=json.dumps(
+            {
+                "username": "Maria",
+                "email": "maria@email.com",
+                "password": password_two,
+            },
+        ),
+        content_type="application/json",
+    )
+
+    assert resp.status_code == 200
+
+    user = get_user_by_id(user.user_id)
+
+    assert check_password_hash(user.password, password_one)
+    assert not check_password_hash(user.password, password_two)
