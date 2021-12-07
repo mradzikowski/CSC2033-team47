@@ -11,8 +11,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
 RUN npm install react-scripts@4.0.3 prettier@2.3.0 eslint@7.27.0 -g --silent
+RUN npm install react-router-dom --save
 
 # add app
 COPY . ./
