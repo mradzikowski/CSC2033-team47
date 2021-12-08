@@ -2,10 +2,10 @@
 
 # Structure of code
 
-We have divided our system for extracting the data into three services (for now), because it would speed up the
+We have divided our system for extracting the data into two services (for now), because it would speed up the
 development in our team and it will help to keep the code clean and modularised.
-There are services: users (for managing logging, adding users, deleting, updating) and stuff related to users,
-climate (This microservice will take care about uploading and retrieving files in different formats),
+There are services: users (for managing logging, adding users, deleting, updating) and stuff related to users and also
+taking care about uploading and retrieving files in different formats),
 client (This microservice will be a frontend app that will interact with other microservices)
 
 # Before the developing
@@ -142,8 +142,6 @@ Name of services could be found in **docker-compose.yaml** file.
 In the microservices there are implemented ping routes to check if the services are responsive.
 
 To check for working users microservice go to [ping endpoint](http://localhost:5004/ping) or [link](http://localhost:5004/)
-
-To check for working climate microservice go to [ping endpoint](http://localhost:5005/ping) or [link](http://localhost:5005/)
 
 To check for working client microservice and see the basic react app go to [link](http://localhost:3007/)
 
