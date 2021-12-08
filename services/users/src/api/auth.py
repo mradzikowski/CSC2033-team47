@@ -3,7 +3,7 @@ import werkzeug.security
 from flask import Blueprint, jsonify, request
 from flask_restx import Api, Resource, fields
 from src import jwt
-from src.api.crud import add_user, get_user_by_email, get_user_by_id
+from src.api.crud_users import add_user, get_user_by_email, get_user_by_id
 
 from flask_jwt_extended import (  # isort:skip
     create_access_token,

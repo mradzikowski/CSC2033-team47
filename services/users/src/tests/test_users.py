@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from src.api.crud import get_user_by_id
+from src.api.crud_users import get_user_by_id
 from src.api.models import User
 from werkzeug.security import check_password_hash
 
