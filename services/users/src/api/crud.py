@@ -18,6 +18,7 @@ def add_user(username: str, email: str, password: str):
     user = User(username, email, password)
     db.session.add(user)
     db.session.commit()
+    return user
 
 
 def update_user(user: User, username: str, email: str):
