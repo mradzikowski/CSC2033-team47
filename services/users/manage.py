@@ -17,7 +17,7 @@ def recreate_db():
 def seed_db():
     db.session.add(User(username="Mateusz", email="mateusz@email.com"))
     db.session.add(User(username="Toby", email="toby@email.com"))
-    db.session.add(User(username="Melissa", email="melissa@email.com"))
+    db.session.add(User(username="Mellisa", email="melissa@email.com"))
     db.session.add(User(username="Joseph", email="joseph@email.com"))
     db.session.add(User(username="Chloe", email="chloe@email.com"))
     db.session.commit()
