@@ -1,6 +1,6 @@
 import pytest
 from src import create_app, db
-from src.api.models import User
+from src.api.models import Dataset, User
 
 
 @pytest.fixture(scope="function")
@@ -12,6 +12,22 @@ def add_user():
         return user
 
     return _add_user
+
+
+@pytest.fixture(scope="function")
+def add_dataset():
+    def _add_dataset(user_id, file_name, category, title):
+        dataset = Dataset(
+            user_id=user_id,
+            file_name=file_name,
+            category=category,
+            title=title,
+        )
+        db.session.add(dataset)
+        db.session.commit()
+        return dataset
+
+    return _add_dataset
 
 
 @pytest.fixture(scope="module")
