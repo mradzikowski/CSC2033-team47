@@ -29,10 +29,13 @@ class Dataset(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     file_name = db.Column(db.String(128), nullable=False)
     title = db.Column(db.String(256), nullable=False)
+    category = db.Column(db.String(256), nullable=False)
     file_type = db.Column(db.String(128), nullable=False)
     date_created = db.Column(db.DateTime, default=func.now())
 
-    def __init__(self, file_name, title):
+    def __init__(self, user_id, file_name, category, title):
+        self.user_id = user_id
         self.file_name = file_name
         self.title = title
-        self.file_type = file_name.split(".", 0).lower()
+        self.category = category
+        self.file_type = file_name.split(".", 0)[0].lower()
