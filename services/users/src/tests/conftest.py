@@ -1,6 +1,6 @@
 import pytest
 from src import create_app, db
-from src.api.models import Dataset, User
+from src.api.models import Category, Dataset, User
 
 
 @pytest.fixture(scope="function")
@@ -28,6 +28,19 @@ def add_dataset():
         return dataset
 
     return _add_dataset
+
+
+@pytest.fixture(scope="function")
+def add_category():
+    def _add_category(category_name):
+        category = Category(
+            category_name=category_name,
+        )
+        db.session.add(category)
+        db.session.commit()
+        return category
+
+    return _add_category
 
 
 @pytest.fixture(scope="module")
