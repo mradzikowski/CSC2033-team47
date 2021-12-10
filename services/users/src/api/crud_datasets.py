@@ -3,7 +3,12 @@ from src.api.models import Dataset
 
 
 def add_dataset(user_id, file_name, title, category):
-    dataset = Dataset(user_id, file_name, title, category)
+    dataset = Dataset(
+        user_id=user_id,
+        file_name=file_name,
+        title=title,
+        category=category,
+    )
     db.session.add(dataset)
     db.session.commit()
     return dataset
