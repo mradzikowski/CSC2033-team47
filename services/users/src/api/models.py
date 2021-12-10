@@ -26,10 +26,13 @@ class Dataset(db.Model):
 
     dataset_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # TODO: associate the user_id with the user from the current session
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id", ondelete="cascade"))
     file_name = db.Column(db.String(128), nullable=False)
     title = db.Column(db.String(256), nullable=False)
-    category = db.Column(db.String(256), nullable=False)
+    category = db.Column(
+        db.String(256),
+        db.ForeignKey("categories.category_name", ondelete="cascade"),
+    )
     file_type = db.Column(db.String(128), nullable=False)
     date_created = db.Column(db.DateTime, default=func.now())
 
@@ -39,3 +42,10 @@ class Dataset(db.Model):
         self.title = title
         self.category = category
         self.file_type = file_name.split(".", 0)[0].lower()
+
+
+class Category(db.Model):
+    __tablename__ = "categories"
+
+    category_name = db.Column(db.String(256), primary_key=True)
+    datasets = db.relationship("Dataset", backref="category_name", lazy=True)
