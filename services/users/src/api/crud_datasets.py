@@ -1,5 +1,5 @@
 from src import db
-from src.api.models import Dataset
+from src.api.models import Category, Dataset
 
 
 def add_dataset(user_id, file_name, title, category):
@@ -32,3 +32,7 @@ def get_dataset_by_title(title):
 
 def get_datasets_for_user(user_id):
     return Dataset.query.filter_by(user_id=user_id).all()
+
+
+def get_categories():
+    return Category.query.all()

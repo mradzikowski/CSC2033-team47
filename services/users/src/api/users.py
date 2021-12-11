@@ -1,5 +1,5 @@
-from flask import Blueprint, request
-from flask_restx import Api, Resource, fields
+from flask import request
+from flask_restx import Namespace, Resource, fields
 from src.api.models import User
 
 from src.api.crud_users import (  # isort:skip
@@ -11,10 +11,9 @@ from src.api.crud_users import (  # isort:skip
     update_user,
 )
 
-users_blueprint = Blueprint("users", __name__)
-api = Api(users_blueprint)
+users_namespace = Namespace("users")
 
-user = api.model(
+user = users_namespace.model(
     "User",
     {
         "user_id": fields.Integer(readOnly=True),
@@ -24,7 +23,7 @@ user = api.model(
     },
 )
 
-user_post = api.model(
+user_post = users_namespace.model(
     "User post",
     user,
     {
@@ -38,8 +37,9 @@ user_post = api.model(
 
 
 class UsersList(Resource):
-    @api.expect(user_post, validate=True)
+    @users_namespace.expect(user_post, validate=True)
     def post(self):
+        """Creates a new user"""
         post_data = request.get_json()
         username = post_data.get("username")
         email = post_data.get("email")
@@ -61,32 +61,36 @@ class UsersList(Resource):
 
         return response_object, 201
 
-    @api.marshal_with(user, as_list=True)
+    @users_namespace.marshal_with(user, as_list=True)
     def get(self):
+        """Returns all users"""
         return get_all_users(), 200
 
 
 class Users(Resource):
-    @api.marshal_with(user)
+    @users_namespace.marshal_with(user)
     def get(self, user_id):
+        """Returns a user by id"""
         user = User.query.filter_by(user_id=user_id).first()
         if not user:
-            api.abort(404, f"User {user_id} does not exist")
+            users_namespace.abort(404, f"User {user_id} does not exist")
         return user, 200
 
     def delete(self, user_id):
+        """Deletes a user by id"""
         response_object = {}
         user = get_user_by_id(user_id=user_id)
         if not user:
-            api.abort(404, f"User {user_id} does not exist")
+            users_namespace.abort(404, f"User {user_id} does not exist")
 
         delete_user(user)
 
         response_object["message"] = f"{user.email} was deleted!"
         return response_object, 200
 
-    @api.expect(user, validate=True)
+    @users_namespace.expect(user, validate=True)
     def put(self, user_id):
+        """Updates a user by id"""
         post_data = request.get_json()
         email = post_data.get("email")
         username = post_data.get("username")
@@ -95,7 +99,7 @@ class Users(Resource):
         user = get_user_by_id(user_id)
 
         if not user:
-            api.abort(404, f"User {user_id} does not exist")
+            users_namespace.abort(404, f"User {user_id} does not exist")
 
         update_user(user=user, username=username, email=email)
 
@@ -103,5 +107,5 @@ class Users(Resource):
         return response_object, 200
 
 
-api.add_resource(UsersList, "/users")
-api.add_resource(Users, "/users/<int:user_id>")
+users_namespace.add_resource(UsersList, "")
+users_namespace.add_resource(Users, "/<int:user_id>")
