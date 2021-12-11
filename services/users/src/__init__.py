@@ -20,15 +20,9 @@ def create_app(script_info=None):
     db.init_app(app)
     jwt.init_app(app)
 
-    from src.api.auth import auth_blueprint
-    from src.api.datasets import datasets_blueprint
-    from src.api.ping import ping_blueprint
-    from src.api.users import users_blueprint
+    from src.api import api
 
-    app.register_blueprint(ping_blueprint)
-    app.register_blueprint(users_blueprint)
-    app.register_blueprint(auth_blueprint)
-    app.register_blueprint(datasets_blueprint)
+    api.init_app(app)
 
     @app.shell_context_processor
     def ctx():

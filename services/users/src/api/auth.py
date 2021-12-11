@@ -1,7 +1,7 @@
 import redis
 import werkzeug.security
-from flask import Blueprint, jsonify, request
-from flask_restx import Api, Resource, fields
+from flask import jsonify, request
+from flask_restx import Namespace, Resource, fields
 from src import jwt
 from src.api.crud_users import add_user, get_user_by_email, get_user_by_id
 
@@ -13,11 +13,10 @@ from flask_jwt_extended import (  # isort:skip
     jwt_required,
 )
 
-auth_blueprint = Blueprint("auth", __name__)
-api = Api(auth_blueprint)
+auth_namespace = Namespace("auth")
 
 
-user = api.model(
+user = auth_namespace.model(
     "User",
     {
         "username": fields.String(required=True),
@@ -25,7 +24,7 @@ user = api.model(
     },
 )
 
-user_with_password = api.model(
+user_with_password = auth_namespace.model(
     "User_with_password",
     {
         "username": fields.String(required=True),
@@ -34,7 +33,7 @@ user_with_password = api.model(
     },
 )
 
-login_user = api.model(
+login_user = auth_namespace.model(
     "Login_user",
     {
         "email": fields.String(required=True),
@@ -42,12 +41,12 @@ login_user = api.model(
     },
 )
 
-refresh_token = api.model(
+refresh_token = auth_namespace.model(
     "Refresh token",
     {"refresh_token": fields.String(required=True)},
 )
 
-tokens = api.model(
+tokens = auth_namespace.model(
     "Tokens",
     {
         "access_token": fields.String(required=True),
@@ -57,9 +56,10 @@ tokens = api.model(
 
 
 class Register(Resource):
-    @api.marshal_with(user)
-    @api.expect(user_with_password, validate=True)
+    @auth_namespace.marshal_with(user)
+    @auth_namespace.expect(user_with_password, validate=True)
     def post(self):
+        """Registers a new user"""
         post_data = request.get_json()
         username = post_data.get("username")
         email = post_data.get("email")
@@ -68,7 +68,7 @@ class Register(Resource):
         user = get_user_by_email(email=email)
 
         if user:
-            api.abort(400, "The email already exists.")
+            auth_namespace.abort(400, "The email already exists.")
 
         user = add_user(username, email, password)
 
@@ -76,9 +76,10 @@ class Register(Resource):
 
 
 class Login(Resource):
-    @api.marshal_with(tokens)
-    @api.expect(login_user, validate=True)
+    @auth_namespace.marshal_with(tokens)
+    @auth_namespace.expect(login_user, validate=True)
     def post(self):
+        """Logins a user"""
         post_data = request.get_json()
         email = post_data.get("email")
         password = post_data.get("password")
@@ -86,7 +87,7 @@ class Login(Resource):
         user = get_user_by_email(email=email)
 
         if not user or werkzeug.security.check_password_hash(user.password, password):
-            api.abort(404, "User does not exist.")
+            auth_namespace.abort(404, "User does not exist.")
 
         access_token = create_access_token(identity=user.user_id)
         refresh_token = create_refresh_token(identity=user.user_id)
@@ -100,9 +101,10 @@ class Login(Resource):
 
 
 class Refresh(Resource):
-    @api.expect(refresh_token)
+    @auth_namespace.expect(refresh_token)
     @jwt_required(refresh=True)
     def post(self):
+        """Refreshes a token"""
         identity = get_jwt_identity()
         access_token = create_access_token(identity=identity)
         refresh_token = create_refresh_token(identity=identity)
@@ -113,9 +115,10 @@ class Refresh(Resource):
 
 
 class Status(Resource):
-    @api.marshal_with(user)
+    @auth_namespace.marshal_with(user)
     @jwt_required()
     def get(self):
+        """Returns the user by authentication token"""
         identity = get_jwt_identity()
         user = get_user_by_id(identity)
         return user, 200
@@ -123,7 +126,7 @@ class Status(Resource):
 
 jwt_redis_blocklist = redis.StrictRedis(
     host="redis",
-    port=6379,  # , db=0, decode_responses=True
+    port=6379,
 )
 
 
@@ -137,13 +140,14 @@ def check_if_token_is_revoked(jwt_header, jwt_payload):
 class Logout(Resource):
     @jwt_required()
     def delete(self):
+        """Logouts the user and deletes a token"""
         jti = get_jwt()["jti"]
         jwt_redis_blocklist.set(jti, "", ex=3600)
         return jsonify(msg="Access token revoked")
 
 
-api.add_resource(Register, "/auth/register")
-api.add_resource(Login, "/auth/login")
-api.add_resource(Refresh, "/auth/refresh")
-api.add_resource(Status, "/auth/status")
-api.add_resource(Logout, "/auth/logout")
+auth_namespace.add_resource(Register, "/register")
+auth_namespace.add_resource(Login, "/login")
+auth_namespace.add_resource(Refresh, "/refresh")
+auth_namespace.add_resource(Status, "/status")
+auth_namespace.add_resource(Logout, "/logout")
