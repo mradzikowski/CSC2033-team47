@@ -95,6 +95,7 @@ def test_upload_file(test_app, test_database, add_user, add_category):
 
     assert f"some_title has been uploaded by {user.user_id}" in data["message"]
     assert resp_two.status_code == 201
+    assert user.dataset_upload_counter == 1
 
 
 def test_get_datasets(test_app, test_database, add_user, add_dataset, add_category):
