@@ -1,0 +1,11 @@
+name: github actions docker compose
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the services using docker-compose
+        run: docker-compose up -d --build
+      - name: Test
+        run: docker-compose exec api_users python pytest -m pytest "src/tests" -p no:warnings
