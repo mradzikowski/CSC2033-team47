@@ -130,6 +130,10 @@ def test_get_datasets(test_app, test_database, add_user, add_dataset, add_catego
     assert "gas-emission-title1" in data[1]["title"]
     assert "gas-emission-title2" in data[2]["title"]
 
+    assert 0 == data[0]["rating"]
+    assert 0 == data[1]["rating"]
+    assert 0 == data[2]["rating"]
+
 
 def test_get_datasets_by_category(
     test_app,
@@ -163,3 +167,7 @@ def test_get_datasets_by_category(
     assert "file_name2" in data[2]["file_name"]
     assert "carbon" in data[2]["category"]
     assert "gas-emission-title2" in data[2]["title"]
+
+    assert 0 == data[0]["rating"]
+    assert 0 == data[1]["rating"]
+    assert 0 == data[2]["rating"]
