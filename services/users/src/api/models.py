@@ -12,6 +12,7 @@ class User(db.Model):
     email = db.Column(db.String(128), nullable=False)
     twitter_link = db.Column(db.String(256), nullable=True)
     datasets = db.relationship("Dataset", backref="user", lazy=True)
+    dataset_upload_counter = db.Column(db.Integer, default=0)
     date_created = db.Column(db.DateTime, default=func.now())
 
     def __init__(self, username="", email="", password="", twitter_link=""):
@@ -19,6 +20,7 @@ class User(db.Model):
         self.email = email
         self.password = generate_password_hash(password)
         self.twitter_link = twitter_link
+        self.dataset_upload_counter = 0
 
 
 class Dataset(db.Model):
@@ -34,6 +36,7 @@ class Dataset(db.Model):
         db.ForeignKey("categories.category_name", ondelete="cascade"),
     )
     file_type = db.Column(db.String(128), nullable=False)
+    rating = db.Column(db.Integer, default=0)
     date_created = db.Column(db.DateTime, default=func.now())
 
     def __init__(self, user_id, file_name, category, title):
@@ -42,6 +45,7 @@ class Dataset(db.Model):
         self.title = title
         self.category = category
         self.file_type = file_name.split(".", 0)[0].lower()
+        self.rating = 0
 
 
 class Category(db.Model):
