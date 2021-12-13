@@ -1,10 +1,12 @@
 import os
 
 from flask import Flask
+from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+cors = CORS()
 jwt = JWTManager()
 
 
@@ -18,6 +20,7 @@ def create_app(script_info=None):
     app.config["MAX_CONTENT_LENGTH"] = 1000 * 1000
 
     db.init_app(app)
+    cors.init_app(app, resources={r"*": {"origins": "*"}})
     jwt.init_app(app)
 
     from src.api import api
