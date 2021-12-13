@@ -13,6 +13,8 @@ COPY package-lock.json ./
 RUN npm install --silent
 RUN npm install react-scripts@4.0.3 prettier@2.3.0 eslint@7.27.0 -g --silent
 RUN npm install react-router-dom --save
+RUN npm install three @react-three/fiber --save
+RUN npm install three @react-three/postprocessing --save
 
 # add app
 COPY . ./
