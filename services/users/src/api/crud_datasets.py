@@ -36,3 +36,10 @@ def get_datasets_for_user(user_id):
 
 def get_categories():
     return Category.query.all()
+
+
+def increment_dataset_ranking(dataset_id):
+    dataset = get_dataset_by_id(dataset_id)
+    dataset.rating += 1
+    db.session.commit()
+    return dataset
