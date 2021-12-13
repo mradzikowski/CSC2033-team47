@@ -9,4 +9,7 @@ jobs:
         run: docker-compose up -d --build
       - name: Test
         run: docker-compose exec -T api_users python -m pytest "src/tests" -p no:warnings
-
+      - name: Pre-commit
+        run: pre-commit run --all-files
+      - name: Bring down the container
+        run: docker-compose down - v
