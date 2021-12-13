@@ -171,3 +171,28 @@ def test_get_datasets_by_category(
     assert 0 == data[0]["rating"]
     assert 0 == data[1]["rating"]
     assert 0 == data[2]["rating"]
+
+
+def test_voting_for_dataset(test_app, test_database, add_dataset, add_user):
+    user = add_user("Matty", "matty@email.com", "123456")
+    dataset = add_dataset(user.user_id, "file_name", "carbon", "gas-emission-title")
+
+    client = test_app.test_client()
+
+    resp = client.post(
+        f"/datasets/vote/{dataset.dataset_id}",
+    )
+
+    data = json.loads(resp.data.decode())
+
+    assert 1 == data["rating"]
+    assert resp.status_code == 200
+
+    resp_two = client.post(
+        f"/datasets/vote/{dataset.dataset_id}",
+    )
+
+    data = json.loads(resp_two.data.decode())
+
+    assert 2 == data["rating"]
+    assert resp.status_code == 200
