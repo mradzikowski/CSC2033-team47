@@ -24,6 +24,12 @@ def add_user(username: str, email: str, password: str):
 def update_user(user: User, username: str, email: str):
     user.username = username
     user.email = email
+    db.session.commit()
+
+
+def update_user_dataset_counter(user: User):
+    user.dataset_upload_counter += 1
+    db.session.commit()
 
 
 def delete_user(user: User):
