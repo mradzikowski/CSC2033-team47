@@ -1,5 +1,7 @@
 # ClimateXtractor project for CSC2033 developed by team47
 
+![CI Status](https://github.com/mradzikowski/CSC2033-team47/actions/workflows/push.yml/badge.svg?branch=main)
+
 # Structure of code
 
 We have divided our system for extracting the data into two services (for now), because it would speed up the
