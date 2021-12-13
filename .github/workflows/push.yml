@@ -12,4 +12,4 @@ jobs:
       - name: Pre-commit
         run: pre-commit run --all-files
       - name: Bring down the container
-        run: docker-compose down - v
+        run: docker-compose down -v
