@@ -1,6 +1,7 @@
 from flask import request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
+from src.api.crud_users import get_user_by_id, update_user_dataset_counter
 from werkzeug.utils import secure_filename
 
 from src.api.crud_datasets import (  # isort:skip
@@ -9,7 +10,9 @@ from src.api.crud_datasets import (  # isort:skip
     get_datasets_by_category,
     get_all_datasets,
     get_categories,
+    increment_dataset_ranking,
 )
+
 
 datasets_namespace = Namespace("datasets")
 
@@ -28,6 +31,7 @@ dataset = datasets_namespace.model(
         "title": fields.String(required=True),
         "category": fields.String(required=True),
         "twitter_link": fields.String(required=False),
+        "rating": fields.Integer(required=False),
     },
 )
 
@@ -70,6 +74,11 @@ class DatasetListUsers(Resource):
                 category=category,
             )
 
+            # After the uploading, the increment the counter of uploads for user
+            identity = get_jwt_identity()
+            user = get_user_by_id(identity)
+            update_user_dataset_counter(user)
+
             response_object["message"] = f"{title} has been uploaded by {user_id}"
             return response_object, 201
 
@@ -78,7 +87,15 @@ class Dataset(Resource):
     @datasets_namespace.marshal_with(dataset)
     def get(self, dataset_id):
         """Returns dataset by id"""
-        return get_dataset_by_id(dataset_id)
+        return get_dataset_by_id(dataset_id), 200
+
+
+class DatasetRating(Resource):
+    @datasets_namespace.marshal_with(dataset)
+    def post(self, dataset_id):
+        """Upvote for the dataset"""
+        dataset = increment_dataset_ranking(dataset_id)
+        return dataset, 200
 
 
 class DatasetListCategory(Resource):
@@ -99,3 +116,4 @@ datasets_namespace.add_resource(Dataset, "/<int:dataset_id>")
 datasets_namespace.add_resource(DatasetListUsers, "")
 datasets_namespace.add_resource(DatasetListCategory, "/category/<string:category_name>")
 datasets_namespace.add_resource(CategoryList, "/category")
+datasets_namespace.add_resource(DatasetRating, "/vote/<int:dataset_id>")
