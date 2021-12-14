@@ -1,5 +1,13 @@
 import {state, useState, useEffect} from 'react'
 
+
+/*
+    Function:
+        - Main function for the search bar that is implemented in the landing page.
+
+    (written by Toby Dixon)
+*/
+
 function SearchBar() {
   const [searchQuery, setSearchQuery] = useState('')
 

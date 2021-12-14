@@ -5,8 +5,16 @@ import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import {EffectComposer, DepthOfField, Bloom} from '@react-three/postprocessing'
 import React from 'react'
 
-// TODO: Post Processing
+// TODO: Search Button, Search Functionality
 
+
+/*
+    Function:
+        - Main function for the landing page. Returns all components that will be displayed
+        when user accesses the landing page.
+
+    (written by Toby Dixon)
+*/
 function LandingPage() {
 
     const [data, setData] = useState(0) 
@@ -31,6 +39,13 @@ function LandingPage() {
 }
 
 
+/*
+    Function:
+        - The scene in which the 3D earth model is displayed on in the background.
+
+    (written by Toby Dixon)
+*/
+
 const Scene = () => {
     
     return (
@@ -51,6 +66,13 @@ const Scene = () => {
     )
 }
 
+/*
+    Function:
+        - Creation of the Earth model
+
+    (written by Toby Dixon)
+*/
+
 
 const Earth = () => {
 
@@ -70,6 +92,14 @@ const Earth = () => {
         </mesh>
     )
 }
+
+
+/*
+    Function:
+        - Temporary function to test that data gathered from the api can be displayed.
+
+    (written by Toby Dixon)
+*/
 
 const Users = (props) => {
 
