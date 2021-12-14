@@ -39,13 +39,13 @@ class Dataset(db.Model):
     rating = db.Column(db.Integer, default=0)
     date_created = db.Column(db.DateTime, default=func.now())
 
-    def __init__(self, user_id, file_name, category, title):
+    def __init__(self, user_id, file_name, category, title, rating=0):
         self.user_id = user_id
         self.file_name = file_name
         self.title = title
         self.category = category
         self.file_type = file_name.split(".", 0)[0].lower()
-        self.rating = 0
+        self.rating = rating
 
 
 class Category(db.Model):
