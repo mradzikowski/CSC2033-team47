@@ -11,6 +11,8 @@ from src.api.crud_datasets import (  # isort:skip
     get_all_datasets,
     get_categories,
     increment_dataset_ranking,
+    get_trending_datasets_by_days,
+    get_trending_datasets_whole_time,
 )
 
 
@@ -98,6 +100,20 @@ class DatasetRating(Resource):
         return dataset, 200
 
 
+class DatasetListTrendingDays(Resource):
+    @datasets_namespace.marshal_with(dataset, as_list=True)
+    def get(self, days):
+        """Returns the trending post for specific timeframe"""
+        return get_trending_datasets_by_days(days), 200
+
+
+class DatasetListTrending(Resource):
+    @datasets_namespace.marshal_with(dataset, as_list=True)
+    def get(self):
+        """Returns the trending post for whole time"""
+        return get_trending_datasets_whole_time(), 200
+
+
 class DatasetListCategory(Resource):
     @datasets_namespace.marshal_with(dataset, as_list=True)
     def get(self, category_name):
@@ -117,3 +133,5 @@ datasets_namespace.add_resource(DatasetListUsers, "")
 datasets_namespace.add_resource(DatasetListCategory, "/category/<string:category_name>")
 datasets_namespace.add_resource(CategoryList, "/category")
 datasets_namespace.add_resource(DatasetRating, "/vote/<int:dataset_id>")
+datasets_namespace.add_resource(DatasetListTrendingDays, "/trending/<int:days>")
+datasets_namespace.add_resource(DatasetListTrending, "/trending/all")
