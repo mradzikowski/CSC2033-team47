@@ -16,12 +16,13 @@ def add_user():
 
 @pytest.fixture(scope="function")
 def add_dataset():
-    def _add_dataset(user_id, file_name, category, title):
+    def _add_dataset(user_id, file_name, category, title, rating=0):
         dataset = Dataset(
             user_id=user_id,
             file_name=file_name,
             category=category,
             title=title,
+            rating=rating,
         )
         db.session.add(dataset)
         db.session.commit()
