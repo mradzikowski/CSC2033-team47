@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from src.api.models import Dataset
+from src.api.models import Category, Dataset
 
 
 @pytest.mark.parametrize(
@@ -197,3 +197,35 @@ def test_voting_for_dataset(test_app, test_database, add_dataset, add_user):
 
     assert 2 == data["rating"]
     assert resp.status_code == 200
+
+
+def test_get_trending_datasets_whole_time(
+    test_app,
+    test_database,
+    add_dataset,
+    add_user,
+    add_category,
+):
+    test_database.session.query(Dataset).delete()
+    test_database.session.query(Category).delete()
+    user = add_user("Matty", "matty@email.com", "123456")
+    add_category("carbon")
+    add_dataset(user.user_id, "file_name", "carbon", "gas-emission-title", rating=10)
+    add_dataset(user.user_id, "file_name1", "carbon", "gas-emission-title1", rating=50)
+    add_dataset(user.user_id, "file_name2", "carbon", "gas-emission-title2", rating=3)
+
+    client = test_app.test_client()
+
+    resp = client.get(
+        "/datasets/trending/all",
+    )
+
+    data = json.loads(resp.data.decode())
+
+    print(data)
+
+    assert resp.status_code == 200
+    assert len(data) == 3
+    assert "gas-emission-title1" in data[0]["title"]
+    assert "gas-emission-title" in data[1]["title"]
+    assert "gas-emission-title2" in data[2]["title"]
