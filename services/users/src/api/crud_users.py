@@ -1,3 +1,4 @@
+from sqlalchemy import desc
 from src import db
 from src.api.models import User
 
@@ -36,3 +37,7 @@ def delete_user(user: User):
     db.session.delete(user)
     db.session.commit()
     return user
+
+
+def get_users_by_ranking():
+    return User.query.order_by(desc(User.dataset_upload_counter)).all()
