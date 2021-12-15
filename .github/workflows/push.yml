@@ -1,4 +1,4 @@
-name: Backend CI and building docker images from dcoker compose
+name: Backend CI and building docker images from docker compose
 on:
   push:
     branches:
