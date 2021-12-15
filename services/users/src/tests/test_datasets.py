@@ -222,8 +222,6 @@ def test_get_trending_datasets_whole_time(
 
     data = json.loads(resp.data.decode())
 
-    print(data)
-
     assert resp.status_code == 200
     assert len(data) == 3
     assert "gas-emission-title1" in data[0]["title"]
