@@ -241,3 +241,91 @@ def test_update_user_not_changing_password(test_app, test_database, add_user):
 
     assert check_password_hash(user.password, password_one)
     assert not check_password_hash(user.password, password_two)
+
+
+def test_get_users_ranking(
+    test_app,
+    test_database,
+    add_user,
+    add_category,
+    add_dataset,
+):
+    test_database.session.query(User).delete()
+
+    add_category("carbon")
+
+    user_first = add_user(
+        username="Matthew",
+        email="matt@email.com",
+        password="too_hard_to_crack",
+    )
+    user_second = add_user(
+        username="Melissa",
+        email="melissa@email.com",
+        password="too_hard_to_crack",
+    )
+    user_third = add_user(
+        username="Toby",
+        email="toby@email.com",
+        password="too_hard_to_crack",
+    )
+    user_fourth = add_user(
+        username="Joseph",
+        email="joseph@email.com",
+        password="too_hard_to_crack",
+    )
+
+    add_dataset(
+        user_id=user_first.user_id,
+        file_name="first_dataset",
+        category="carbon",
+        title="carbon_dataset",
+    )
+    add_dataset(
+        user_id=user_first.user_id,
+        file_name="first_dataset1",
+        category="carbon",
+        title="carbon_dataset",
+    )
+
+    add_dataset(
+        user_id=user_second.user_id,
+        file_name="first_dataset2",
+        category="carbon",
+        title="carbon_dataset",
+    )
+    add_dataset(
+        user_id=user_second.user_id,
+        file_name="first_dataset3",
+        category="carbon",
+        title="carbon_dataset",
+    )
+    add_dataset(
+        user_id=user_second.user_id,
+        file_name="first_dataset4",
+        category="carbon",
+        title="carbon_dataset",
+    )
+
+    add_dataset(
+        user_id=user_fourth.user_id,
+        file_name="first_dataset5",
+        category="carbon",
+        title="carbon_dataset",
+    )
+
+    client = test_app.test_client()
+    resp = client.get(
+        "/users/ranking",
+    )
+
+    data = json.loads(resp.data.decode())
+
+    print(data)
+
+    assert resp.status_code == 200
+    assert len(data) == 4
+    assert user_second.username == data[0]["username"]
+    assert user_first.username == data[1]["username"]
+    assert user_fourth.username == data[2]["username"]
+    assert user_third.username == data[3]["username"]
