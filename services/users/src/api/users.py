@@ -9,6 +9,7 @@ from src.api.crud_users import (  # isort:skip
     get_user_by_email,
     get_user_by_id,
     update_user,
+    get_users_by_ranking,
 )
 
 users_namespace = Namespace("users")
@@ -24,7 +25,7 @@ user = users_namespace.model(
 )
 
 user_post = users_namespace.model(
-    "User post",
+    "UserPost",
     user,
     {
         "user_id": fields.Integer(readOnly=True),
@@ -32,6 +33,14 @@ user_post = users_namespace.model(
         "email": fields.String(required=True),
         "password": fields.String(required=True),
         "date_created": fields.DateTime,
+    },
+)
+
+user_ranking = users_namespace.model(
+    "UserRanking",
+    {
+        "username": fields.String(required=True),
+        "dataset_upload_counter": fields.Integer(required=True),
     },
 )
 
@@ -107,5 +116,13 @@ class Users(Resource):
         return response_object, 200
 
 
+class UsersRanking(Resource):
+    @users_namespace.marshal_with(user_ranking)
+    def get(self):
+        """Returns the ranking of users by upload files"""
+        return get_users_by_ranking(), 200
+
+
 users_namespace.add_resource(UsersList, "")
 users_namespace.add_resource(Users, "/<int:user_id>")
+users_namespace.add_resource(UsersRanking, "/ranking")
