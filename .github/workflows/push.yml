@@ -1,4 +1,4 @@
-name: github actions docker compose
+name: Backend CI and building docker images from dcoker compose
 on: push
 jobs:
   test:
