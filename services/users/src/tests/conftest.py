@@ -1,5 +1,6 @@
 import pytest
 from src import create_app, db
+from src.api.crud_users import get_user_by_id, update_user_dataset_counter
 from src.api.models import Category, Dataset, User
 
 
@@ -17,6 +18,9 @@ def add_user():
 @pytest.fixture(scope="function")
 def add_dataset():
     def _add_dataset(user_id, file_name, category, title, rating=0):
+        user = get_user_by_id(user_id)
+        update_user_dataset_counter(user)
+
         dataset = Dataset(
             user_id=user_id,
             file_name=file_name,
