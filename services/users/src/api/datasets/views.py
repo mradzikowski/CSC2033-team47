@@ -1,10 +1,10 @@
 from flask import request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
-from src.api.crud_users import get_user_by_id, update_user_dataset_counter
+from src.api.crud.crud_users import get_user_by_id, update_user_dataset_counter
 from werkzeug.utils import secure_filename
 
-from src.api.crud_datasets import (  # isort:skip
+from src.api.crud.crud_datasets import (  # isort:skip
     add_dataset,
     get_dataset_by_id,
     get_datasets_by_category,

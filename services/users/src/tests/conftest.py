@@ -1,6 +1,6 @@
 import pytest
 from src import create_app, db
-from src.api.crud_users import get_user_by_id, update_user_dataset_counter
+from src.api.crud.crud_users import get_user_by_id, update_user_dataset_counter
 from src.api.models import Category, Dataset, User
 
 
