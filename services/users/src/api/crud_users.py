@@ -41,3 +41,16 @@ def delete_user(user: User):
 
 def get_users_by_ranking():
     return User.query.order_by(desc(User.dataset_upload_counter)).all()
+
+
+def get_users_with_subscription():
+    return User.query.filter_by(subscribed=True).all()
+
+
+def update_user_subscription(user_id: int, turn_on: bool):
+    user = get_user_by_id(user_id)
+    if turn_on:
+        user.subscribed = True
+    else:
+        user.subscribed = False
+    db.session.commit()
