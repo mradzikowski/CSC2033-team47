@@ -7,9 +7,17 @@ from src.api.models import Category, Dataset
 @pytest.mark.parametrize(
     "payload, status_code, message",
     [
-        [{}, 400, "Input payload validation failed"],
-        [{"title": "title for simple dataset"}, 400, "Input payload validation failed"],
-        [{"category": "carbon-emission"}, 400, "Input payload validation failed"],
+        [{"file_name": "file_name.pdf"}, 400, "Input payload validation failed"],
+        [
+            {"title": "title for simple dataset", "file_name": "file_name.pdf"},
+            400,
+            "Input payload validation failed",
+        ],
+        [
+            {"category": "carbon-emission", "file_name": "file_name.pdf"},
+            400,
+            "Input payload validation failed",
+        ],
     ],
 )
 def test_upload_file_invalid_json_keys(
@@ -43,7 +51,7 @@ def test_upload_file_invalid_json_keys(
 
     resp_two = client.post(
         "/datasets",
-        data={"file": "file_name.pdf"},
+        data=json.dumps(payload),
         content_type="multipart/form-data",
         headers={"Authorization": f"Bearer {access_token}"},
     )
