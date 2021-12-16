@@ -3,7 +3,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
 from src.api.models import User
 
-from src.api.crud_users import (  # isort:skip
+from src.api.crud.crud_users import (  # isort:skip
     add_user,
     delete_user,
     get_all_users,
