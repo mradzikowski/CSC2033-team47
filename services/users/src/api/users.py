@@ -1,4 +1,5 @@
 from flask import request
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
 from src.api.models import User
 
@@ -10,6 +11,8 @@ from src.api.crud_users import (  # isort:skip
     get_user_by_id,
     update_user,
     get_users_by_ranking,
+    get_users_with_subscription,
+    update_user_subscription,
 )
 
 users_namespace = Namespace("users")
@@ -41,6 +44,21 @@ user_ranking = users_namespace.model(
     {
         "username": fields.String(required=True),
         "dataset_upload_counter": fields.Integer(required=True),
+    },
+)
+
+user_subscribed = users_namespace.model(
+    "UserSubscribed",
+    {
+        "username": fields.String(required=True),
+        "email": fields.String(required=True),
+    },
+)
+
+subscription = users_namespace.model(
+    "Subscription",
+    {
+        "turn_on": fields.Boolean(required=True),
     },
 )
 
@@ -123,6 +141,32 @@ class UsersRanking(Resource):
         return get_users_by_ranking(), 200
 
 
+class UsersSubscribe(Resource):
+    @users_namespace.marshal_with(user_subscribed)
+    def get(self):
+        """Returns users that subscribed to the newsletter"""
+        return get_users_with_subscription(), 200
+
+    @users_namespace.expect(subscription, validate=True)
+    @jwt_required()
+    def post(self):
+        """Set or unset the subscription depending on the post data"""
+        response_object = {}
+        post_data = request.get_json()
+        turn_on = post_data.get("turn_on")
+        user_id = get_jwt_identity()
+
+        update_user_subscription(user_id, turn_on)
+
+        if turn_on:
+            response_object["message"] = f"{user_id} has subscribed the newsletter."
+        else:
+            response_object["message"] = f"{user_id} has unsubscribed the newsletter."
+
+        return response_object, 200
+
+
 users_namespace.add_resource(UsersList, "")
 users_namespace.add_resource(Users, "/<int:user_id>")
 users_namespace.add_resource(UsersRanking, "/ranking")
+users_namespace.add_resource(UsersSubscribe, "/subscription")
