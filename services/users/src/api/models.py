@@ -13,6 +13,7 @@ class User(db.Model):
     twitter_link = db.Column(db.String(256), nullable=True)
     datasets = db.relationship("Dataset", backref="user", lazy=True)
     dataset_upload_counter = db.Column(db.Integer, default=0)
+    subscribed = db.Column(db.Boolean, default=False)
     date_created = db.Column(db.DateTime, default=func.now())
 
     def __init__(self, username="", email="", password="", twitter_link=""):
@@ -21,6 +22,7 @@ class User(db.Model):
         self.password = generate_password_hash(password)
         self.twitter_link = twitter_link
         self.dataset_upload_counter = 0
+        self.subscribed = False
 
 
 class Dataset(db.Model):
