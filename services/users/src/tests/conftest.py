@@ -6,7 +6,18 @@ from src.api.models import Category, Dataset, User
 
 @pytest.fixture(scope="function")
 def add_user():
-    def _add_user(username, email, password, subscribed=False):
+    """
+    Pytest fixture to add user during the test
+
+    :return: callable to add user
+    """
+
+    def _add_user(
+        username: str,
+        email: str,
+        password: str,
+        subscribed: bool = False,
+    ) -> User:
         user = User(
             username=username,
             email=email,
@@ -22,9 +33,22 @@ def add_user():
 
 @pytest.fixture(scope="function")
 def add_dataset():
-    def _add_dataset(user_id, file_name, category, title, rating=0):
+    """
+    Pytest fixture to add dataset during the test
+
+    :return: callable to add dataset
+    """
+
+    def _add_dataset(
+        user_id: int,
+        file_name: str,
+        category: str,
+        title: str,
+        rating: int = 0,
+    ) -> Dataset:
         user = get_user_by_id(user_id)
-        update_user_dataset_counter(user)
+        if user:
+            update_user_dataset_counter(user)
 
         dataset = Dataset(
             user_id=user_id,
@@ -42,7 +66,13 @@ def add_dataset():
 
 @pytest.fixture(scope="function")
 def add_category():
-    def _add_category(category_name):
+    """
+    Pytest fixture to add category during the test
+
+    :return: callable to add category
+    """
+
+    def _add_category(category_name: str) -> Category:
         category = Category(
             category_name=category_name,
         )
@@ -55,6 +85,11 @@ def add_category():
 
 @pytest.fixture(scope="module")
 def test_app():
+    """
+    Pytest fixture to yield flask test app in flask context
+
+    :return:
+    """
     app = create_app()
     app.config.from_object("src.config.TestingConfig")
     with app.app_context():
@@ -63,6 +98,11 @@ def test_app():
 
 @pytest.fixture(scope="module")
 def test_database():
+    """
+    Pytest fixture to yield database during tests
+
+    :return:
+    """
     db.create_all()
     yield db
     db.session.remove()
