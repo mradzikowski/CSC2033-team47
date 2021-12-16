@@ -6,8 +6,13 @@ from src.api.models import Category, Dataset, User
 
 @pytest.fixture(scope="function")
 def add_user():
-    def _add_user(username, email, password):
-        user = User(username=username, email=email, password=password)
+    def _add_user(username, email, password, subscribed=False):
+        user = User(
+            username=username,
+            email=email,
+            password=password,
+            subscribed=subscribed,
+        )
         db.session.add(user)
         db.session.commit()
         return user
