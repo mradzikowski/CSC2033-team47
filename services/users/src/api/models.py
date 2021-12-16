@@ -16,13 +16,20 @@ class User(db.Model):
     subscribed = db.Column(db.Boolean, default=False)
     date_created = db.Column(db.DateTime, default=func.now())
 
-    def __init__(self, username="", email="", password="", twitter_link=""):
+    def __init__(
+        self,
+        username="",
+        email="",
+        password="",
+        twitter_link="",
+        subscribed=False,
+    ):
         self.username = username
         self.email = email
         self.password = generate_password_hash(password)
         self.twitter_link = twitter_link
         self.dataset_upload_counter = 0
-        self.subscribed = False
+        self.subscribed = subscribed
 
 
 class Dataset(db.Model):
