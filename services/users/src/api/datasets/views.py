@@ -1,4 +1,6 @@
-from flask import request
+import os
+
+from flask import make_response, render_template, request, send_from_directory
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields
 from src.api.crud.crud_users import get_user_by_id, update_user_dataset_counter
@@ -45,44 +47,11 @@ category = datasets_namespace.model(
 )
 
 
-class DatasetListUsers(Resource):
+class DatasetList(Resource):
     @datasets_namespace.marshal_with(dataset, as_list=True)
     def get(self):
         """Returns all datasets"""
         return get_all_datasets(), 200
-
-    @datasets_namespace.expect(dataset, validate=True)
-    @jwt_required()
-    def post(self):
-        """Uploads a new dataset"""
-        post_data = request.get_json()
-        title = post_data.get("title")
-        category = post_data.get("category")
-        response_object = {}
-        user_id = get_jwt_identity()
-        file = post_data.get("file_name")
-        if file == "":
-            response_object["message"] = "No file selected."
-            return response_object, 400
-        else:
-            filename = secure_filename(file)
-            # TODO: ADD SAVING AND UPLOADING PROPER FILES
-            # TODO: FOR NOW IT JUST SAVES A FILE PATH IN STR
-
-            add_dataset(
-                user_id=user_id,
-                file_name=filename,
-                title=title,
-                category=category,
-            )
-
-            # After the uploading, the increment the counter of uploads for user
-            identity = get_jwt_identity()
-            user = get_user_by_id(identity)
-            update_user_dataset_counter(user)
-
-            response_object["message"] = f"{title} has been uploaded by {user_id}"
-            return response_object, 201
 
 
 class Dataset(Resource):
@@ -128,10 +97,53 @@ class CategoryList(Resource):
         return get_categories(), 200
 
 
+class DatasetRetrieve(Resource):
+    def get(self, filename):
+        return send_from_directory(f"{os.getenv('APP_FOLDER')}/src/media", filename)
+
+
+class DatasetUpload(Resource):
+    def get(self):
+        headers = {"Content-Type": "text/html"}
+        return make_response(render_template("upload.html"), 200, headers)
+
+    @jwt_required()
+    def post(self):
+        file = request.files["file_name"]
+        title = request.form.get("title")
+        category = request.form.get("category")
+
+        response_object = {}
+        user_id = get_jwt_identity()
+
+        if file == "":
+            response_object["message"] = "No file selected."
+            return response_object, 400
+        else:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(f"{os.getenv('APP_FOLDER')}/src/media", filename))
+
+            add_dataset(
+                user_id=user_id,
+                file_name=filename,
+                title=title,
+                category=category,
+            )
+
+            # After the uploading, the increment the counter of uploads for user
+            user = get_user_by_id(user_id)
+            update_user_dataset_counter(user)
+
+            response_object["message"] = f"{title} has been uploaded by {user_id}"
+            return response_object, 201
+
+
 datasets_namespace.add_resource(Dataset, "/<int:dataset_id>")
-datasets_namespace.add_resource(DatasetListUsers, "")
+datasets_namespace.add_resource(DatasetList, "")
 datasets_namespace.add_resource(DatasetListCategory, "/category/<string:category_name>")
 datasets_namespace.add_resource(CategoryList, "/category")
 datasets_namespace.add_resource(DatasetRating, "/vote/<int:dataset_id>")
 datasets_namespace.add_resource(DatasetListTrendingDays, "/trending/<int:days>")
 datasets_namespace.add_resource(DatasetListTrending, "/trending/all")
+datasets_namespace.add_resource(DatasetUpload, "/upload")
+datasets_namespace.add_resource(DatasetRetrieve, "/download/<string:filename>")
