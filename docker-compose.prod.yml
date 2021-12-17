@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  api_users:
+    build:
+      context: ./services/users
+      dockerfile: Dockerfile.prod
+    command: gunicorn --bind 0.0.0.0:5000 manage:app
+    expose:
+      - 5000
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - api_users_db
+
+  api_users_db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.prod.db
+
+  client:
+    stdin_open: true
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile
+    volumes:
+      - "./services/client:/app"
+      - "/app/node_modules"
+    ports:
+      - 3007:3000
+    env_file:
+      - ./.env.prod.client
+    depends_on:
+      - api_users
+
+  redis:
+    image: "redis:alpine"
+
+  nginx:
+    build: ./services/nginx
+    volumes:
+      - media_volume:/home/app/api_users/media
+    ports:
+      - 1337:80
+    depends_on:
+      - api_users
+
+volumes:
+  postgres_data_prod:
+  media_volume:
