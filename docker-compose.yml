@@ -16,7 +16,7 @@ services:
       - APP_SETTINGS=src.config.DevelopmentConfig
       - DATABASE_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_dev
       - DATABASE_TEST_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_test
-      - UPLOAD_FOLDER=./usr/src/app/uploaded_datasets
+      - APP_FOLDER=/usr/src/app
     depends_on:
       - api_users_db
 
