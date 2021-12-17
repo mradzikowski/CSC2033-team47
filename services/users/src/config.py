@@ -7,7 +7,7 @@ class BaseConfig:
     JWT_SECRET_KEY = "my_secret_key"
     JWT_ACCESS_TOKEN_EXPIRES = 900
     JWT_REFRESH_TOKEN_EXPIRES = 2592000
-    UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER")
+    MEDIA_FOLDER = f"{os.getenv('APP_FOLDER')}/src/media"
 
 
 class DevelopmentConfig(BaseConfig):
