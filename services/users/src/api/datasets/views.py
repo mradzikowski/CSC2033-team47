@@ -34,7 +34,6 @@ dataset = datasets_namespace.model(
         "file_name": fields.String(required=True),
         "title": fields.String(required=True),
         "category": fields.String(required=True),
-        "twitter_link": fields.String(required=False),
         "rating": fields.Integer(required=False),
     },
 )
