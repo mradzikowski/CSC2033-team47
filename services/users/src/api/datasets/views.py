@@ -15,6 +15,8 @@ from src.api.crud.crud_datasets import (  # isort:skip
     increment_dataset_ranking,
     get_trending_datasets_by_days,
     get_trending_datasets_whole_time,
+    get_dataset_by_filename,
+    increment_dataset_download_counter,
 )
 
 
@@ -98,7 +100,10 @@ class CategoryList(Resource):
 
 class DatasetRetrieve(Resource):
     def get(self, filename):
-        return send_from_directory(f"{os.getenv('APP_FOLDER')}/src/media", filename)
+        dataset = get_dataset_by_filename(filename)
+        if dataset:
+            increment_dataset_download_counter(dataset)
+            return send_from_directory(f"{os.getenv('APP_FOLDER')}/src/media", filename)
 
 
 class DatasetUpload(Resource):
