@@ -34,6 +34,10 @@ def get_dataset_by_title(title: str) -> Union[List[Dataset], None]:
     return Dataset.query.filter_by(title=title).all()
 
 
+def get_dataset_by_filename(file_name: str) -> Union[List[Dataset], None]:
+    return Dataset.query.filter_by(file_name=file_name).all()
+
+
 def get_datasets_for_user(user_id: int) -> Union[List[Dataset], None]:
     return Dataset.query.filter_by(user_id=user_id).all()
 
@@ -47,6 +51,11 @@ def increment_dataset_ranking(dataset_id: int) -> Dataset:
     dataset.rating += 1
     db.session.commit()
     return dataset
+
+
+def increment_dataset_download_counter(dataset: Dataset):
+    dataset.download_counter += 1
+    db.session.commit()
 
 
 def get_trending_datasets_by_days(days: int) -> Union[List[Dataset], None]:
