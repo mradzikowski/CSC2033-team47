@@ -56,7 +56,6 @@ const Scene = () => {
                 <ambientLight intensity={0.2} />
                     <Earth className='Earth'></Earth>
                     <EffectComposer>
-                        <DepthOfField focusDistance={0.3} focalLength={0.02} bokehScale={1} height={480} />
                         <Bloom luminanceThreshold={0} luminanceSmoothing={0.4} height={500} />
                     </EffectComposer>
                 </Canvas>
@@ -87,7 +86,7 @@ const Earth = () => {
     return (
 
         <mesh ref={mesh}>
-        <sphereGeometry attach='geometry' args={[2, 20, 20]}/>
+        <sphereGeometry attach='geometry' args={[2, 16, 16]}/>
         <meshStandardMaterial map={base} roughnessMap={disp} color="white"/>
         </mesh>
     )
