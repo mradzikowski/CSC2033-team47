@@ -1,0 +1,19 @@
+name: Backend CI and building docker images from docker compose
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the services using docker-compose
+        run: docker-compose up -d --build
+      - name: Test
+        run: docker-compose exec -T api_users python -m pytest "src/tests" -p no:warnings
+      - name: Bring down the container
+        run: docker-compose down -v

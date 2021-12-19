@@ -1,5 +1,7 @@
 # ClimateXtractor project for CSC2033 developed by team47
 
+![CI Status](https://github.com/mradzikowski/CSC2033-team47/actions/workflows/push.yml/badge.svg?branch=main)
+
 # Structure of code
 
 We have divided our system for extracting the data into two services (for now), because it would speed up the
@@ -65,7 +67,6 @@ Set the environmental variables used in **docker-compose.yaml** file
 
 ```shell
 export REACT_APP_USERS_SERVICE_URL=http://localhost:5004
-export REACT_APP_CLIMATE_SERVICE_URL=http://localhost:5005
 ```
 
 To build the images run:
@@ -141,22 +142,22 @@ Name of services could be found in **docker-compose.yaml** file.
 
 In the microservices there are implemented ping routes to check if the services are responsive.
 
-To check for working users microservice go to [ping endpoint](http://localhost:5004/ping) or [link](http://localhost:5004/)
+To check for working users' microservice go to [ping endpoint](http://localhost:5004/ping) or [link](http://localhost:5004/)
 
 To check for working client microservice and see the basic react app go to [link](http://localhost:3007/)
 
 # Test routes
 
-Before testing you should create the database
+Before testing, you should create the database
 
 ```shell
-docker-compose api_users python manage.py recreate_db
+docker-compose exec api_users python manage.py recreate_db
 ```
 
 You can seed the database with given users by
 
 ```shell
-docker-compose api_users python manage.py seed_db
+docker-compose exec api_users python manage.py seed_db
 ```
 
 You can go into the postgreSQL command line by and see the tables
@@ -223,9 +224,13 @@ To see the coverage of the tests run:
 docker-compose exec api_users python -m pytests "src/tests" -p "no:warnings" --cov="src"
 ```
 
-To see the coverage in html run and use the browser of your type or right click on the file and click `open in -> browser -> your choice`
+To see the coverage in html run and use the browser of your type or right-click on the file and click `open in -> browser -> your choice`
 
 ```shell
 docker-compose exec api_users python -m pytests "src/tests" -p "no:warnings" --cov="src" --cov-report html
 google-chrome services/users/htmlcov/index.html
 ```
+
+# API DOCS
+
+To view API documentation go to [link](http://localhost:5004/doc)
