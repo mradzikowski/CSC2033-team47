@@ -2,10 +2,13 @@ import {state, Suspense, useEffect, useState} from 'react';
 import SearchBar from './SearchBar'
 import {Canvas, useLoader, useFrame} from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import {EffectComposer, DepthOfField, Bloom} from '@react-three/postprocessing'
+import {EffectComposer, Bloom} from '@react-three/postprocessing'
 import React from 'react'
 
-// TODO: Search Button, Search Functionality
+// TODO: Replace search bar with dropdown that shows all categories as optional filters for searching.
+// TODO: Create a new filter component that is added somewhere to the screen when a filter is chosen.
+// TODO: Create a new page that displays gathered information on info-cards or some other format 
+// When a search is initiated, filtered by categories.
 
 
 /*
@@ -17,21 +20,24 @@ import React from 'react'
 */
 function LandingPage() {
 
-    const [data, setData] = useState(0) 
+    const [categories, setCategories] = useState(0) 
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`)
+        fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
         .then(res => res.json())
         .then(data =>{
-            setData(data)
-            console.log(data)
+            let c = new Set()
+            data.forEach((e) => {
+                c.add(e['category'])
+            })
+            setCategories(c)
+            console.log(c)
         })}, [])
 
     return(
         <div className='App-header'>
             <h1>ClimateXtractor</h1>
             {/* if data is gathered, render it. Otherwise render 'non' */}
-            {/* {data==0 ? 'non' : <Users props={data} />} */}
             <SearchBar></SearchBar>
             <Scene />
         </div>
@@ -103,8 +109,12 @@ const Earth = () => {
 const Users = (props) => {
 
     let final = []
-    for (let user of props.props){
-      final.push(<h2>username: {user.username}, id: {user.user_id}, email: {user.email}, date created: {user.date_created}</h2>)
+    // for (let user of props.props){
+    //   final.push(<h2>username: {user.username}, id: {user.user_id}, email: {user.email}, date created: {user.date_created}</h2>)
+    // }
+
+    for (let data of props.props){
+        final.push(data)
     }
   
     return(

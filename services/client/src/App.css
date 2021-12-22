@@ -62,24 +62,14 @@ h1 {
 .searchBar {
   width: 700px;
   border-radius: 50px;
-  height: 17px;
-  padding: 10px;
-  border-width: 0px;
-  text-align: center;
-  font-size: 20px;
-  background-color: white;
-  transition: background-color 0.2s;
+  height: 25px;
+  font-size: 15px;
   position: fixed;
+  display: block;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
-  outline: none;
-}
-
-.searchBar:hover {
-  background-color: #808080;
-  transition: background-color 0.2s;
+  color: black;
 }
 
 .Earth {
@@ -87,6 +77,6 @@ h1 {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 0;
+  z-index: -1;
   filter: blur(2px)
 }

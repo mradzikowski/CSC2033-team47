@@ -1,4 +1,5 @@
 import {state, useState, useEffect} from 'react'
+import Select from 'react-select'
 
 
 /*
@@ -9,25 +10,18 @@ import {state, useState, useEffect} from 'react'
 */
 
 function SearchBar() {
-  const [searchQuery, setSearchQuery] = useState('')
-
-  const handleInput = (e) => {
-    e.preventDefault()
-    setSearchQuery(e.target.value)
-  }
+  const categories = [
+    { value: 'climate', label: 'Climate' },
+    { value: 'carbon', label: 'Carbon Emissions' },
+    { value: 'water', label: 'Water' },
+  ]
 
   return(
     <div>
-      <div>
-        <input
-          className='searchBar'
-          type='text'
-          placeholder='Search'
-          onChange={handleInput} />
-      </div>
-      <div>
-        Search Query = {searchQuery}
-      </div>
+      <Select 
+        isMulti
+        isSearchable={false}
+        options={categories} className='searchBar'/>
     </div>
 
   )
