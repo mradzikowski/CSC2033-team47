@@ -9,6 +9,7 @@ import React from 'react'
 // TODO: Create a new filter component that is added somewhere to the screen when a filter is chosen.
 // TODO: Create a new page that displays gathered information on info-cards or some other format 
 // When a search is initiated, filtered by categories.
+// TODO: Either hardcode categories or come up with a more efficient way to grab them (at the moment i am grabbing all data)
 
 
 /*
@@ -19,20 +20,6 @@ import React from 'react'
     (written by Toby Dixon)
 */
 function LandingPage() {
-
-    const [categories, setCategories] = useState(0) 
-
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
-        .then(res => res.json())
-        .then(data =>{
-            let c = new Set()
-            data.forEach((e) => {
-                c.add(e['category'])
-            })
-            setCategories(c)
-            console.log(c)
-        })}, [])
 
     return(
         <div className='App-header'>
@@ -97,30 +84,6 @@ const Earth = () => {
         </mesh>
     )
 }
-
-
-/*
-    Function:
-        - Temporary function to test that data gathered from the api can be displayed.
-
-    (written by Toby Dixon)
-*/
-
-const Users = (props) => {
-
-    let final = []
-    // for (let user of props.props){
-    //   final.push(<h2>username: {user.username}, id: {user.user_id}, email: {user.email}, date created: {user.date_created}</h2>)
-    // }
-
-    for (let data of props.props){
-        final.push(data)
-    }
-  
-    return(
-      <ul>{final}</ul>
-    )
-  }
   
 
 export default LandingPage;

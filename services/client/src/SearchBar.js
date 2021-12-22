@@ -10,11 +10,19 @@ import Select from 'react-select'
 */
 
 function SearchBar() {
-  const categories = [
-    { value: 'climate', label: 'Climate' },
-    { value: 'carbon', label: 'Carbon Emissions' },
-    { value: 'water', label: 'Water' },
-  ]
+  const [categories, setCategories] = useState()
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
+    .then(res => res.json())
+    .then(data =>{
+      let tempArray = []
+      for (let c of data){
+        tempArray.push({value: Object.keys(c)[0], label: Object.values(c)[0]})
+      }
+      console.log(tempArray)
+      setCategories(tempArray)
+    })}, [])
 
   return(
     <div>
