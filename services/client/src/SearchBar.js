@@ -18,7 +18,7 @@ function SearchBar() {
     .then(data =>{
       let tempArray = []
       for (let c of data){
-        tempArray.push({value: Object.keys(c)[0], label: Object.values(c)[0]})
+        tempArray.push({value: Object.values(c)[0], label: Object.values(c)[0]})
       }
       console.log(tempArray)
       setCategories(tempArray)
@@ -28,8 +28,10 @@ function SearchBar() {
     <div>
       <Select 
         isMulti
+        isClearable={true}
         isSearchable={false}
-        options={categories} className='searchBar'/>
+        options={categories}
+        className='searchBar'/>
     </div>
 
   )
