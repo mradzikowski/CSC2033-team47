@@ -1,6 +1,5 @@
-import {state, useState, useEffect} from 'react'
-import Select from 'react-select'
-
+import { state, useState, useEffect } from "react";
+import Select from "react-select";
 
 /*
     Function:
@@ -10,34 +9,39 @@ import Select from 'react-select'
 */
 
 function SearchBar() {
-  const [categories, setCategories] = useState()
+  const [categories, setCategories] = useState();
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
-    .then(res => res.json())
-    .then(data =>{
-      let tempArray = []
-      for (let c of data){
-        tempArray.push({value: Object.values(c)[0], label: Object.values(c)[0]})
-      }
-      console.log(tempArray)
-      setCategories(tempArray)
-    })}, [])
+      .then((res) => res.json())
+      .then((data) => {
+        let tempArray = [];
+        for (let c of data) {
+          tempArray.push({
+            value: Object.values(c)[0],
+            label: Object.values(c)[0],
+          });
+        }
+        console.log(tempArray);
+        setCategories(tempArray);
+      });
+  }, []);
 
-  return(
+  return (
+    // eslint-disable-next-line react/react-in-jsx-scope
     <div>
-      <Select 
+      {/* eslint-disable-next-line react/react-in-jsx-scope */}
+      <Select
         isMulti
-        isClearable={true}
+        isClearable
         isSearchable={false}
         options={categories}
-        className='searchBar'/>
+        className="searchBar"
+      />
     </div>
-
-  )
+  );
 }
 
-const style = {
-}
+const style = {};
 
 export default SearchBar;
