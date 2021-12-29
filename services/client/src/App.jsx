@@ -10,6 +10,7 @@ import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import UserStatus from "./components/UserStatus";
+import DatasetsList from "./components/DatasetsList";
 
 /*
     Function:
@@ -19,11 +20,12 @@ import UserStatus from "./components/UserStatus";
 */
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       users: [],
       categories: [],
+      datasets: [],
       title: "ClimateXtractor.com",
       accessToken: null,
     };
@@ -32,6 +34,7 @@ class App extends Component {
   componentDidMount() {
     this.getUsers();
     this.getCategories();
+    this.getDatasetList();
   }
 
   getUsers() {
@@ -51,6 +54,17 @@ class App extends Component {
       .then((res) => {
         this.setState({ categories: res.data });
       }) // updated
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  getDatasetList() {
+    axios
+      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
+      .then((res) => {
+        this.setState({ datasets: res.data });
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -83,10 +97,7 @@ class App extends Component {
   };
 
   isAuthenticated = () => {
-    if (this.state.accessToken || this.validRefresh()) {
-      return true;
-    }
-    return false;
+    return !!(this.state.accessToken || this.validRefresh());
   };
 
   validRefresh = () => {
@@ -191,6 +202,13 @@ class App extends Component {
                       path="/categories"
                       render={() => (
                         <CategoryList categories={this.state.categories} />
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/datasets"
+                      render={() => (
+                        <DatasetsList datasets={this.state.datasets} />
                       )}
                     />
                   </Switch>
