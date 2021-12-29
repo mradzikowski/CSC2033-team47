@@ -17,6 +17,9 @@ const NavBar = (props) => {
         >
           Categories
         </Link>
+        <Link to="/datasets" className="navbar-item" data-testid="nav-datasets">
+          Datasets
+        </Link>
         <Link to="/users" className="navbar-item" data-testid="nav-categories">
           Users
         </Link>
@@ -42,6 +45,13 @@ const NavBar = (props) => {
             data-testid="nav-categories"
           >
             Categories
+          </Link>
+          <Link
+            to="/datasets"
+            className="navbar-item"
+            data-testid="nav-datasets"
+          >
+            Datasets
           </Link>
           <Link
             to="/users"
