@@ -17,6 +17,7 @@ from src.api.crud.crud_datasets import (  # isort:skip
     get_trending_datasets_whole_time,
     get_dataset_by_filename,
     increment_dataset_download_counter,
+    get_datasets_trending_by_download,
 )
 
 datasets_namespace = Namespace("datasets")
@@ -37,6 +38,7 @@ dataset = datasets_namespace.model(
         "title": fields.String(required=True),
         "category": fields.String(required=True),
         "rating": fields.Integer(required=False),
+        "download_counter": fields.Integer(required=False),
     },
 )
 
@@ -82,6 +84,13 @@ class DatasetListTrending(Resource):
     def get(self):
         """Returns the trending post for whole time"""
         return get_trending_datasets_whole_time(), 200
+
+
+class DatasetListTrendingByDownload(Resource):
+    @datasets_namespace.marshal_with(dataset, as_list=True)
+    def get(self):
+        """Returns the trending post for whole time"""
+        return get_datasets_trending_by_download(), 200
 
 
 class DatasetListCategory(Resource):
@@ -159,6 +168,7 @@ datasets_namespace.add_resource(DatasetListCategory, "/category/<string:category
 datasets_namespace.add_resource(CategoryList, "/category")
 datasets_namespace.add_resource(DatasetRating, "/vote/<int:dataset_id>")
 datasets_namespace.add_resource(DatasetListTrendingDays, "/trending/<int:days>")
+datasets_namespace.add_resource(DatasetListTrendingByDownload, "/trending/download")
 datasets_namespace.add_resource(DatasetListTrending, "/trending/all")
 datasets_namespace.add_resource(DatasetUpload, "/upload")
 datasets_namespace.add_resource(DatasetRetrieve, "/download/<string:filename>")

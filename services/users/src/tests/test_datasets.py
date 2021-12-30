@@ -132,3 +132,51 @@ def test_get_trending_datasets_whole_time(
     assert "gas-emission-title1" in data[0]["title"]
     assert "gas-emission-title" in data[1]["title"]
     assert "gas-emission-title2" in data[2]["title"]
+
+
+def test_get_trending_datasets_whole_time_by_download(
+    test_app,
+    test_database,
+    add_dataset,
+    add_user,
+    add_category,
+):
+    test_database.session.query(Dataset).delete()
+    test_database.session.query(Category).delete()
+    user = add_user("Matty", "matty@email.com", "123456")
+    add_category("carbon")
+    add_dataset(
+        user.user_id,
+        "file_name",
+        "carbon",
+        "gas-emission-title",
+        download_counter=10,
+    )
+    add_dataset(
+        user.user_id,
+        "file_name1",
+        "carbon",
+        "gas-emission-title1",
+        download_counter=5,
+    )
+    add_dataset(
+        user.user_id,
+        "file_name2",
+        "carbon",
+        "gas-emission-title2",
+        download_counter=100,
+    )
+
+    client = test_app.test_client()
+
+    resp = client.get(
+        "/datasets/trending/download",
+    )
+
+    data = json.loads(resp.data.decode())
+
+    assert resp.status_code == 200
+    assert len(data) == 3
+    assert "gas-emission-title2" in data[0]["title"]
+    assert "gas-emission-title" in data[1]["title"]
+    assert "gas-emission-title1" in data[2]["title"]

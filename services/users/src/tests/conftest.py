@@ -45,6 +45,7 @@ def add_dataset():
         category: str,
         title: str,
         rating: int = 0,
+        download_counter: int = 0,
     ) -> Dataset:
         user = get_user_by_id(user_id)
         if user:
@@ -56,6 +57,7 @@ def add_dataset():
             category=category,
             title=title,
             rating=rating,
+            download_counter=download_counter,
         )
         db.session.add(dataset)
         db.session.commit()

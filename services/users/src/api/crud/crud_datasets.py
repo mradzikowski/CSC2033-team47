@@ -42,6 +42,10 @@ def get_datasets_for_user(user_id: int) -> Union[List[Dataset], None]:
     return Dataset.query.filter_by(user_id=user_id).all()
 
 
+def get_datasets_trending_by_download() -> Union[List[Category], None]:
+    return Dataset.query.order_by(desc(Dataset.download_counter)).all()
+
+
 def get_categories() -> Union[List[Category], None]:
     return Category.query.all()
 
