@@ -11,10 +11,6 @@ repos:
       - id: check-yaml
         name: Checking yaml files syntax
         description: Attempts to load all yaml files to verify syntax.
-      - id: pretty-format-json
-        args: [--autofix]
-        name: Checking for sorted yaml files
-        description: Checks that all your JSON files are pretty. (Sorted and indented)
       - id: trailing-whitespace
         name: Trim trailing whitespace
         description: Trimming trailing whitespace.

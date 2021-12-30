@@ -15,12 +15,12 @@ from flask_jwt_extended import (  # isort:skip
 
 auth_namespace = Namespace("auth")
 
-
 user = auth_namespace.model(
     "User",
     {
         "username": fields.String(required=True),
         "email": fields.String(required=True),
+        "date_created": fields.DateTime(required=False),
     },
 )
 
@@ -70,7 +70,7 @@ class Register(Resource):
         if user:
             auth_namespace.abort(400, "The email already exists.")
 
-        user = add_user(username, email, password)
+        user = add_user(username=username, email=email, password=password)
 
         return user, 201
 
@@ -85,8 +85,10 @@ class Login(Resource):
         password = post_data.get("password")
 
         user = get_user_by_email(email=email)
-
-        if not user or werkzeug.security.check_password_hash(user.password, password):
+        if not user or not werkzeug.security.check_password_hash(
+            user.password,
+            password,
+        ):
             auth_namespace.abort(404, "User does not exist.")
 
         access_token = create_access_token(identity=user.user_id)

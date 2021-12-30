@@ -76,13 +76,24 @@ def test_invalid_json(test_app, test_database, payload):
 
 
 def test_registered_user(test_app, test_database, add_user):
-    add_user("Mateusz", "mateusz@email.com", "123456")
     client = test_app.test_client()
+    client.post(
+        "/auth/register",
+        data=json.dumps(
+            {
+                "username": "Jacob",
+                "email": "jacob@email.com",
+                "password": "123456",
+            },
+        ),
+        content_type="application/json",
+    )
+
     resp = client.post(
         "/auth/login",
         data=json.dumps(
             {
-                "email": "mateusz@email.com",
+                "email": "jacob@email.com",
                 "password": "123456",
             },
         ),
@@ -119,14 +130,14 @@ def test_not_registered_user(test_app, test_database):
 
 
 def test_valid_refresh(test_app, test_database, add_user):
-    user = add_user("Matt", "matt@email.com", "123456")
+    add_user("Matt", "matt@email.com", "123456")
     client = test_app.test_client()
     resp_login = client.post(
         "/auth/login",
         data=json.dumps(
             {
-                "email": user.email,
-                "password": user.password,
+                "email": "matt@email.com",
+                "password": "123456",
             },
         ),
         content_type="application/json",
@@ -140,7 +151,6 @@ def test_valid_refresh(test_app, test_database, add_user):
     )
 
     data = json.loads(resp.data.decode())
-    print(data)
 
     assert resp.status_code == 200
     assert resp_login.status_code == 200
@@ -151,15 +161,15 @@ def test_valid_refresh(test_app, test_database, add_user):
 
 
 def test_invalid_refresh(test_app, test_database, add_user):
-    user = add_user("Mat", "mat@email.com", "123456")
+    add_user("Mat", "mat@email.com", "123456")
     client = test_app.test_client()
     current_app.config["JWT_REFRESH_TOKEN_EXPIRES"] = -1
     resp_login = client.post(
         "/auth/login",
         data=json.dumps(
             {
-                "email": user.email,
-                "password": user.password,
+                "email": "mat@email.com",
+                "password": "123456",
             },
         ),
         content_type="application/json",
@@ -189,8 +199,8 @@ def test_user_status(test_app, test_database, add_user):
         "/auth/login",
         data=json.dumps(
             {
-                "email": user.email,
-                "password": user.password,
+                "email": "matt@email.com",
+                "password": "123456",
             },
         ),
         content_type="application/json",
@@ -234,8 +244,8 @@ def test_logout_user(test_app, test_database, add_user):
         "/auth/login",
         data=json.dumps(
             {
-                "email": user.email,
-                "password": user.password,
+                "email": "matt@email.com",
+                "password": "123456",
             },
         ),
         content_type="application/json",
@@ -265,8 +275,8 @@ def test_invalid_logout(test_app, test_database, add_user):
         "/auth/login",
         data=json.dumps(
             {
-                "email": user.email,
-                "password": user.password,
+                "email": "matt@email.com",
+                "password": "123456",
             },
         ),
         content_type="application/json",

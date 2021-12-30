@@ -1,3 +1,13 @@
+/* imports */
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&family=Work+Sans:wght@100&display=swap");
+/* -------- */
+
+body {
+  background-image: url("./background.png");
+  background-size: 120%;
+  backdrop-filter: blur(5px);
+}
+
 .App {
   text-align: center;
 }
@@ -14,7 +24,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: black; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +45,38 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+h1 {
+  font-family: "Rubik", sans-serif;
+  font-size: 100px;
+  margin: 0;
+  position: fixed;
+  z-index: 10;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.searchBar {
+  width: 700px;
+  border-radius: 50px;
+  height: 25px;
+  font-size: 15px;
+  position: fixed;
+  display: block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  outline: none !important;
+}
+
+.Earth {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  filter: blur(2px);
 }

@@ -4,6 +4,10 @@ __pycache__/
 *$py.class
 .env*
 
+media/
+node_modules/
+__snapshots__/
+
 # C extensions
 *.so
 

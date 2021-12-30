@@ -354,8 +354,8 @@ def test_user_subscribe_unsubscribe(
         "/auth/login",
         data=json.dumps(
             {
-                "email": user.email,
-                "password": user.password,
+                "email": "subscriprion@email.com",
+                "password": "123456",
             },
         ),
         content_type="application/json",
@@ -389,15 +389,15 @@ def test_user_subscribe_unsubscribe(
 
 def test_user_subscribe_invalid_json(test_app, test_database, add_user):
     test_database.session.query(User).delete()
-    user = add_user("i_like_subscriptions", "subscriprion@email.com", "123456")
+    add_user("i_like_subscriptions", "subscriprion@email.com", "123456")
     client = test_app.test_client()
 
     resp = client.post(
         "/auth/login",
         data=json.dumps(
             {
-                "email": user.email,
-                "password": user.password,
+                "email": "subscriprion@email.com",
+                "password": "123456",
             },
         ),
         content_type="application/json",
