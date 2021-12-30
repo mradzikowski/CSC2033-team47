@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import { Box } from "@mui/material";
 
 class UserStatus extends Component {
   constructor(props) {
@@ -41,24 +43,26 @@ class UserStatus extends Component {
       return <Redirect to="/login" />;
     }
     return (
-      <div>
-        <ul>
-          <li>
-            <strong>Email:</strong>&nbsp;
-            <span data-testid="user-email">{this.state.email}</span>
-          </li>
-          <li>
-            <strong>Username:</strong>&nbsp;
-            <span data-testid="user-username">{this.state.username}</span>
-          </li>
-          <li>
-            <strong>Date created</strong>&nbsp;
-            <span data-testid="user-date-created">
-              {this.state.date_created}
-            </span>
-          </li>
-        </ul>
-      </div>
+      <Box>
+        <Paper>
+          <ul>
+            <li>
+              <strong>Email:</strong>&nbsp;
+              <span data-testid="user-email">{this.state.email}</span>
+            </li>
+            <li>
+              <strong>Username:</strong>&nbsp;
+              <span data-testid="user-username">{this.state.username}</span>
+            </li>
+            <li>
+              <strong>Date created</strong>&nbsp;
+              <span data-testid="user-date-created">
+                {this.state.date_created}
+              </span>
+            </li>
+          </ul>
+        </Paper>
+      </Box>
     );
   }
 }
