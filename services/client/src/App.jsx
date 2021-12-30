@@ -171,6 +171,30 @@ class App extends Component {
       .catch((err) => console.log(err));
   };
 
+  onClickDownloadFile = (event) => {
+    const file_name = event.target.name;
+    const options = {
+      url: `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/download`.concat(
+        "/",
+        file_name
+      ),
+      method: "get",
+      responseType: "blob",
+    };
+    axios(options)
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", file_name); //or any other extension
+        document.body.appendChild(link);
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <div className="App">
@@ -254,7 +278,10 @@ class App extends Component {
                       exact
                       path="/datasets"
                       render={() => (
-                        <DatasetsList datasets={this.state.datasets} />
+                        <DatasetsList
+                          datasets={this.state.datasets}
+                          handleClick={this.onClickDownloadFile}
+                        />
                       )}
                     />
                     <Route
