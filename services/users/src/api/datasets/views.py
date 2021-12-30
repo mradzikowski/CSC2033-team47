@@ -19,7 +19,6 @@ from src.api.crud.crud_datasets import (  # isort:skip
     increment_dataset_download_counter,
 )
 
-
 datasets_namespace = Namespace("datasets")
 
 # TODO: decide on allowed file extensions
@@ -33,6 +32,7 @@ def allowed_file(filename):
 dataset = datasets_namespace.model(
     "Dataset",
     {
+        "dataset_id": fields.Integer(required=True),
         "file_name": fields.String(required=True),
         "title": fields.String(required=True),
         "category": fields.String(required=True),
@@ -113,7 +113,7 @@ class DatasetUpload(Resource):
 
     @jwt_required()
     def post(self):
-        file = request.files["file_name"]
+        file = request.files["file"]
         title = request.form.get("title")
         category = request.form.get("category")
 
@@ -125,6 +125,12 @@ class DatasetUpload(Resource):
             return response_object, 400
         else:
             filename = secure_filename(file.filename)
+            if not allowed_file(filename):
+                response_object["message"] = (
+                    f"Currently allowed files are {ALLOWED_EXTENSIONS}."
+                    f" Please change the file extension."
+                )
+                return response_object, 400
             file.save(os.path.join(f"{os.getenv('APP_FOLDER')}/src/media", filename))
 
             add_dataset(
