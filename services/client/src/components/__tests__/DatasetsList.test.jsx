@@ -7,11 +7,13 @@ afterEach(cleanup);
 
 const datasets = [
   {
+    dataset_id: 1,
     file_name: "test_file_name",
     title: "test_title",
     category: "test_category",
   },
   {
+    dataset_id: 2,
     file_name: "test_file_name_1",
     title: "test_title_1",
     category: "test_category_1",

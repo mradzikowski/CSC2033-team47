@@ -60,6 +60,9 @@ const NavBar = (props) => {
           >
             Users
           </Link>
+          <Link to="/datasets/upload" className="navbar-item">
+            Upload
+          </Link>
         </div>
         <div className="navbar-end">
           <span
