@@ -11,6 +11,7 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import UserStatus from "./components/UserStatus";
 import DatasetsList from "./components/DatasetsList";
+import AddDataset from "./components/AddDataset";
 
 /*
     Function:
@@ -26,7 +27,10 @@ class App extends Component {
       users: [],
       categories: [],
       datasets: [],
-      title: "ClimateXtractor.com",
+      file_name: null,
+      title: null,
+      category: null,
+      title_website: "ClimateXtractor.com",
       accessToken: null,
     };
   }
@@ -125,12 +129,54 @@ class App extends Component {
     this.setState({ accessToken: null });
   };
 
+  onChangeHandler = (event) => {
+    if (event.target.files) {
+      console.log(event.target.files[0]);
+      this.setState({ [event.target.name]: event.target.files[0] });
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
+  };
+
+  uploadFile = (event) => {
+    event.preventDefault();
+    let formData = new FormData();
+    console.log(this.state.file_name);
+    console.log(this.state.title);
+    console.log(this.state.category);
+
+    formData.append("file", this.state.file_name);
+    formData.append("title", this.state.title);
+    formData.append("category", this.state.category);
+
+    console.log(formData.get("file"));
+    console.log(formData.get("title"));
+    console.log(formData.get("category"));
+
+    axios
+      .post(
+        `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${this.state.accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        this.getDatasetList();
+      })
+      .catch((err) => console.log(err));
+  };
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <NavBar
-            title={this.state.title}
+            title={this.state.title_website}
             logoutUser={this.logoutUser}
             isAuthenticated={this.isAuthenticated}
           />
@@ -209,6 +255,16 @@ class App extends Component {
                       path="/datasets"
                       render={() => (
                         <DatasetsList datasets={this.state.datasets} />
+                      )}
+                    />
+                    <Route
+                      exact
+                      path="/datasets/upload"
+                      render={() => (
+                        <AddDataset
+                          handleChange={this.onChangeHandler}
+                          handleClick={this.uploadFile}
+                        />
                       )}
                     />
                   </Switch>
