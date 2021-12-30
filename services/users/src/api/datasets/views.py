@@ -102,8 +102,13 @@ class DatasetRetrieve(Resource):
     def get(self, filename):
         dataset = get_dataset_by_filename(filename)
         if dataset:
+            dataset = dataset[0]
             increment_dataset_download_counter(dataset)
-            return send_from_directory(f"{os.getenv('APP_FOLDER')}/src/media", filename)
+            return send_from_directory(
+                f"{os.getenv('APP_FOLDER')}/src/media",
+                filename,
+                as_attachment=True,
+            )
 
 
 class DatasetUpload(Resource):
