@@ -198,12 +198,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
           <NavBar
+            className='navbar'
             title={this.state.title_website}
             logoutUser={this.logoutUser}
             isAuthenticated={this.isAuthenticated}
           />
+        <header className="App-header">
           <div className="container">
             <br />
             <Switch>
@@ -211,11 +212,7 @@ class App extends Component {
                 exact
                 path="/"
                 render={() => (
-                  <div>
-                    <div>
-                      <LandingPage />
-                    </div>
-                  </div>
+                  <LandingPage />
                 )}
               />
               <Route
