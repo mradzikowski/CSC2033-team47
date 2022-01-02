@@ -6,26 +6,32 @@ import Paper from "@mui/material/Paper";
 
 const DatasetsList = (props) => {
   return (
-    <Box>
+    <div className="datasets-list">
       {props.datasets.map((dataset) => {
         return (
-          <Box key={dataset.dataset_id}>
+          <Box key={dataset.dataset_id} className='dataset-item'>
             <Paper
               key={dataset.dataset_id}
               className="dataset"
-              sx={{ display: "grid" }}
+              sx={{ display: "grid", width: '100%'}}
               elevation={10}
             >
-              <strong>Filename:</strong>&nbsp;
-              {dataset.file_name}
-              <strong>Title:</strong>&nbsp;
-              <span data-testid="dataset-title">{dataset.title}</span>
-              <strong>Category:</strong>&nbsp;
-              <span data-testid="dataset-category">{dataset.category}</span>
+              <div style={{display: 'inline-block', padding: '5px'}}>
+                <strong>Filename:</strong> {dataset.file_name}&nbsp;
+              </div>
+              <div style={{display: 'inline-block', padding: '5px'}}>
+                <strong>Title:</strong>&nbsp;
+                <span data-testid="dataset-title">{dataset.title}</span>
+              </div>
+              <div style={{display: 'inline-block', padding: '5px'}}>
+                <strong>Category:</strong>&nbsp;
+                <span data-testid="dataset-category">{dataset.category}</span>
+              </div>
               <Button
                 name={dataset.file_name}
                 onClick={props.handleClick}
                 variant="contained"
+                style={{backgroundColor: 'black'}}
               >
                 Download
               </Button>
@@ -34,7 +40,7 @@ const DatasetsList = (props) => {
           </Box>
         );
       })}
-    </Box>
+    </div>
   );
 };
 

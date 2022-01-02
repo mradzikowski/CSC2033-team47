@@ -20,7 +20,7 @@ import React from "react";
 */
 function LandingPage() {
   return (
-    <div className="App-header">
+    <div>
       <h1>CLIMATEXTRACTOR</h1>
       {/* if data is gathered, render it. Otherwise render 'non' */}
       <SearchBar />
