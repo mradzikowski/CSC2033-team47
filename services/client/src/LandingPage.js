@@ -21,7 +21,7 @@ import React from "react";
 function LandingPage() {
   return (
     <div className="App-header">
-      <h1>ClimateXtractor</h1>
+      <h1>CLIMATEXTRACTOR</h1>
       {/* if data is gathered, render it. Otherwise render 'non' */}
       <SearchBar />
       <Scene />
@@ -42,15 +42,15 @@ const Scene = () => {
       <Suspense fallback={null}>
         <Canvas style={{ position: "relative", width: 600, height: 600 }}>
           <pointLight intensity={0.6} position={[20, 20, 10]} color="orange" />
-          <ambientLight intensity={0.2} />
+          <ambientLight intensity={0.4} />
           <Earth className="Earth" />
-          <EffectComposer>
+          {/* <EffectComposer>
             <Bloom
-              luminanceThreshold={0}
-              luminanceSmoothing={0.4}
-              height={500}
+              luminanceThreshold={0.1}
+              luminanceSmoothing={0.2}
+              height={800}
             />
-          </EffectComposer>
+          </EffectComposer> */}
         </Canvas>
       </Suspense>
     </div>

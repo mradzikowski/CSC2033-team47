@@ -1,70 +1,71 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { AppBar, Toolbar, Typography, Box } from "@mui/material/";
+// import { AppBar, Toolbar, Typography, Box } from "@mui/material/";
 
 const NavBar = (props) => {
   let menu = (
-    <AppBar position="static">
-      <Link to="/categories" data-testid="nav-categories">
-        Categories
+    <div className="menu">
+      <Link to="/" className="menuItem">
+        CLIMATEXTRACTOR
       </Link>
-      <Link to="/datasets" data-testid="nav-datasets">
-        Datasets
+      <Link to="/categories" data-testid="nav-categories" className="menuItem">
+        CATEGORIES
       </Link>
-      <Link to="/users" data-testid="nav-categories">
-        Users
+      <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
+        DATASETS
       </Link>
-      <Link to="/register" data-testid="nav-register">
-        Register
+      <Link to="/users" data-testid="nav-categories" className="menuItem">
+        USERS
       </Link>
-      <Link to="/login" data-testid="nav-login">
-        Log In
+      <Link to="/register" data-testid="nav-register" className="menuItem">
+        REGISTER
       </Link>
-    </AppBar>
+      <Link to="/login" data-testid="nav-login" className="menuItem">
+        LOG IN
+      </Link>
+    </div>
   );
   if (props.isAuthenticated()) {
     menu = (
-      <AppBar>
-        <Link to="/status" data-testid="nav-status">
-          Account
+      <div className="menu">
+        <Link to="/" className="menuItem">
+          CLIMATEXTRACTOR
         </Link>
-        <Link to="/categories" data-testid="nav-categories">
-          Categories
+        <Link to="/status" data-testid="nav-status" className="menuItem">
+          ACCOUNT
         </Link>
-        <Link to="/datasets" data-testid="nav-datasets">
-          Datasets
+        <Link to="/categories" data-testid="nav-categories" className="menuItem">
+          CATEGORIES
         </Link>
-        <Link to="/users" data-testid="nav-categories">
-          Users
+        <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
+          DATASETS
         </Link>
-        <Link to="/datasets/upload" className="navbar-item">
-          Upload
+        <Link to="/users" data-testid="nav-categories" className="menuItem">
+          USERS
+        </Link>
+        <Link to="/datasets/upload" className="menuItem">
+          UPLOAD
         </Link>
         <span
           // eslint-disable-next-line react/jsx-handler-names
           onClick={props.logoutUser}
           data-testid="nav-logout"
         >
-          Log Out
+          LOG OUT
         </span>
-      </AppBar>
+      </div>
     );
   }
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar>
-        <Link to="/" className="title">
-          {props.title}
-        </Link>
-        {menu}
-      </AppBar>
-    </Box>
+    <div>
+      {menu}
+    </div>
   );
 };
 
 NavBar.propTypes = {
-  title: PropTypes.string.isRequired,
+  // title: PropTypes.string.isRequired,
   logoutUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.func.isRequired,
 };
