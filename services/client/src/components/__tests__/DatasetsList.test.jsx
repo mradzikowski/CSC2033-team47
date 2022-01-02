@@ -20,13 +20,20 @@ const datasets = [
   },
 ];
 
+const props = {
+  datasets,
+  isAuthenticated: () => {
+    return true;
+  },
+};
+
 it("renders a username", () => {
-  const { getByText } = render(<DatasetList datasets={datasets} />);
+  const { getByText } = renderWithRouter(<DatasetList {...props} />);
   expect(getByText("test_file_name")).toHaveClass("dataset");
   expect(getByText("test_file_name_1")).toHaveClass("dataset");
 });
 
 it("renders", () => {
-  const { asFragment } = render(<DatasetList datasets={datasets} />);
+  const { asFragment } = renderWithRouter(<DatasetList {...props} />);
   expect(asFragment()).toMatchSnapshot();
 });

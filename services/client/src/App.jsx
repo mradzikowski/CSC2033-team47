@@ -273,6 +273,8 @@ class App extends Component {
                   <DatasetsList
                     datasets={this.state.datasets}
                     handleClick={this.onClickDownloadFile}
+                    accessToken={this.state.accessToken}
+                    isAuthenticated={this.isAuthenticated}
                   />
                 )}
               />
