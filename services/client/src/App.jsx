@@ -204,101 +204,93 @@ class App extends Component {
             logoutUser={this.logoutUser}
             isAuthenticated={this.isAuthenticated}
           />
-          <section className="section">
-            <div className="container">
-              <div className="columns">
-                <div className="column is-half">
-                  <br />
-                  <Switch>
-                    <Route
-                      exact
-                      path="/"
-                      render={() => (
-                        <div>
-                          <div>
-                            <LandingPage />
-                          </div>
-                        </div>
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/categories"
-                      render={() => (
-                        <CategoryList categories={this.state.categories} />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/users"
-                      render={() => <UsersList users={this.state.users} />}
-                    />
-                    <Route
-                      exact
-                      path="/login"
-                      render={() => (
-                        <LoginForm
-                          // eslint-disable-next-line react/jsx-handler-names
-                          handleLoginFormSubmit={this.handleLoginFormSubmit}
-                          isAuthenticated={this.isAuthenticated}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/register"
-                      render={() => (
-                        <RegisterForm
-                          // eslint-disable-next-line react/jsx-handler-names
-                          handleRegisterFormSubmit={
-                            this.handleRegisterFormSubmit
-                          }
-                          isAuthenticated={this.isAuthenticated}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/status"
-                      render={() => (
-                        <UserStatus
-                          accessToken={this.state.accessToken}
-                          isAuthenticated={this.isAuthenticated}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/categories"
-                      render={() => (
-                        <CategoryList categories={this.state.categories} />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/datasets"
-                      render={() => (
-                        <DatasetsList
-                          datasets={this.state.datasets}
-                          handleClick={this.onClickDownloadFile}
-                        />
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/datasets/upload"
-                      render={() => (
-                        <AddDataset
-                          handleChange={this.onChangeHandler}
-                          handleClick={this.uploadFile}
-                        />
-                      )}
-                    />
-                  </Switch>
-                </div>
-              </div>
-            </div>
-          </section>
+          <div className="container">
+            <br />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <div>
+                    <div>
+                      <LandingPage />
+                    </div>
+                  </div>
+                )}
+              />
+              <Route
+                exact
+                path="/categories"
+                render={() => (
+                  <CategoryList categories={this.state.categories} />
+                )}
+              />
+              <Route
+                exact
+                path="/users"
+                render={() => <UsersList users={this.state.users} />}
+              />
+              <Route
+                exact
+                path="/login"
+                render={() => (
+                  <LoginForm
+                    // eslint-disable-next-line react/jsx-handler-names
+                    handleLoginFormSubmit={this.handleLoginFormSubmit}
+                    isAuthenticated={this.isAuthenticated}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/register"
+                render={() => (
+                  <RegisterForm
+                    // eslint-disable-next-line react/jsx-handler-names
+                    handleRegisterFormSubmit={this.handleRegisterFormSubmit}
+                    isAuthenticated={this.isAuthenticated}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/status"
+                render={() => (
+                  <UserStatus
+                    accessToken={this.state.accessToken}
+                    isAuthenticated={this.isAuthenticated}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/categories"
+                render={() => (
+                  <CategoryList categories={this.state.categories} />
+                )}
+              />
+              <Route
+                exact
+                path="/datasets"
+                render={() => (
+                  <DatasetsList
+                    datasets={this.state.datasets}
+                    handleClick={this.onClickDownloadFile}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path="/datasets/upload"
+                render={() => (
+                  <AddDataset
+                    handleChange={this.onChangeHandler}
+                    handleClick={this.uploadFile}
+                  />
+                )}
+              />
+            </Switch>
+          </div>
         </header>
       </div>
     );

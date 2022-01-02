@@ -16,7 +16,7 @@ describe("when unauthenticated", () => {
     };
 
     const { getByText, findByTestId } = renderWithRouter(<NavBar {...props} />);
-    expect(getByText(props.title)).toHaveClass("nav-title");
+    expect(getByText(props.title)).toHaveClass("title");
     await waitFor(() => {
       expect(props.isAuthenticated).toHaveBeenCalledTimes(1);
     });
@@ -47,11 +47,11 @@ describe("when authenticated", () => {
       isAuthenticated: jest.fn().mockImplementation(() => true),
     };
     const { getByText, findByTestId } = renderWithRouter(<NavBar {...props} />);
-    expect(getByText(props.title)).toHaveClass("nav-title");
+    expect(getByText(props.title)).toHaveClass("title");
     await waitFor(() => {
       expect(props.isAuthenticated).toHaveBeenCalledTimes(1);
     });
-    expect((await findByTestId("nav-status")).innerHTML).toBe("User Status");
+    expect((await findByTestId("nav-status")).innerHTML).toBe("Account");
     expect((await findByTestId("nav-logout")).innerHTML).toBe("Log Out");
   });
 

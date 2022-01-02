@@ -2,36 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
 
 const DatasetsList = (props) => {
   return (
-    <div>
+    <Box>
       {props.datasets.map((dataset) => {
         return (
-          <Box
-            key={dataset.dataset_id}
-            sx={{ display: "grid" }}
-            className="box is-3 dataset"
-            variant="outlined"
-          >
-            <Box>
+          <Box key={dataset.dataset_id}>
+            <Paper
+              key={dataset.dataset_id}
+              className="dataset"
+              sx={{ display: "grid" }}
+              elevation={10}
+            >
               <strong>Filename:</strong>&nbsp;
               {dataset.file_name}
-            </Box>
-
-            <br />
-            <Box>
               <strong>Title:</strong>&nbsp;
               <span data-testid="dataset-title">{dataset.title}</span>
-            </Box>
-
-            <br />
-            <Box>
               <strong>Category:</strong>&nbsp;
               <span data-testid="dataset-category">{dataset.category}</span>
-            </Box>
-
-            <Box>
               <Button
                 name={dataset.file_name}
                 onClick={props.handleClick}
@@ -39,11 +29,12 @@ const DatasetsList = (props) => {
               >
                 Download
               </Button>
-            </Box>
+            </Paper>
+            <br />
           </Box>
         );
       })}
-    </div>
+    </Box>
   );
 };
 
