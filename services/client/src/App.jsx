@@ -1,11 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import LandingPage from "./LandingPage";
 import axios from "axios";
 import UsersList from "./components/UsersList";
-import CategoryList from "./components/CategoryList";
+// import CategoryList from "./components/CategoryList";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -37,7 +37,6 @@ class App extends Component {
 
   componentDidMount() {
     this.getUsers();
-    this.getCategories();
     this.getDatasetList();
   }
 
@@ -46,17 +45,6 @@ class App extends Component {
       .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`)
       .then((res) => {
         this.setState({ users: res.data });
-      }) // updated
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  getCategories() {
-    axios
-      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
-      .then((res) => {
-        this.setState({ categories: res.data });
       }) // updated
       .catch((err) => {
         console.log(err);
@@ -217,13 +205,6 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              />
-              <Route
-                exact
                 path="/users"
                 render={() => <UsersList users={this.state.users} />}
               />
@@ -261,13 +242,6 @@ class App extends Component {
               />
               <Route
                 exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              />
-              <Route
-                exact
                 path="/datasets"
                 render={() => (
                   <DatasetsList
@@ -286,6 +260,7 @@ class App extends Component {
                   />
                 )}
               />
+              <Redirect from="*" to path="/" />
             </Switch>
           </div>
         </header>
