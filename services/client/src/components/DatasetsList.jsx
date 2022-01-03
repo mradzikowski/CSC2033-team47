@@ -40,15 +40,16 @@ class DatasetsList extends Component {
                   sx={{ display: "grid" }}
                   elevation={10}
                 >
-                  <strong>Filename:</strong>&nbsp;
+                  <strong>Filename:</strong>
                   {dataset.file_name}
-                  <strong>Title:</strong>&nbsp;
+                  <strong>Title:</strong>
                   <span data-testid="dataset-title">{dataset.title}</span>
-                  <strong>Category:</strong>&nbsp;
+                  <strong>Category:</strong>
                   <span data-testid="dataset-category">{dataset.category}</span>
                   <Button
-                    onClick={(event) =>
-                      this.handleUpVoteSubmit(dataset.dataset_id)
+                    onClick={
+                      (event) => this.handleUpVoteSubmit(dataset.dataset_id)
+                      // eslint-disable-next-line react/jsx-curly-newline
                     }
                   >
                     Useful <ThumbUpIcon />
