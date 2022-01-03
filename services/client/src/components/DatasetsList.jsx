@@ -28,7 +28,7 @@ class DatasetsList extends Component {
   };
 
   render() {
-    if (this.props.isAuthenticated) {
+    if (this.props.isAuthenticated()) {
       return (
         <Box className="datasets-list">
           {this.props.datasets.map((dataset) => {
@@ -116,6 +116,7 @@ class DatasetsList extends Component {
 
 DatasetsList.propTypes = {
   datasets: PropTypes.array.isRequired,
+  isAuthenticated: PropTypes.func.isRequired,
 };
 
 export default DatasetsList;
