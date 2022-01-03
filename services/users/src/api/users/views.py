@@ -52,13 +52,7 @@ user_subscribed = users_namespace.model(
     {
         "username": fields.String(required=True),
         "email": fields.String(required=True),
-    },
-)
-
-subscription = users_namespace.model(
-    "Subscription",
-    {
-        "turn_on": fields.Boolean(required=True),
+        "subscribed": fields.Boolean(required=False),
     },
 )
 
@@ -147,18 +141,15 @@ class UsersSubscribe(Resource):
         """Returns users that subscribed to the newsletter"""
         return get_users_with_subscription(), 200
 
-    @users_namespace.expect(subscription, validate=True)
     @jwt_required()
     def post(self):
         """Set or unset the subscription depending on the post data"""
-        response_object = {}
-        post_data = request.get_json()
-        turn_on = post_data.get("turn_on")
         user_id = get_jwt_identity()
+        response_object = {}
 
-        update_user_subscription(user_id, turn_on)
+        subscription = update_user_subscription(user_id)
 
-        if turn_on:
+        if subscription:
             response_object["message"] = f"{user_id} has subscribed the newsletter."
         else:
             response_object["message"] = f"{user_id} has unsubscribed the newsletter."
