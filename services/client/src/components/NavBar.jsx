@@ -9,11 +9,24 @@ const NavBar = (props) => {
       <Link to="/" className="menuItem">
         CLIMATEXTRACTOR
       </Link>
+<<<<<<< HEAD
+=======
+      {/*<Link to="/categories" data-testid="nav-categories" className="menuItem">*/}
+      {/*  CATEGORIES*/}
+      {/*</Link>*/}
+>>>>>>> 9daecb0d2a30a05bb6057e816ca4fa96309d131a
       <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
         DATASETS
       </Link>
-      <Link to="/users" data-testid="nav-categories" className="menuItem">
-        USERS
+      {/*<Link to="/users" data-testid="nav-users" className="menuItem">*/}
+      {/*  USERS*/}
+      {/*</Link>*/}
+      <Link
+        to="/users/ranking"
+        data-testid="nav-ranking-users"
+        className="menuItem"
+      >
+        RANKING
       </Link>
       <Link to="/register" data-testid="nav-register" className="menuItem">
         REGISTER
@@ -32,12 +45,22 @@ const NavBar = (props) => {
         <Link to="/status" data-testid="nav-status" className="menuItem">
           ACCOUNT
         </Link>
+<<<<<<< HEAD
+=======
+        {/*<Link*/}
+        {/*  to="/categories"*/}
+        {/*  data-testid="nav-categories"*/}
+        {/*  className="menuItem"*/}
+        {/*>*/}
+        {/*  CATEGORIES*/}
+        {/*</Link>*/}
+>>>>>>> 9daecb0d2a30a05bb6057e816ca4fa96309d131a
         <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
           DATASETS
         </Link>
-        <Link to="/users" data-testid="nav-categories" className="menuItem">
-          USERS
-        </Link>
+        {/*<Link to="/users" data-testid="nav-categories" className="menuItem">*/}
+        {/*  USERS*/}
+        {/*</Link>*/}
         <Link to="/datasets/upload" className="menuItem">
           UPLOAD
         </Link>
@@ -45,17 +68,14 @@ const NavBar = (props) => {
           // eslint-disable-next-line react/jsx-handler-names
           onClick={props.logoutUser}
           data-testid="nav-logout"
+          className="menuItem"
         >
           LOG OUT
         </span>
       </div>
     );
   }
-  return (
-    <div>
-      {menu}
-    </div>
-  );
+  return <div>{menu}</div>;
 };
 
 NavBar.propTypes = {

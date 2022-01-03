@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PasswordIcon from "@mui/icons-material/Password";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
 
 const RegisterForm = (props) => {
   if (props.isAuthenticated()) {
@@ -56,9 +57,6 @@ const RegisterForm = (props) => {
             <Paper elevation={10}>
               <form onSubmit={handleSubmit}>
                 <div className="field">
-                  <label className="label" htmlFor="input-username">
-                    Username
-                  </label>
                   <TextField
                     name="username"
                     className={
@@ -74,6 +72,7 @@ const RegisterForm = (props) => {
                       ),
                     }}
                     placeholder="Enter a username"
+                    fullWidth
                     value={values.username}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -83,9 +82,6 @@ const RegisterForm = (props) => {
                   )}
                 </div>
                 <div className="field">
-                  <label className="label" htmlFor="input-email">
-                    Email
-                  </label>
                   <TextField
                     name="email"
                     className={
@@ -100,6 +96,7 @@ const RegisterForm = (props) => {
                         </InputAdornment>
                       ),
                     }}
+                    fullWidth
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -109,9 +106,6 @@ const RegisterForm = (props) => {
                   )}
                 </div>
                 <div className="field">
-                  <label className="label" htmlFor="input-password">
-                    Password
-                  </label>
                   <TextField
                     name="password"
                     id="input-password"
@@ -129,6 +123,7 @@ const RegisterForm = (props) => {
                       ),
                     }}
                     placeholder="Enter a password"
+                    fullWidth
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -143,7 +138,7 @@ const RegisterForm = (props) => {
                   disabled={isSubmitting}
                   variant="contained"
                 >
-                  Register
+                  Register <HowToRegIcon />
                 </Button>
               </form>
             </Paper>
