@@ -350,6 +350,9 @@ def test_user_subscribe_unsubscribe(
     user = add_user("i_like_subscriptions", "subscriprion@email.com", "123456")
     client = test_app.test_client()
 
+    if not payload:
+        user.subscribed = True
+
     resp = client.post(
         "/auth/login",
         data=json.dumps(
@@ -370,11 +373,6 @@ def test_user_subscribe_unsubscribe(
 
     resp_subscribe = client.post(
         "/users/subscription",
-        data=json.dumps(
-            {
-                "turn_on": payload,
-            },
-        ),
         content_type="application/json",
         headers={"Authorization": f"Bearer {access_token}"},
     )
@@ -385,42 +383,6 @@ def test_user_subscribe_unsubscribe(
 
     assert resp_subscribe.status_code == status_code
     assert return_message in data["message"]
-
-
-def test_user_subscribe_invalid_json(test_app, test_database, add_user):
-    test_database.session.query(User).delete()
-    add_user("i_like_subscriptions", "subscriprion@email.com", "123456")
-    client = test_app.test_client()
-
-    resp = client.post(
-        "/auth/login",
-        data=json.dumps(
-            {
-                "email": "subscriprion@email.com",
-                "password": "123456",
-            },
-        ),
-        content_type="application/json",
-    )
-
-    resp_login = json.loads(resp.data.decode())
-
-    access_token = resp_login["access_token"]
-
-    assert resp_login["access_token"]
-    assert resp_login["refresh_token"]
-
-    resp_subscribe = client.post(
-        "/users/subscription",
-        data=json.dumps({}),
-        content_type="application/json",
-        headers={"Authorization": f"Bearer {access_token}"},
-    )
-
-    data = json.loads(resp_subscribe.data.decode())
-
-    assert resp_subscribe.status_code == 400
-    assert "Input payload validation failed" in data["message"]
 
 
 def test_get_all_users_with_subscriptions(test_app, test_database, add_user):
