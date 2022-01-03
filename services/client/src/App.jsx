@@ -12,6 +12,7 @@ import RegisterForm from "./components/RegisterForm";
 import UserStatus from "./components/UserStatus";
 import DatasetsList from "./components/DatasetsList";
 import AddDataset from "./components/AddDataset";
+import RankingUsersList from "./components/RankingUsersList";
 
 /*
     Function:
@@ -25,6 +26,7 @@ class App extends Component {
     super(props);
     this.state = {
       users: [],
+      usersRanking: [],
       categories: [],
       datasets: [],
       file_name: null,
@@ -39,6 +41,7 @@ class App extends Component {
     this.getUsers();
     this.getCategories();
     this.getDatasetList();
+    this.getRankingUser();
   }
 
   getUsers() {
@@ -46,7 +49,18 @@ class App extends Component {
       .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`)
       .then((res) => {
         this.setState({ users: res.data });
-      }) // updated
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  getRankingUser() {
+    axios
+      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users/ranking`)
+      .then((res) => {
+        this.setState({ usersRanking: res.data });
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -198,23 +212,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          <NavBar
-            className='navbar'
-            title={this.state.title_website}
-            logoutUser={this.logoutUser}
-            isAuthenticated={this.isAuthenticated}
-          />
+        <NavBar
+          className="navbar"
+          title={this.state.title_website}
+          logoutUser={this.logoutUser}
+          isAuthenticated={this.isAuthenticated}
+        />
         <header className="App-header">
           <div className="container">
             <br />
             <Switch>
-              <Route
-                exact
-                path="/"
-                render={() => (
-                  <LandingPage />
-                )}
-              />
+              <Route exact path="/" render={() => <LandingPage />} />
               <Route
                 exact
                 path="/categories"
@@ -222,11 +230,11 @@ class App extends Component {
                   <CategoryList categories={this.state.categories} />
                 )}
               />
-              <Route
-                exact
-                path="/users"
-                render={() => <UsersList users={this.state.users} />}
-              />
+              {/*<Route*/}
+              {/*  exact*/}
+              {/*  path="/users"*/}
+              {/*  render={() => <UsersList users={this.state.users} />}*/}
+              {/*/>*/}
               <Route
                 exact
                 path="/login"
@@ -259,13 +267,13 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
-                exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              />
+              {/*<Route*/}
+              {/*  exact*/}
+              {/*  path="/categories"*/}
+              {/*  render={() => (*/}
+              {/*    <CategoryList categories={this.state.categories} />*/}
+              {/*  )}*/}
+              {/*/>*/}
               <Route
                 exact
                 path="/datasets"
@@ -286,6 +294,13 @@ class App extends Component {
                     handleChange={this.onChangeHandler}
                     handleClick={this.uploadFile}
                   />
+                )}
+              />
+              <Route
+                exact
+                path="/users/ranking"
+                render={() => (
+                  <RankingUsersList usersRanking={this.state.usersRanking} />
                 )}
               />
             </Switch>
