@@ -9,12 +9,9 @@ const NavBar = (props) => {
       <Link to="/" className="menuItem">
         CLIMATEXTRACTOR
       </Link>
-<<<<<<< HEAD
-=======
       {/*<Link to="/categories" data-testid="nav-categories" className="menuItem">*/}
       {/*  CATEGORIES*/}
       {/*</Link>*/}
->>>>>>> 9daecb0d2a30a05bb6057e816ca4fa96309d131a
       <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
         DATASETS
       </Link>
@@ -45,8 +42,6 @@ const NavBar = (props) => {
         <Link to="/status" data-testid="nav-status" className="menuItem">
           ACCOUNT
         </Link>
-<<<<<<< HEAD
-=======
         {/*<Link*/}
         {/*  to="/categories"*/}
         {/*  data-testid="nav-categories"*/}
@@ -54,7 +49,6 @@ const NavBar = (props) => {
         {/*>*/}
         {/*  CATEGORIES*/}
         {/*</Link>*/}
->>>>>>> 9daecb0d2a30a05bb6057e816ca4fa96309d131a
         <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
           DATASETS
         </Link>

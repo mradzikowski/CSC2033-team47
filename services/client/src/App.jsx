@@ -37,7 +37,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getUsers();
-    this.getCategories();
+    // this.getCategories();
     this.getDatasetList();
   }
 
@@ -52,16 +52,16 @@ class App extends Component {
       });
   }
 
-  getCategories() {
-    axios
-      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
-      .then((res) => {
-        this.setState({ categories: res.data });
-      }) // updated
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  // getCategories() {
+  //   axios
+  //     .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
+  //     .then((res) => {
+  //       this.setState({ categories: res.data });
+  //     }) // updated
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 
   getDatasetList() {
     axios
@@ -215,13 +215,13 @@ class App extends Component {
                   <LandingPage />
                 )}
               />
-              <Route
+              {/* <Route
                 exact
                 path="/categories"
                 render={() => (
                   <CategoryList categories={this.state.categories} />
                 )}
-              />
+              /> */}
               <Route
                 exact
                 path="/users"
@@ -259,13 +259,13 @@ class App extends Component {
                   />
                 )}
               />
-              <Route
+              {/* <Route
                 exact
                 path="/categories"
                 render={() => (
                   <CategoryList categories={this.state.categories} />
                 )}
-              />
+              /> */}
               <Route
                 exact
                 path="/datasets"
