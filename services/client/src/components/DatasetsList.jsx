@@ -33,7 +33,7 @@ class DatasetsList extends Component {
         <Box className="datasets-list">
           {this.props.datasets.map((dataset) => {
             return (
-              <Box key={dataset.dataset_id}>
+              <Box key={dataset.dataset_id} className='dataset-container'>
                 <Paper
                   key={dataset.dataset_id}
                   className="dataset"
@@ -43,27 +43,35 @@ class DatasetsList extends Component {
                   <div className="dataset-item">
                     <strong>Filename:</strong>
                     {dataset.file_name}
-
                   </div>
-                  <strong>Title:</strong>
-                  <span data-testid="dataset-title">{dataset.title}</span>
-                  <strong>Category:</strong>
-                  <span data-testid="dataset-category">{dataset.category}</span>
-                  <Button
-                    onClick={
-                      (event) => this.handleUpVoteSubmit(dataset.dataset_id)
-                      // eslint-disable-next-line react/jsx-curly-newline
-                    }
-                  >
-                    Useful <ThumbUpIcon />
-                  </Button>
-                  <Button
-                    name={dataset.file_name}
-                    onClick={this.props.handleClick}
-                    variant="contained"
-                  >
-                    Download
-                  </Button>
+                  <div className='dataset-item'>
+                    <strong>Title:</strong>
+                    <span data-testid="dataset-title">{dataset.title}</span>
+                  </div>
+                  <div className='dataset-item'>
+                    <strong>Category:</strong>
+                    <span data-testid="dataset-category">{dataset.category}</span>
+                  </div>
+                  <div style={{display: 'flex'}}>
+                    <Button
+                      style={{display:'inline-block', float: 'left', width: '10%', transform: "translate(0, 5%)"}}
+                      onClick={
+                        (event) => this.handleUpVoteSubmit(dataset.dataset_id)
+                        // eslint-disable-next-line react/jsx-curly-newline
+                      }
+                    >
+                      <ThumbUpIcon />
+                    </Button>
+                    <Button
+                      style={{display: 'inline-block', float: 'left', width: '90%'}}
+                      sx={{backgroundColor: 'black'}}
+                      name={dataset.file_name}
+                      onClick={this.props.handleClick}
+                      variant="contained"
+                    >
+                      Download
+                    </Button>
+                  </div>
                 </Paper>
                 <br />
               </Box>
