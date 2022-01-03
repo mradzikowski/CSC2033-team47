@@ -62,6 +62,7 @@ const NavBar = (props) => {
           // eslint-disable-next-line react/jsx-handler-names
           onClick={props.logoutUser}
           data-testid="nav-logout"
+          className="menuItem"
         >
           LOG OUT
         </span>
