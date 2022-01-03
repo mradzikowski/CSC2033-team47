@@ -49,11 +49,12 @@ def get_users_with_subscription() -> Union[List[User], None]:
     return User.query.filter_by(subscribed=True).all()
 
 
-def update_user_subscription(user_id: int, turn_on: bool) -> None:
+def update_user_subscription(user_id: int) -> Union[bool, None]:
     user = get_user_by_id(user_id)
     if user:
-        if turn_on:
-            user.subscribed = True
-        else:
+        if user.subscribed:
             user.subscribed = False
+        else:
+            user.subscribed = True
         db.session.commit()
+        return user.subscribed
