@@ -28,9 +28,9 @@ class DatasetsList extends Component {
   };
 
   render() {
-    if (this.props.isAuthenticated()) {
+    if (this.props.isAuthenticated) {
       return (
-        <Box>
+        <Box className="datasets-list">
           {this.props.datasets.map((dataset) => {
             return (
               <Box key={dataset.dataset_id}>
@@ -40,8 +40,11 @@ class DatasetsList extends Component {
                   sx={{ display: "grid" }}
                   elevation={10}
                 >
-                  <strong>Filename:</strong>
-                  {dataset.file_name}
+                  <div className="dataset-item">
+                    <strong>Filename:</strong>
+                    {dataset.file_name}
+
+                  </div>
                   <strong>Title:</strong>
                   <span data-testid="dataset-title">{dataset.title}</span>
                   <strong>Category:</strong>
@@ -70,23 +73,30 @@ class DatasetsList extends Component {
       );
     } else {
       return (
-        <Box>
+        <Box className="datasets-list">
           {this.props.datasets.map((dataset) => {
             return (
-              <Box key={dataset.dataset_id}>
+              <Box key={dataset.dataset_id} className='dataset-container'>
                 <Paper
                   key={dataset.dataset_id}
                   className="dataset"
                   sx={{ display: "grid" }}
                   elevation={10}
-                >
-                  <strong>Filename:</strong>&nbsp;
-                  {dataset.file_name}
-                  <strong>Title:</strong>&nbsp;
-                  <span data-testid="dataset-title">{dataset.title}</span>
-                  <strong>Category:</strong>&nbsp;
-                  <span data-testid="dataset-category">{dataset.category}</span>
+                >  
+                  <div className='dataset-item'>
+                    <strong>Filename:</strong>&nbsp;
+                    {dataset.file_name}
+                  </div>
+                  <div className='dataset-item'>
+                    <strong>Title:</strong>&nbsp;
+                    <span data-testid="dataset-title">{dataset.title}</span>
+                  </div>
+                  <div className='dataset-item'>
+                    <strong>Category:</strong>&nbsp;
+                    <span data-testid="dataset-category">{dataset.category}</span>
+                  </div>
                   <Button
+                    sx={{backgroundColor: 'black'}}
                     name={dataset.file_name}
                     onClick={this.props.handleClick}
                     variant="contained"

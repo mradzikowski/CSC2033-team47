@@ -286,7 +286,7 @@ class App extends Component {
                   />
                 )}
               />
-              <Redirect from="*" to path="/"></Redirect>
+              <Redirect from="*" to path="/" />
             </Switch>
           </div>
         </header>
