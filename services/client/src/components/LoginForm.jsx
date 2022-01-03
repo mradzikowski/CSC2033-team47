@@ -10,6 +10,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import PasswordIcon from "@mui/icons-material/Password";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import LoginIcon from "@mui/icons-material/Login";
 
 const LoginForm = (props) => {
   if (props.isAuthenticated()) {
@@ -48,9 +49,9 @@ const LoginForm = (props) => {
             <Paper elevation={10}>
               <form onSubmit={handleSubmit}>
                 <div className="field">
-                  <label className="label" htmlFor="input-email">
-                    Email
-                  </label>
+                  {/*<label className="label" htmlFor="input-email">*/}
+                  {/*  Email*/}
+                  {/*</label>*/}
                   <TextField
                     name="email"
                     className={
@@ -58,6 +59,7 @@ const LoginForm = (props) => {
                     }
                     type="email"
                     placeholder="Enter an email address"
+                    fullWidth
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -74,9 +76,9 @@ const LoginForm = (props) => {
                   )}
                 </div>
                 <div className="field">
-                  <label className="label" htmlFor="input-password">
-                    Password
-                  </label>
+                  {/*<label className="label" htmlFor="input-password">*/}
+                  {/*  Password*/}
+                  {/*</label>*/}
                   <TextField
                     name="password"
                     id="input-password"
@@ -94,6 +96,7 @@ const LoginForm = (props) => {
                       ),
                     }}
                     placeholder="Enter a password"
+                    fullWidth
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
@@ -109,6 +112,7 @@ const LoginForm = (props) => {
                   variant="contained"
                 >
                   Login
+                  <LoginIcon />
                 </Button>
               </form>
             </Paper>
