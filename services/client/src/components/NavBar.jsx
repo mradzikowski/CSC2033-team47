@@ -9,14 +9,21 @@ const NavBar = (props) => {
       <Link to="/" className="menuItem">
         CLIMATEXTRACTOR
       </Link>
-      <Link to="/categories" data-testid="nav-categories" className="menuItem">
-        CATEGORIES
-      </Link>
+      {/*<Link to="/categories" data-testid="nav-categories" className="menuItem">*/}
+      {/*  CATEGORIES*/}
+      {/*</Link>*/}
       <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
         DATASETS
       </Link>
-      <Link to="/users" data-testid="nav-categories" className="menuItem">
-        USERS
+      {/*<Link to="/users" data-testid="nav-users" className="menuItem">*/}
+      {/*  USERS*/}
+      {/*</Link>*/}
+      <Link
+        to="/users/ranking"
+        data-testid="nav-ranking-users"
+        className="menuItem"
+      >
+        RANKING
       </Link>
       <Link to="/register" data-testid="nav-register" className="menuItem">
         REGISTER
@@ -35,15 +42,19 @@ const NavBar = (props) => {
         <Link to="/status" data-testid="nav-status" className="menuItem">
           ACCOUNT
         </Link>
-        <Link to="/categories" data-testid="nav-categories" className="menuItem">
-          CATEGORIES
-        </Link>
+        {/*<Link*/}
+        {/*  to="/categories"*/}
+        {/*  data-testid="nav-categories"*/}
+        {/*  className="menuItem"*/}
+        {/*>*/}
+        {/*  CATEGORIES*/}
+        {/*</Link>*/}
         <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
           DATASETS
         </Link>
-        <Link to="/users" data-testid="nav-categories" className="menuItem">
-          USERS
-        </Link>
+        {/*<Link to="/users" data-testid="nav-categories" className="menuItem">*/}
+        {/*  USERS*/}
+        {/*</Link>*/}
         <Link to="/datasets/upload" className="menuItem">
           UPLOAD
         </Link>
@@ -57,11 +68,7 @@ const NavBar = (props) => {
       </div>
     );
   }
-  return (
-    <div>
-      {menu}
-    </div>
-  );
+  return <div>{menu}</div>;
 };
 
 NavBar.propTypes = {
