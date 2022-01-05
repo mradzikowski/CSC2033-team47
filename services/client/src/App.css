@@ -90,7 +90,7 @@ h1 {
   transform: translate(-50%, 0);
   overflow: hidden;
   top: 0;
-  width: 100%;
+  width: 100vw;
   background-color: white;
   z-index: 10;
   /* background-color: black; */
@@ -119,9 +119,16 @@ h1 {
   /* float: left; */
 }
 
-.dataset-item {
+.dataset-container {
   width: 40vw;
   padding: 25px;
   display: inline-block;
   font-size: 15px;
 }
+
+.dataset-item {
+  padding: 5px;
+  margin-left: 10px;
+  text-align: left;
+}
+
