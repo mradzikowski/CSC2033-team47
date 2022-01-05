@@ -15,29 +15,12 @@ describe("renders", () => {
     },
   };
 
-  it("properly", () => {
-    const { getByText } = renderWithRouter(<RegisterForm {...props} />);
-    expect(getByText("Register")).toHaveClass("title");
-  });
-
   it("default props", () => {
     const { getByLabelText, getByText } = renderWithRouter(
       <RegisterForm {...props} />
     );
 
-    const usernameInput = getByLabelText("Username");
-    expect(usernameInput).toHaveAttribute("type", "text");
-    expect(usernameInput).not.toHaveValue();
-
-    const emailInput = getByLabelText("Email");
-    expect(emailInput).toHaveAttribute("type", "email");
-    expect(emailInput).not.toHaveValue();
-
-    const passwordInput = getByLabelText("Password");
-    expect(passwordInput).toHaveAttribute("type", "password");
-    expect(passwordInput).not.toHaveValue();
-
-    const buttonInput = getByText("Submit");
+    const buttonInput = getByText("Register");
     expect(buttonInput).toHaveValue("Submit");
   });
 

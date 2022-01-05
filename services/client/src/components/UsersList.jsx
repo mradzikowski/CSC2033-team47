@@ -15,7 +15,7 @@ const UsersList = (props) => {
               gridTemplateColumns: { md: "1fr 1fr" },
             }}
           >
-            <Paper className="box title is-4 username">{user.username}</Paper>
+            <Paper className="username">{user.username}</Paper>
           </Box>
         );
       })}

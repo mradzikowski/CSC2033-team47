@@ -4,6 +4,8 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
+import Button from "@mui/material/Button";
+import MailIcon from "@mui/icons-material/Mail";
 
 class UserStatus extends Component {
   constructor(props) {
@@ -12,11 +14,15 @@ class UserStatus extends Component {
       email: "",
       username: "",
       date_created: "",
+      subscribe: "",
+      button: "",
     };
   }
+
   componentDidMount() {
     this.getUserStatus();
   }
+
   getUserStatus(event) {
     const options = {
       url: `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/status`,
@@ -32,12 +38,50 @@ class UserStatus extends Component {
           username: res.data.username,
           email: res.data.email,
           date_created: res.data.date_created,
+          subscribe: res.data.subscribed,
         });
+        if (this.state.subscribe) {
+          this.setState({
+            button: (
+              <Button onClick={this.handleSubscribeButton} variant="outlined">
+                Unsubscribe <MailIcon />
+              </Button>
+            ),
+          });
+        } else {
+          this.setState({
+            button: (
+              <Button onClick={this.handleSubscribeButton} variant="outlined">
+                Subscribe <MailIcon />
+              </Button>
+            ),
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
+  handleSubscribeButton = () => {
+    const options = {
+      url: `${process.env.REACT_APP_USERS_SERVICE_URL}/users/subscription`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.props.accessToken}`,
+      },
+    };
+
+    return axios(options)
+      .then((res) => {
+        this.getUserStatus();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     if (!this.props.isAuthenticated()) {
       return <Redirect to="/login" />;
@@ -60,6 +104,7 @@ class UserStatus extends Component {
                 {this.state.date_created}
               </span>
             </li>
+            <li>{this.state.button}</li>
           </ul>
         </Paper>
       </Box>

@@ -21,6 +21,7 @@ user = auth_namespace.model(
         "username": fields.String(required=True),
         "email": fields.String(required=True),
         "date_created": fields.DateTime(required=False),
+        "subscribed": fields.Boolean(required=False),
     },
 )
 

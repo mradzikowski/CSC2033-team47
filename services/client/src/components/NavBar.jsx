@@ -1,115 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
-const titleStyle = {
-  fontWeight: "bold",
-};
+// import { AppBar, Toolbar, Typography, Box } from "@mui/material/";
 
 const NavBar = (props) => {
   let menu = (
-    <div className="navbar-menu">
-      <div className="navbar-end">
-        <Link
-          to="/categories"
-          className="navbar-item"
-          data-testid="nav-categories"
-        >
-          Categories
-        </Link>
-        <Link to="/datasets" className="navbar-item" data-testid="nav-datasets">
-          Datasets
-        </Link>
-        <Link to="/users" className="navbar-item" data-testid="nav-categories">
-          Users
-        </Link>
-        <Link to="/register" className="navbar-item" data-testid="nav-register">
-          Register
-        </Link>
-        <Link to="/login" className="navbar-item" data-testid="nav-login">
-          Log In
-        </Link>
-      </div>
+    <div className="menu">
+      <Link to="/" className="menuItem">
+        CLIMATEXTRACTOR
+      </Link>
+      <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
+        DATASETS
+      </Link>
+      <Link to="/users" data-testid="nav-categories" className="menuItem">
+        USERS
+      </Link>
+      <Link to="/register" data-testid="nav-register" className="menuItem">
+        REGISTER
+      </Link>
+      <Link to="/login" data-testid="nav-login" className="menuItem">
+        LOG IN
+      </Link>
     </div>
   );
   if (props.isAuthenticated()) {
     menu = (
-      <div className="navbar-menu">
-        <div className="navbar-start">
-          <Link to="/status" className="navbar-item" data-testid="nav-status">
-            User Status
-          </Link>
-          <Link
-            to="/categories"
-            className="navbar-item"
-            data-testid="nav-categories"
-          >
-            Categories
-          </Link>
-          <Link
-            to="/datasets"
-            className="navbar-item"
-            data-testid="nav-datasets"
-          >
-            Datasets
-          </Link>
-          <Link
-            to="/users"
-            className="navbar-item"
-            data-testid="nav-categories"
-          >
-            Users
-          </Link>
-          <Link to="/datasets/upload" className="navbar-item">
-            Upload
-          </Link>
-        </div>
-        <div className="navbar-end">
-          <span
-            // eslint-disable-next-line react/jsx-handler-names
-            onClick={props.logoutUser}
-            className="navbar-item link"
-            data-testid="nav-logout"
-          >
-            Log Out
-          </span>
-        </div>
+      <div className="menu">
+        <Link to="/" className="menuItem">
+          CLIMATEXTRACTOR
+        </Link>
+        <Link to="/status" data-testid="nav-status" className="menuItem">
+          ACCOUNT
+        </Link>
+        <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
+          DATASETS
+        </Link>
+        <Link to="/users" data-testid="nav-categories" className="menuItem">
+          USERS
+        </Link>
+        <Link to="/datasets/upload" className="menuItem">
+          UPLOAD 
+        </Link>
+        <span
+          // eslint-disable-next-line react/jsx-handler-names
+          onClick={props.logoutUser}
+          data-testid="nav-logout"
+          className="menuItem"
+        >
+          LOG OUT
+        </span>
       </div>
     );
   }
   return (
-    <nav
-      className="navbar is-dark"
-      role="navigation"
-      aria-label="main navigation"
-    >
-      <section className="container">
-        <div className="navbar-brand">
-          <Link to="/" className="navbar-item nav-title" style={titleStyle}>
-            {props.title}
-          </Link>
-          <span
-            className="nav-toggle navbar-burger"
-            onClick={() => {
-              let toggle = document.querySelector(".nav-toggle");
-              let menu = document.querySelector(".navbar-menu");
-              toggle.classList.toggle("is-active");
-              menu.classList.toggle("is-active");
-            }}
-          >
-            <span />
-            <span />
-            <span />
-          </span>
-        </div>
-        {menu}
-      </section>
-    </nav>
+    <div>
+      {menu}
+    </div>
   );
 };
 
 NavBar.propTypes = {
-  title: PropTypes.string.isRequired,
+  // title: PropTypes.string.isRequired,
   logoutUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.func.isRequired,
 };

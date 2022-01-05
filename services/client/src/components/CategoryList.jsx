@@ -1,20 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 const CategoryList = (props) => {
   return (
-    <div>
+    <Box>
       {props.categories.map((category) => {
         return (
-          <p
-            key={category.category_name}
-            className="box title is-4 category_name"
-          >
-            {category.category_name}
-          </p>
+          <Box key={category.category_name}>
+            <Paper elevation={10} className="category_name">
+              {category.category_name}
+            </Paper>
+            <br />
+          </Box>
         );
       })}
-    </div>
+    </Box>
   );
 };
 
