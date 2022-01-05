@@ -1,4 +1,8 @@
-FROM python:3.9.5-slim-buster
+FROM python:3.9
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV GECKODRIVER_VER v0.29.0
+ENV FIREFOX_VER 87.0
 
 # Setting working directory
 WORKDIR /usr/src/app
@@ -7,10 +11,15 @@ WORKDIR /usr/src/app
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Installing system dependencies
-RUN apt-get update \
-  && apt-get -y install netcat gcc postgresql \
-  && apt-get clean
+RUN apt update \
+   && apt upgrade -y \
+   && apt install -y \
+       firefox-esr \
+   && apt-get -y install netcat gcc postgresql
+
+RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VER}/geckodriver-${GECKODRIVER_VER}-linux64.tar.gz \
+   && tar zxf geckodriver-*.tar.gz \
+   && mv geckodriver /usr/bin/
 
 # Installing dependencies
 COPY ./requirements.txt .

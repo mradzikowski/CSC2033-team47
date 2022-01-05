@@ -71,3 +71,70 @@ class Category(db.Model):
 
     category_name = db.Column(db.String(256), primary_key=True)
     datasets = db.relationship("Dataset", backref="category_name", lazy=True)
+
+
+class ClimateData(db.Model):
+    __tablename__ = "climatedata"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    tons_of_co2 = db.Column(db.BigInteger, default=0)
+    world_average_temperature = db.Column(db.Float, default=0)
+    tons_of_melted_ice = db.Column(db.BigInteger, default=0)
+    rise_in_sea_levels_in_cm = db.Column(db.Float, default=0)
+    cost_of_not_acting_on_climate_change = db.Column(db.BigInteger, default=0)
+    energy_used = db.Column(db.BigInteger, default=0)
+    solar_energy_striking_earth = db.Column(db.BigInteger, default=0)
+    electricity_used = db.Column(db.BigInteger, default=0)
+    percent_electricity_produced_from_renewable_sources = db.Column(db.Float, default=0)
+    time_left_to_the_end_of_oil = db.Column(db.String(128), default="")
+    date_created = db.Column(db.DateTime, default=func.now())
+
+    def __init__(
+        self,
+        tons_of_co2="0",
+        world_average_temperature="0",
+        tons_of_melted_ice="0",
+        rise_in_sea_levels_in_cm="0",
+        cost_of_not_acting_on_climate_change="0",
+        energy_used="0",
+        solar_energy_striking_earth="0",
+        electricity_used="0",
+        percent_electricity_produced_from_renewable_sources="0",
+        time_left_to_the_end_of_oil="",
+    ):
+        self.tons_of_co2 = self.replace_string_to_number(tons_of_co2, ",")
+        self.world_average_temperature = self.replace_string_to_number(
+            world_average_temperature,
+            ".",
+        )
+        self.tons_of_melted_ice = self.replace_string_to_number(tons_of_melted_ice, ",")
+        self.rise_in_sea_levels_in_cm = self.replace_string_to_number(
+            rise_in_sea_levels_in_cm,
+            ".",
+        )
+        self.cost_of_not_acting_on_climate_change = self.replace_string_to_number(
+            cost_of_not_acting_on_climate_change,
+            ",",
+        )
+        self.energy_used = self.replace_string_to_number(energy_used, ",")
+        self.solar_energy_striking_earth = self.replace_string_to_number(
+            solar_energy_striking_earth,
+            ",",
+        )
+        self.electricity_used = self.replace_string_to_number(electricity_used, ",")
+        self.percent_electricity_produced_from_renewable_sources = (
+            self.replace_string_to_number(
+                percent_electricity_produced_from_renewable_sources,
+                ".",
+            )
+        )
+        self.time_left_to_the_end_of_oil = time_left_to_the_end_of_oil
+
+    @staticmethod
+    def replace_string_to_number(word: str, punctuation: str):
+        word = word.strip()
+        if punctuation == ".":
+            return round(float(word), 4)
+        else:
+            return int(word.replace(punctuation, ""))

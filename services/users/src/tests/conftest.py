@@ -1,7 +1,7 @@
 import pytest
 from src import create_app, db
 from src.api.crud.crud_users import get_user_by_id, update_user_dataset_counter
-from src.api.models import Category, Dataset, User
+from src.api.models import Category, ClimateData, Dataset, User
 
 
 @pytest.fixture(scope="function")
@@ -83,6 +83,39 @@ def add_category():
         return category
 
     return _add_category
+
+
+@pytest.fixture(scope="function")
+def add_climate_data():
+    def _add_climate_data(
+        world_average_temperature="0",
+        tons_of_co2="0",
+        tons_of_melted_ice="0",
+        rise_in_sea_levels_in_cm="0",
+        cost_of_not_acting_on_climate_change="0",
+        energy_used="0",
+        solar_energy_striking_earth="0",
+        electricity_used="0",
+        percent_electricity_produced_from_renewable_sources="0",
+        time_left_to_the_end_of_oil="",
+    ):
+        climate_data = ClimateData(
+            tons_of_co2,
+            world_average_temperature,
+            tons_of_melted_ice,
+            rise_in_sea_levels_in_cm,
+            cost_of_not_acting_on_climate_change,
+            energy_used,
+            solar_energy_striking_earth,
+            electricity_used,
+            percent_electricity_produced_from_renewable_sources,
+            time_left_to_the_end_of_oil,
+        )
+        db.session.add(climate_data)
+        db.session.commit()
+        return climate_data
+
+    return _add_climate_data
 
 
 @pytest.fixture(scope="module")

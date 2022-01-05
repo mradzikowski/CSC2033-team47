@@ -1,6 +1,6 @@
 /* imports */
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&family=Work+Sans:wght@100&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
 /* -------- */
 
 body {
@@ -49,7 +49,7 @@ body {
 }
 
 h1 {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-size: 100px;
   margin: 0;
   position: fixed;
@@ -99,16 +99,16 @@ h1 {
 
 .menuItem {
   text-decoration: none;
-  color: #2CAF66;
+  color: #2caf66;
   font-weight: 500;
   font-size: 25px;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   margin: 10px;
   width: 100%;
 }
 
 .menuItem:hover {
-  color: #0760C1;
+  color: #0760c1;
 }
 
 .datasets-list {
@@ -131,3 +131,4 @@ h1 {
   margin-left: 10px;
   text-align: left;
 }
+
