@@ -1,5 +1,8 @@
-import { state, useState, useEffect } from "react";
+import React, { state, setState, useState, useEffect, Component } from "react";
+import { useHistory, withRouter } from "react-router-dom";
 import Select from "react-select";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 /*
     Function:
@@ -8,10 +11,19 @@ import Select from "react-select";
     (written by Toby Dixon)
 */
 
-function SearchBar() {
-  const [categories, setCategories] = useState();
+class SearchBar extends Component {
 
-  useEffect(() => {
+  constructor(props) {
+    super(props);
+    this.state = {
+      categories: null,
+      query: null,
+    }
+
+    console.log(this.props)
+  }
+
+  componentDidMount() {
     fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
       .then((res) => res.json())
       .then((data) => {
@@ -23,25 +35,48 @@ function SearchBar() {
           });
         }
         console.log(tempArray);
-        setCategories(tempArray);
-      });
-  }, []);
+        this.setState({categories: tempArray});
+      })
+      .then(() => {console.log(this.state)});
 
-  return (
-    // eslint-disable-next-line react/react-in-jsx-scope
-    <div>
-      {/* eslint-disable-next-line react/react-in-jsx-scope */}
-      <Select
-        isMulti
-        isClearable
-        isSearchable={false}
-        options={categories}
-        className="searchBar"
-      />
-    </div>
-  );
+  }
+
+  handleChange = (e) => {
+    this.setState({query: e})
+  }
+
+  callSearch = () => {
+    console.log(typeof(this.props.search))
+  }
+
+  render() {
+    return (
+      // eslint-disable-next-line react/react-in-jsx-scope
+      <div style={{display: 'block'}}>
+        {/* eslint-disable-next-line react/react-in-jsx-scope */}
+        <Select
+          isMulti
+          isClearable
+          isSearchable={false}
+          options={this.state.categories}
+          className="searchBar"
+          onChange={(e) => this.handleChange(e)}
+        />
+        {/* eslint-disable-next-line react/react-in-jsx-scope */}
+        <Button
+          className="searchButton"
+          sx={{backgroundColor: 'black', height: '35px'}}
+          variant="contained"
+          onClick={() => this.props.search(this.state.query)}
+        >
+          Search
+        </Button>
+        {/* {this.state.query != null ? this.state.query[0].value : 'null'} */}
+      </div>
+    );
+  }
 }
 
 const style = {};
 
-export default SearchBar;
+export default withRouter(SearchBar);

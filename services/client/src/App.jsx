@@ -63,6 +63,8 @@ class App extends Component {
   //     });
   // }
 
+
+
   getDatasetList() {
     axios
       .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
@@ -198,12 +200,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          <NavBar
-            className='navbar'
-            title={this.state.title_website}
-            logoutUser={this.logoutUser}
-            isAuthenticated={this.isAuthenticated}
-          />
+        <NavBar
+          className='navbar'
+          title={this.state.title_website}
+          logoutUser={this.logoutUser}
+          isAuthenticated={this.isAuthenticated}
+        />
         <header className="App-header">
           <div className="container">
             <br />

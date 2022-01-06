@@ -1,9 +1,14 @@
 import { state, Suspense, useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
+import {withRouter} from "react-router-dom"
+import DatasetsList from "./components/DatasetsList";
+import Select from "react-select";
+import Button from "@mui/material/Button";
 import { Canvas, useLoader, useFrame } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import React from "react";
+import { checkPropTypes } from "prop-types";
 
 // TODO: Replace search bar with dropdown that shows all categories as optional filters for searching.
 // TODO: Create a new filter component that is added somewhere to the screen when a filter is chosen.
@@ -18,15 +23,27 @@ import React from "react";
 
     (written by Toby Dixon)
 */
-function LandingPage() {
-  return (
-    <div>
-      <h1>CLIMATEXTRACTOR</h1>
-      {/* if data is gathered, render it. Otherwise render 'non' */}
-      <SearchBar />
-      <Scene />
-    </div>
-  );
+
+class LandingPage extends React.Component {
+
+  constructor(props) {
+    super(props);
+    console.log(this.props)
+  }
+
+  callSearch = (query) => {
+    this.props.history.push("/datasets", {state: query})
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>CLIMATEXTRACTOR</h1>
+        <SearchBar search={this.callSearch} />
+        <Scene />
+      </div>
+    );
+  }
 }
 
 /*
@@ -84,4 +101,4 @@ const Earth = () => {
   );
 };
 
-export default LandingPage;
+export default withRouter(LandingPage);

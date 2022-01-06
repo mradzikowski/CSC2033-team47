@@ -66,10 +66,23 @@ h1 {
   height: 25px;
   font-size: 15px;
   position: fixed;
-  display: block;
-  left: 50%;
+  display: inline-block;
+  left: 40%;
   top: 50%;
   transform: translate(-50%, -50%);
+  color: black;
+  outline: none !important;
+}
+
+.searchButton {
+  width: 100px;
+  border-radius: 50px;
+  font-size: 15px;
+  position: fixed;
+  display: inline-block;
+  left: 0%;
+  top: 50%;
+  transform: translate(-25%, -35%);
   color: black;
   outline: none !important;
 }
