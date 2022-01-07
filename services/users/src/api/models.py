@@ -73,8 +73,38 @@ class Category(db.Model):
     datasets = db.relationship("Dataset", backref="category_name", lazy=True)
 
 
-class ClimateData(db.Model):
-    __tablename__ = "climatedata"
+class NasaData(db.Model):
+    __tablename__ = "nasadata"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    down_arctic_ice_percent = db.Column(db.Float, default=0)
+    down_ice_sheets_tons = db.Column(db.Integer, default=0)
+    up_sea_level = db.Column(db.Float, default=0)
+    up_ocean_heat = db.Column(db.Integer, default=0)
+    up_carbon_dioxide = db.Column(db.Integer, default=0)
+    up_global_temperature = db.Column(db.Float, default=0)
+
+    def __init__(
+        self,
+        down_arctic_ice_percent="0",
+        down_ice_sheet_tons="0",
+        up_sea_level="0",
+        up_ocean_heat="0",
+        up_carbon_dioxide="0",
+        up_global_temperature="0"
+    ):
+
+        self.down_arctic_ice_percent = down_arctic_ice_percent
+        self.down_ice_sheets_tons = down_ice_sheet_tons
+        self.up_sea_level = up_sea_level
+        self.up_ocean_heat = up_ocean_heat
+        self.up_carbon_dioxide = up_carbon_dioxide
+        self.up_global_temperature = up_global_temperature
+
+
+class WorldCountsData(db.Model):
+    __tablename__ = "worldcountsdata"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 

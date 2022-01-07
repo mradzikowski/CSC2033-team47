@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from bs4 import BeautifulSoup
 from helium import kill_browser, start_firefox
 from src import db
-from src.api.models import ClimateData
+from src.api.models import WorldCountsData, NasaData
 
 
 # Retrieve data from https://www.theworldcounts.com/challenges/climate-change
@@ -17,8 +17,9 @@ def add_world_counts_data():
 
     counters = [counter.text for counter in counters]
     print(counters)
+
     if "Loading ..." not in counters:
-        climate_data = ClimateData(*counters)
+        climate_data = WorldCountsData(*counters)
         print(climate_data)
 
         db.session.add(climate_data)
@@ -39,11 +40,8 @@ def add_nasa_climate_data():
     # Get the first 6 div tags with the class change_number
     vitals = soup.find_all("div", {"class": "change_number"}, limit=6)
 
-    vitals = [vital.text for vital in vitals]
+    vitals = [vital.text.strip() for vital in vitals]
     print(vitals)
-
-    kill_browser()
-    return vitals
 
     # Vitals corresponding meaning (as of time of writing)
     # [0] - Arctic Sea Ice Extent (Percent per decade since 1979)(Down Arrow)
@@ -52,6 +50,17 @@ def add_nasa_climate_data():
     # [3] - Ocean Heat Added (Zettajoules since 1955)(Up Arrow)
     # [4] - Carbon Dioxide (Parts per million (current))(Up Arrow)
     # [5] - Global Temperature (Degrees centigrade since 1880)(Up Arrow)
+
+    if "Loading ..." not in vitals:
+        climate_data = NasaData(*vitals)
+        print(climate_data)
+
+        db.session.add(climate_data)
+        db.session.commit()
+        kill_browser()
+        return climate_data
+    else:
+        return None
 
 
 # Retrieve data from https://www.bloomberg.com/graphics/climate-change-data-green/
@@ -85,17 +94,14 @@ def add_bloomberg_data():
     return data
 
 
-def get_climate_data_today():
+def get_world_counts_data_today():
     start_range = date.today()
     end_range = date.today() + timedelta(days=1)
-    climate_data = ClimateData.query.filter(
-        ClimateData.date_created.between(start_range, end_range),
+    climate_data = WorldCountsData.query.filter(
+        WorldCountsData.date_created.between(start_range, end_range),
     ).all()
     if len(climate_data) == 0:
-        climate_data = []
-        climate_data.extend(add_world_counts_data())
-        climate_data.extend(add_nasa_climate_data())
-        climate_data.extend(add_bloomberg_data())
+        climate_data = add_world_counts_data()
         if climate_data:
             return climate_data
         else:
