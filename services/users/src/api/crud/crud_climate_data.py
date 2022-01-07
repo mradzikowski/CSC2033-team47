@@ -1,13 +1,13 @@
 import time
 from datetime import date, timedelta
-
 from bs4 import BeautifulSoup
 from helium import kill_browser, start_firefox
 from src import db
 from src.api.models import ClimateData
 
-#Retrieve data from https://www.theworldcounts.com/challenges/climate-change
-def add_climate_data():
+
+# Retrieve data from https://www.theworldcounts.com/challenges/climate-change
+def add_world_counts_data():
     url = "https://www.theworldcounts.com/challenges/climate-change"
     browser = start_firefox(url, headless=True)
     time.sleep(1)
@@ -92,7 +92,10 @@ def get_climate_data_today():
         ClimateData.date_created.between(start_range, end_range),
     ).all()
     if len(climate_data) == 0:
-        climate_data = add_climate_data()
+        climate_data = []
+        climate_data.extend(add_world_counts_data())
+        climate_data.extend(add_nasa_climate_data())
+        climate_data.extend(add_bloomberg_data())
         if climate_data:
             return climate_data
         else:
