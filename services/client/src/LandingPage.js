@@ -41,7 +41,6 @@ class LandingPage extends React.Component {
       <div>
         <h1>CLIMATEXTRACTOR</h1>
         <SearchBar search={this.callSearch} />
-        <NasaData />
         <Scene />
       </div>
     );

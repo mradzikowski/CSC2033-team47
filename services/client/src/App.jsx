@@ -12,6 +12,7 @@ import RegisterForm from "./components/RegisterForm";
 import UserStatus from "./components/UserStatus";
 import DatasetsList from "./components/DatasetsList";
 import AddDataset from "./components/AddDataset";
+import ClimateData from "./components/ClimateData";
 
 /*
     Function:
@@ -214,7 +215,13 @@ class App extends Component {
                 exact
                 path="/"
                 render={() => (
-                  <LandingPage />
+                  <LandingPage climate_data={this.state.climate_data} />
+                )}
+              />
+              <Route 
+                exact path="/data"
+                render={() => (
+                  <ClimateData />
                 )}
               />
               {/* <Route
