@@ -1,6 +1,7 @@
 /* imports */
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300&family=Work+Sans:wght@100&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap');
 /* -------- */
 
 body {
@@ -145,3 +146,40 @@ h1 {
   text-align: left;
 }
 
+
+.nasa-data-bar{
+  position: fixed;
+  bottom: 0%;
+  left: 0%;
+  height: 12vh;
+  width: 100vw;
+  display: flex;
+  flex-wrap: no-wrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: rgb(50, 50, 50);
+}
+
+.nasa-data-container {
+  flex: 0 0 auto;
+  width: 20%;
+  max-width: 100%;
+  color: white;
+  background-color: rgb(20, 20, 20);
+  margin-left: 3px;
+}
+
+.nasa-data-title {
+  margin: 10px;
+  width: 100%;
+  text-align: left;
+  font-style: bold;
+  font-size: 18px;
+  display: inline-block;
+  font-family: 'Varela Round', sans-serif;
+}
+
+.nasa-data-value {
+  display: inline-block;
+  font-family: 'Source Sans Pro', sans-serif;
+}

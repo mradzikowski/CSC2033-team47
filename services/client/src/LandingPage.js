@@ -9,6 +9,7 @@ import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import React from "react";
 import { checkPropTypes } from "prop-types";
+import NasaData from './components/NasaData';
 
 // TODO: Replace search bar with dropdown that shows all categories as optional filters for searching.
 // TODO: Create a new filter component that is added somewhere to the screen when a filter is chosen.
@@ -40,6 +41,7 @@ class LandingPage extends React.Component {
       <div>
         <h1>CLIMATEXTRACTOR</h1>
         <SearchBar search={this.callSearch} />
+        <NasaData />
         <Scene />
       </div>
     );
