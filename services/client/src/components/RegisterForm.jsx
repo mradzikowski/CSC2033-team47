@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, setState} from "react";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import { Formik } from "formik";
@@ -14,9 +14,17 @@ import PasswordIcon from "@mui/icons-material/Password";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 
 const RegisterForm = (props) => {
+
+  const [validSubmit, setValidSubmit] = useState(false)
+
   if (props.isAuthenticated()) {
     return <Redirect to="/" />;
   }
+
+  if (validSubmit) {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <div>
       <Formik
@@ -29,6 +37,7 @@ const RegisterForm = (props) => {
           props.handleRegisterFormSubmit(values);
           resetForm();
           setSubmitting(false);
+          setValidSubmit(true);
         }}
         validationSchema={Yup.object().shape({
           username: Yup.string()
