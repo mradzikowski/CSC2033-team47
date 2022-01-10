@@ -73,6 +73,23 @@ class Category(db.Model):
     datasets = db.relationship("Dataset", backref="category_name", lazy=True)
 
 
+class Vote(db.Model):
+    __tablename__ = "votes"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    dataset_id = db.Column(
+        db.Integer,
+        db.ForeignKey("datasets.dataset_id", ondelete="cascade"),
+    )
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id", ondelete="cascade"))
+
+    db.UniqueConstraint(dataset_id, user_id)
+
+    def __init__(self, dataset_id, user_id):
+        self.dataset_id = dataset_id
+        self.user_id = user_id
+
+
 class ClimateData(db.Model):
     __tablename__ = "climatedata"
 
