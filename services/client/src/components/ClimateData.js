@@ -46,7 +46,7 @@ class ClimateData extends React.Component {
             return (
                 <div>
                     <CounterData data={this.state.data[0]} />
-                    <NasaData climate_data={this.state.data[1]} />
+                    <NasaData climate_data={this.state.data[0]} />
                 </div>
             )
         } else {
