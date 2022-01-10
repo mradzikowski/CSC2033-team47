@@ -183,3 +183,36 @@ h1 {
   display: inline-block;
   font-family: 'Source Sans Pro', sans-serif;
 }
+
+.climatedata-container {
+  padding: 25px;
+  display: inline-block;
+  font-size: 20px;
+}
+
+.climatedata::after {
+  width: 30vw !important;
+  display: table;
+  clear: both;
+  content:"";
+}
+
+.climatedata-item {
+  height: 50px;
+  font-size: 15px;
+  padding: 5px;
+  margin-left: 10px;
+  text-align: left;
+  float: left;
+}
+
+.climatedata-list {
+  width: 100vw;
+  left: 10;
+  height: 90vh;
+  border-radius: 10px;
+  padding-bottom: 200px;
+  padding-top: 200px;
+  overflow: scroll
+  /* float: left; */
+}

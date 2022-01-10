@@ -7,28 +7,16 @@ class NasaData extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state={
-            data:[]
-        }
     }
 
-
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/all`)
-          .then((res) => res.json())
-          .then((values) => {
-            let tempArray = []
-            for (let key in values[0]) {
-                tempArray.push({title: key, data: values[0][key]});
-            }
-            this.setState({data: tempArray})
-          })
+        console.log(this.props)
     }
 
     render() {
         return(
             <div className='nasa-data-bar'>
-                {this.state.data.map(dataset => {
+                {this.props.climate_data.map(dataset => {
                     return(
                         <div key='1' className='nasa-data-container'>
                             <div key='2' className='nasa-data-title'>
