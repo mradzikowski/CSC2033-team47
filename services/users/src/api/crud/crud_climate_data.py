@@ -3,7 +3,7 @@ from datetime import date, timedelta
 from bs4 import BeautifulSoup
 from helium import kill_browser, start_firefox
 from src import db
-from src.api.models import WorldCountsData, NasaData
+from src.api.models import WorldCountsData, NasaData, BloombergData
 
 
 # Retrieve data from https://www.theworldcounts.com/challenges/climate-change
@@ -89,9 +89,49 @@ def add_bloomberg_data():
     # [2] - Today's arctic ice area vs. historic average
     # [3] - Carbon-free net power in the United States, most recent data
     # [4] - Renewable power investment worldwide in Q2 2020
-    kill_browser()
 
-    return data
+    if "Loading ..." not in data:
+        climate_data = NasaData(*data)
+        print(climate_data)
+
+        db.session.add(climate_data)
+        db.session.commit()
+        kill_browser()
+        return climate_data
+    else:
+        return None
+
+
+def get_bloomberg_data_today():
+    start_range = date.today()
+    end_range = date.today() + timedelta(days=1)
+    climate_data = BloombergData.query.filter(
+        BloombergData.date_created.between(start_range, end_range),
+    ).all()
+    if len(climate_data) == 0:
+        climate_data = add_bloomberg_data()
+        if climate_data:
+            return climate_data
+        else:
+            return False
+    else:
+        return climate_data
+
+
+def get_nasa_data_today():
+    start_range = date.today()
+    end_range = date.today() + timedelta(days=1)
+    climate_data = NasaData.query.filter(
+        NasaData.date_created.between(start_range, end_range),
+    ).all()
+    if len(climate_data) == 0:
+        climate_data = add_nasa_climate_data()
+        if climate_data:
+            return climate_data
+        else:
+            return False
+    else:
+        return climate_data
 
 
 def get_world_counts_data_today():

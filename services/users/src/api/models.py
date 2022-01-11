@@ -103,6 +103,32 @@ class NasaData(db.Model):
         self.up_global_temperature = up_global_temperature
 
 
+class BloombergData(db.Model):
+    __tablename__ = "bloombergdata"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    greenhouse_emissions = db.Column(db.BigInteger, default=0)
+    nov_increase_temp = db.Column(db.Integer, default=0)
+    today_arctic_ice = db.Column(db.Float, default=0)
+    carbon_free_power = db.Column(db.Integer, default=0)
+    renewable_power_investments = db.Column(db.Float, default=0)
+
+    def __init__(
+            self,
+            greenhouse_emissions="0",
+            nov_increase_temp="0",
+            today_arctic_ice="0",
+            carbon_free_power="0",
+            renewable_power_investments="0"
+    ):
+        self.greenhouse_emissions = greenhouse_emissions
+        self.nov_increase_temp = nov_increase_temp
+        self.today_arctic_ice = today_arctic_ice
+        self.carbon_free_power = carbon_free_power
+        self.renewable_power_investments = renewable_power_investments
+
+
 class WorldCountsData(db.Model):
     __tablename__ = "worldcountsdata"
 
