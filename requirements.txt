@@ -9,3 +9,7 @@ pre-commit==2.16.0
 pytest==6.2.5
 pytest-cov==3.0.0
 redis==4.0.2
+
+Werkzeug~=2.0.2
+beautifulsoup4~=4.10.0
+tweepy~=4.4.0
