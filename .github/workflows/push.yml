@@ -1,4 +1,4 @@
-name: Backend CI and building docker images from docker compose
+name: Continous Integration with the building Docker images
 on:
   push:
     branches:
