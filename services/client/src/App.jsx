@@ -228,11 +228,11 @@ class App extends Component {
                   <CategoryList categories={this.state.categories} />
                 )}
               /> */}
-              <Route
+              {/* <Route
                 exact
                 path="/users"
                 render={() => <UsersList users={this.state.users} />}
-              />
+              /> */}
               <Route
                 exact
                 path="/login"
