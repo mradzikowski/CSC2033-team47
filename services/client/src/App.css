@@ -216,3 +216,28 @@ h1 {
   overflow: scroll
   /* float: left; */
 }
+
+.tweet-list {
+  width: 80vw;
+  height: 90vh;
+  border-radius: 10px;
+  padding-bottom: 200px;
+  padding-top: 200px;
+  overflow: scroll;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+}
+
+.tweet-item {
+  width: 30vw;
+  padding: 20px;
+}
+
+.tweet-loading {
+  position: relative;
+  top: 50%;
+  text-align: 'center';
+  z-index: -1;
+  color:rgb(200, 200, 200);
+}

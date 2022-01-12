@@ -12,6 +12,8 @@ import UserStatus from "./components/UserStatus";
 import DatasetsList from "./components/DatasetsList";
 import AddDataset from "./components/AddDataset";
 import ClimateData from "./components/ClimateData";
+import NewsPage from "./components/NewsPage"
+
 
 /*
     Function:
@@ -219,6 +221,12 @@ class App extends Component {
                 exact path="/data"
                 render={() => (
                   <ClimateData />
+                )}
+              />
+              <Route
+                exact path="/news"
+                render={() => (
+                  <NewsPage />
                 )}
               />
               {/* <Route
