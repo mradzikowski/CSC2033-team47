@@ -84,6 +84,7 @@ class NasaData(db.Model):
     up_ocean_heat = db.Column(db.Integer, default=0)
     up_carbon_dioxide = db.Column(db.Integer, default=0)
     up_global_temperature = db.Column(db.Float, default=0)
+    date_created = db.Column(db.DateTime, default=func.now())
 
     def __init__(
         self,
@@ -92,15 +93,21 @@ class NasaData(db.Model):
         up_sea_level="0",
         up_ocean_heat="0",
         up_carbon_dioxide="0",
-        up_global_temperature="0"
+        up_global_temperature="0",
     ):
 
-        self.down_arctic_ice_percent = down_arctic_ice_percent
-        self.down_ice_sheets_tons = down_ice_sheet_tons
-        self.up_sea_level = up_sea_level
-        self.up_ocean_heat = up_ocean_heat
-        self.up_carbon_dioxide = up_carbon_dioxide
-        self.up_global_temperature = up_global_temperature
+        self.down_arctic_ice_percent = replace_string_to_number(
+            down_arctic_ice_percent,
+            ".",
+        )
+        self.down_ice_sheets_tons = replace_string_to_number(down_ice_sheet_tons, ",")
+        self.up_sea_level = replace_string_to_number(up_sea_level, ".")
+        self.up_ocean_heat = replace_string_to_number(up_ocean_heat, ",")
+        self.up_carbon_dioxide = replace_string_to_number(up_carbon_dioxide, ",")
+        self.up_global_temperature = replace_string_to_number(
+            up_global_temperature,
+            ".",
+        )
 
 
 class BloombergData(db.Model):
@@ -108,25 +115,29 @@ class BloombergData(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
-    greenhouse_emissions = db.Column(db.BigInteger, default=0)
-    nov_increase_temp = db.Column(db.Integer, default=0)
+    greenhouse_emissions = db.Column(db.Integer, default=0)
+    nov_increase_temp = db.Column(db.Float, default=0)
     today_arctic_ice = db.Column(db.Float, default=0)
     carbon_free_power = db.Column(db.Integer, default=0)
     renewable_power_investments = db.Column(db.Float, default=0)
+    date_created = db.Column(db.DateTime, default=func.now())
 
     def __init__(
-            self,
-            greenhouse_emissions="0",
-            nov_increase_temp="0",
-            today_arctic_ice="0",
-            carbon_free_power="0",
-            renewable_power_investments="0"
+        self,
+        greenhouse_emissions="0",
+        nov_increase_temp="0",
+        today_arctic_ice="0",
+        carbon_free_power="0",
+        renewable_power_investments="0",
     ):
-        self.greenhouse_emissions = greenhouse_emissions
-        self.nov_increase_temp = nov_increase_temp
-        self.today_arctic_ice = today_arctic_ice
-        self.carbon_free_power = carbon_free_power
-        self.renewable_power_investments = renewable_power_investments
+        self.greenhouse_emissions = replace_string_to_number(greenhouse_emissions, ",")
+        self.nov_increase_temp = replace_string_to_number(nov_increase_temp, ".")
+        self.today_arctic_ice = replace_string_to_number(today_arctic_ice, ".")
+        self.carbon_free_power = replace_string_to_number(carbon_free_power, ",")
+        self.renewable_power_investments = replace_string_to_number(
+            renewable_power_investments,
+            ".",
+        )
 
 
 class WorldCountsData(db.Model):
@@ -159,38 +170,38 @@ class WorldCountsData(db.Model):
         percent_electricity_produced_from_renewable_sources="0",
         time_left_to_the_end_of_oil="",
     ):
-        self.tons_of_co2 = self.replace_string_to_number(tons_of_co2, ",")
-        self.world_average_temperature = self.replace_string_to_number(
+        self.tons_of_co2 = replace_string_to_number(tons_of_co2, ",")
+        self.world_average_temperature = replace_string_to_number(
             world_average_temperature,
             ".",
         )
-        self.tons_of_melted_ice = self.replace_string_to_number(tons_of_melted_ice, ",")
-        self.rise_in_sea_levels_in_cm = self.replace_string_to_number(
+        self.tons_of_melted_ice = replace_string_to_number(tons_of_melted_ice, ",")
+        self.rise_in_sea_levels_in_cm = replace_string_to_number(
             rise_in_sea_levels_in_cm,
             ".",
         )
-        self.cost_of_not_acting_on_climate_change = self.replace_string_to_number(
+        self.cost_of_not_acting_on_climate_change = replace_string_to_number(
             cost_of_not_acting_on_climate_change,
             ",",
         )
-        self.energy_used = self.replace_string_to_number(energy_used, ",")
-        self.solar_energy_striking_earth = self.replace_string_to_number(
+        self.energy_used = replace_string_to_number(energy_used, ",")
+        self.solar_energy_striking_earth = replace_string_to_number(
             solar_energy_striking_earth,
             ",",
         )
-        self.electricity_used = self.replace_string_to_number(electricity_used, ",")
+        self.electricity_used = replace_string_to_number(electricity_used, ",")
         self.percent_electricity_produced_from_renewable_sources = (
-            self.replace_string_to_number(
+            replace_string_to_number(
                 percent_electricity_produced_from_renewable_sources,
                 ".",
             )
         )
         self.time_left_to_the_end_of_oil = time_left_to_the_end_of_oil
 
-    @staticmethod
-    def replace_string_to_number(word: str, punctuation: str):
-        word = word.strip()
-        if punctuation == ".":
-            return round(float(word), 4)
-        else:
-            return int(word.replace(punctuation, ""))
+
+def replace_string_to_number(word: str, punctuation: str):
+    word = word.strip()
+    if punctuation == ".":
+        return round(float(word), 2)
+    else:
+        return int(word.replace(punctuation, ""))
