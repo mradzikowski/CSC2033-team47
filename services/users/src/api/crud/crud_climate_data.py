@@ -1,9 +1,22 @@
 import time
 from datetime import date, timedelta
+
+import psutil
 from bs4 import BeautifulSoup
 from helium import kill_browser, start_firefox
 from src import db
-from src.api.models import WorldCountsData, NasaData, BloombergData
+from src.api.models import BloombergData, NasaData, WorldCountsData
+
+PROCNAMES = ["geckodriver", "Web Content", "firefox-esr"]
+
+
+def killing_geckodrivers_processes():
+    """Helper function to kill the processes after killing the firefox browser"""
+    for proc in psutil.process_iter():
+        # check whether the process name matches
+        for PROCNAME in PROCNAMES:
+            if proc.name() == PROCNAME:
+                proc.kill()
 
 
 # Retrieve data from https://www.theworldcounts.com/challenges/climate-change
@@ -25,8 +38,11 @@ def add_world_counts_data():
         db.session.add(climate_data)
         db.session.commit()
         kill_browser()
+        killing_geckodrivers_processes()
         return climate_data
     else:
+        kill_browser()
+        killing_geckodrivers_processes()
         return None
 
 
@@ -58,8 +74,11 @@ def add_nasa_climate_data():
         db.session.add(climate_data)
         db.session.commit()
         kill_browser()
+        killing_geckodrivers_processes()
         return climate_data
     else:
+        kill_browser()
+        killing_geckodrivers_processes()
         return None
 
 
@@ -77,11 +96,9 @@ def add_bloomberg_data():
     data.pop(4)
     data.pop(0)
     # Convert values to text form
-    data = [datum.text for datum in data]
+    bloomberg_data_not_cleared = [datum.text for datum in data]
 
-    # For dev purposes
-    for datum in data:
-        print(datum)
+    data_cleared = clearing_bloomberg_data(bloomberg_data_not_cleared)
 
     # Data corresponding meaning (as of time of writing)
     # [0] - Million metric tons of greenhouse emissions, most recent annual data
@@ -89,16 +106,17 @@ def add_bloomberg_data():
     # [2] - Today's arctic ice area vs. historic average
     # [3] - Carbon-free net power in the United States, most recent data
     # [4] - Renewable power investment worldwide in Q2 2020
-
-    if "Loading ..." not in data:
-        climate_data = NasaData(*data)
-        print(climate_data)
+    if "Loading ..." not in data_cleared:
+        climate_data = BloombergData(*data_cleared)
 
         db.session.add(climate_data)
         db.session.commit()
         kill_browser()
+        killing_geckodrivers_processes()
         return climate_data
     else:
+        kill_browser()
+        killing_geckodrivers_processes()
         return None
 
 
@@ -150,4 +168,16 @@ def get_world_counts_data_today():
         return climate_data
 
 
+def clearing_bloomberg_data(bloomberg_data):
+    data_before_clearing = [d.split()[0].replace("\u200b", "") for d in bloomberg_data]
 
+    # Clearing the data
+    data_cleared = []
+    signs = ["°", "%", "$", "B", "+"]
+    for row in data_before_clearing:
+        for sign in signs:
+            if sign in row:
+                row = row.replace(sign, "")
+        data_cleared.append(row)
+
+    return data_cleared
