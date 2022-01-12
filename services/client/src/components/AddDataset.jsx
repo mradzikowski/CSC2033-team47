@@ -3,8 +3,14 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
 const AddDataset = (props) => {
+
+  if (!props.isAuthenticated()) {
+    return <Redirect to="/login" />;
+  }
+
   return (
       <Paper elevation={10} className='upload-container'>
         <form style={{padding: '20px'}}>
@@ -58,6 +64,7 @@ const AddDataset = (props) => {
 AddDataset.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleClick: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.func.isRequired,
 };
 
 export default AddDataset;

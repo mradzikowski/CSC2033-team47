@@ -292,6 +292,7 @@ class App extends Component {
                   <AddDataset
                     handleChange={this.onChangeHandler}
                     handleClick={this.uploadFile}
+                    isAuthenticated={this.isAuthenticated}
                   />
                 )}
               />
