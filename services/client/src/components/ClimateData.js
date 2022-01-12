@@ -15,38 +15,34 @@ class ClimateData extends React.Component {
         super(props)
 
         this.state = {
-            data: [],
+            worldCounts: [],
             retrieved: false,
         }
     }
 
     componentDidMount() {
-        fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/all`)
+
+        // Get World Counts
+        fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/worldcounts`)
           .then((res) => res.json())
           .then((values) => {
-            let dataArray = []
-
-            for (let i = 0; i < values.length; i++){
-                let dataset = values[i.toString()]
-                let setArray = []
-                for (let key in dataset) {
-                    if (key != 'id') setArray.push({title: key, data: dataset[key]});
-                }
-                dataArray.push(setArray)
-            }
+            let worldCounts = []
             
-            this.setState({data: dataArray})
+            for (let key in values[0]) {
+                if (key != 'id') worldCounts.push({title: key, data: values[0][key]});
+            }
+
+            this.setState({worldCounts: worldCounts})
             this.setState({retrieved: true})
           })
-
     }
 
     render(){
         if (this.state.retrieved){
             return (
                 <div>
-                    <CounterData data={this.state.data[0]} />
-                    <NasaData climate_data={this.state.data[0]} />
+                    <CounterData data={this.state.worldCounts} />
+                    <NasaData />
                 </div>
             )
         } else {
@@ -69,20 +65,20 @@ class CounterData extends React.Component {
         return(
             <Box className="climatedata-list">
                 <Box className='climatedata-container' key=''>
-                    <Paper key='' className='climatedata'>
+                    <Paper className='climatedata'>
                         <WbSunnyIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
-                            <div key=''>
+                            <div>
                                 <strong>{this.props.data['0'].data}</strong>
                             </div>
-                            <div key=''>
+                            <div>
                                 World Average Temperature (°C)
                             </div>
                         </div>
                     </Paper>
                 </Box>
-                <Box className='climatedata-container' key=''>
-                    <Paper key='' className='climatedata'>
+                <Box className='climatedata-container'>
+                    <Paper className='climatedata'>
                         <ArrowUpwardIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>

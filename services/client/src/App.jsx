@@ -24,6 +24,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      datasets: [],
       users: [],
       categories: [],
       file_name: null,
@@ -36,6 +37,7 @@ class App extends Component {
 
   componentDidMount() {
     this.getUsers();
+    this.getDatasetList();
   }
 
   getUsers() {
@@ -268,7 +270,7 @@ class App extends Component {
                 path="/datasets"
                 render={() => (
                   <DatasetsList
-                    // datasets={this.state.datasets}
+                    datasets={this.state.datasets}
                     handleClick={this.onClickDownloadFile}
                     isAuthenticated={this.isAuthenticated}
                     accessToken={this.state.accessToken}
