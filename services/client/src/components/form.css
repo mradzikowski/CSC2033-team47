@@ -5,4 +5,19 @@ input.error {
 .input-feedback {
   color: red;
   margin-top: 0.25rem;
+  font-size: small;
+}
+
+.field {
+  margin: 20px;
+  color: white;
+}
+
+.formContainer {
+  /* padding: 20px; */
+  width: 40vw;
+}
+
+#component-error-text {
+  color: red;
 }

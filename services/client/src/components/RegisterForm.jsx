@@ -6,12 +6,13 @@ import * as Yup from "yup";
 
 import "./form.css";
 import { Redirect } from "react-router-dom";
-import { InputAdornment, TextField } from "@mui/material";
+import { FormControl, InputAdornment, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PasswordIcon from "@mui/icons-material/Password";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import FormHelperText from '@mui/material/FormHelperText';
 
 const RegisterForm = (props) => {
 
@@ -63,11 +64,13 @@ const RegisterForm = (props) => {
             handleSubmit,
           } = props;
           return (
-            <Paper elevation={10}>
+            <Paper elevation={10} className='formContainer'>
+              <img src={`${process.env.PUBLIC_URL}/Logo.png`} style={{ margin: '5%', width: '70%', height: '70%'}} />
               <form onSubmit={handleSubmit}>
-                <div className="field">
+                <div className='field'>
                   <TextField
                     name="username"
+                    id="username-field"
                     className={
                       errors.username && touched.username
                         ? "input error"
@@ -85,9 +88,10 @@ const RegisterForm = (props) => {
                     value={values.username}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    variant="standard"
                   />
                   {errors.username && touched.username && (
-                    <div className="input-feedback">{errors.username}</div>
+                    <FormHelperText id="component-error-text">{errors.username}</FormHelperText>
                   )}
                 </div>
                 <div className="field">
@@ -109,9 +113,10 @@ const RegisterForm = (props) => {
                     value={values.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    variant="standard"
                   />
                   {errors.email && touched.email && (
-                    <div className="input-feedback">{errors.email}</div>
+                    <FormHelperText id="component-error-text">{errors.email}</FormHelperText>
                   )}
                 </div>
                 <div className="field">
@@ -136,19 +141,21 @@ const RegisterForm = (props) => {
                     value={values.password}
                     onChange={handleChange}
                     onBlur={handleBlur}
+                    variant="standard"
                   />
                   {errors.password && touched.password && (
-                    <div className="input-feedback">{errors.password}</div>
+                    <FormHelperText id="component-error-text">{errors.password}</FormHelperText>
                   )}
-                </div>
-                <Button
-                  type="submit"
-                  value="Submit"
-                  disabled={isSubmitting}
-                  variant="contained"
-                >
-                  Register <HowToRegIcon />
-                </Button>
+                  <Button
+                    type="submit"
+                    value="Submit"
+                    disabled={isSubmitting}
+                    variant="contained"
+                    style={{ margin: '5%'}}
+                  >
+                    Register <HowToRegIcon />
+                  </Button>
+                </div>  
               </form>
             </Paper>
           );
