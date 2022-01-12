@@ -64,6 +64,23 @@ class Dataset(db.Model):
         self.file_type = file_name.split(".", 0)[0].lower()
         self.rating = rating
         self.download_counter = download_counter
+        
+
+class Vote(db.Model):
+    __tablename__ = "votes"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    dataset_id = db.Column(
+        db.Integer,
+        db.ForeignKey("datasets.dataset_id", ondelete="cascade"),
+    )
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id", ondelete="cascade"))
+
+    db.UniqueConstraint(dataset_id, user_id)
+
+    def __init__(self, dataset_id, user_id):
+        self.dataset_id = dataset_id
+        self.user_id = user_id
 
 
 class Category(db.Model):
@@ -71,6 +88,7 @@ class Category(db.Model):
 
     category_name = db.Column(db.String(256), primary_key=True)
     datasets = db.relationship("Dataset", backref="category_name", lazy=True)
+
 
 
 class NasaData(db.Model):
@@ -139,7 +157,7 @@ class BloombergData(db.Model):
             ".",
         )
 
-
+        
 class WorldCountsData(db.Model):
     __tablename__ = "worldcountsdata"
 

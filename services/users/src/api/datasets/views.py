@@ -12,12 +12,13 @@ from src.api.crud.crud_datasets import (  # isort:skip
     get_datasets_by_category,
     get_all_datasets,
     get_categories,
-    increment_dataset_ranking,
     get_trending_datasets_by_days,
     get_trending_datasets_whole_time,
     get_dataset_by_filename,
     increment_dataset_download_counter,
     get_datasets_trending_by_download,
+    add_user_to_votes,
+    check_if_already_voted,
 )
 
 datasets_namespace = Namespace("datasets")
@@ -66,10 +67,25 @@ class Dataset(Resource):
 
 class DatasetRating(Resource):
     @datasets_namespace.marshal_with(dataset)
+    @jwt_required()
     def post(self, dataset_id):
         """Upvote for the dataset"""
-        dataset = increment_dataset_ranking(dataset_id)
-        return dataset, 200
+        response_object = {}
+
+        user_id = get_jwt_identity()
+        user = get_user_by_id(user_id)
+
+        dataset_retrieved = get_dataset_by_id(dataset_id)
+        if not dataset_retrieved:
+            response_object["message"] = "Dataset not found."
+            return response_object, 400
+
+        if check_if_already_voted(user_id=user_id, dataset_id=dataset_id):
+            response_object["message"] = "You have already upvoted this dataset."
+            return response_object, 200
+        else:
+            dataset_updated = add_user_to_votes(user, dataset_retrieved)
+            return dataset_updated, 200
 
 
 class DatasetListTrendingDays(Resource):

@@ -79,7 +79,12 @@ def test_get_datasets_by_category(
     assert 0 == data[2]["rating"]
 
 
-def test_voting_for_dataset(test_app, test_database, add_dataset, add_user):
+def test_voting_for_dataset_unauthorized(
+    test_app,
+    test_database,
+    add_dataset,
+    add_user,
+):
     user = add_user("Matty", "matty@email.com", "123456")
     dataset = add_dataset(user.user_id, "file_name", "carbon", "gas-emission-title")
 
@@ -90,18 +95,54 @@ def test_voting_for_dataset(test_app, test_database, add_dataset, add_user):
     )
 
     data = json.loads(resp.data.decode())
+    print(data)
+    assert "Missing Authorization Header" in data["msg"]
+    assert resp.status_code == 401
 
-    assert 1 == data["rating"]
-    assert resp.status_code == 200
 
-    resp_two = client.post(
-        f"/datasets/vote/{dataset.dataset_id}",
+def test_voting_for_dataset(
+    test_app,
+    test_database,
+    add_dataset,
+    add_user,
+    add_category,
+):
+    test_database.session.query(Dataset).delete()
+    test_database.session.query(Category).delete()
+
+    client = test_app.test_client()
+
+    user = add_user("Mat", "mat@email.com", "123456")
+    add_category("carbon")
+    dataset = add_dataset(user.user_id, "file_name", "carbon", "gas-emission-title")
+
+    resp = client.post(
+        "/auth/login",
+        data=json.dumps(
+            {
+                "email": "mat@email.com",
+                "password": "123456",
+            },
+        ),
+        content_type="application/json",
     )
 
-    data = json.loads(resp_two.data.decode())
+    resp_login = json.loads(resp.data.decode())
 
-    assert 2 == data["rating"]
-    assert resp.status_code == 200
+    access_token = resp_login["access_token"]
+
+    assert resp_login["access_token"]
+    assert resp_login["refresh_token"]
+
+    resp_vote = client.post(
+        f"/datasets/vote/{dataset.dataset_id}",
+        content_type="application/json",
+        headers={"Authorization": f"Bearer {access_token}"},
+    )
+
+    data = json.loads(resp_vote.data.decode())
+    assert 1 == data["rating"]
+    assert "carbon" in data["category"]
 
 
 def test_get_trending_datasets_whole_time(

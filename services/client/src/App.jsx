@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import LandingPage from "./LandingPage";
 import axios from "axios";
 import UsersList from "./components/UsersList";
-import CategoryList from "./components/CategoryList";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -26,7 +25,6 @@ class App extends Component {
     this.state = {
       users: [],
       categories: [],
-      datasets: [],
       file_name: null,
       title: null,
       category: null,
@@ -37,8 +35,6 @@ class App extends Component {
 
   componentDidMount() {
     this.getUsers();
-    // this.getCategories();
-    this.getDatasetList();
   }
 
   getUsers() {
@@ -47,28 +43,6 @@ class App extends Component {
       .then((res) => {
         this.setState({ users: res.data });
       }) // updated
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  // getCategories() {
-  //   axios
-  //     .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
-  //     .then((res) => {
-  //       this.setState({ categories: res.data });
-  //     }) // updated
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-  getDatasetList() {
-    axios
-      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
-      .then((res) => {
-        this.setState({ datasets: res.data });
-      })
       .catch((err) => {
         console.log(err);
       });
@@ -198,30 +172,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-          <NavBar
-            className='navbar'
-            title={this.state.title_website}
-            logoutUser={this.logoutUser}
-            isAuthenticated={this.isAuthenticated}
-          />
+        <NavBar
+          className="navbar"
+          title={this.state.title_website}
+          logoutUser={this.logoutUser}
+          isAuthenticated={this.isAuthenticated}
+        />
         <header className="App-header">
           <div className="container">
             <br />
             <Switch>
-              <Route
-                exact
-                path="/"
-                render={() => (
-                  <LandingPage />
-                )}
-              />
-              {/* <Route
-                exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              /> */}
+              <Route exact path="/" render={() => <LandingPage />} />
               <Route
                 exact
                 path="/users"
@@ -259,21 +220,15 @@ class App extends Component {
                   />
                 )}
               />
-              {/* <Route
-                exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              /> */}
               <Route
                 exact
                 path="/datasets"
                 render={() => (
                   <DatasetsList
-                    datasets={this.state.datasets}
+                    // datasets={this.state.datasets}
                     handleClick={this.onClickDownloadFile}
                     isAuthenticated={this.isAuthenticated}
+                    accessToken={this.state.accessToken}
                   />
                 )}
               />
