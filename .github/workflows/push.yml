@@ -19,7 +19,7 @@ jobs:
           echo DATABASE_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_dev > .env.dev
           echo DATABASE_TEST_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_test > .env.dev
           echo APP_FOLDER=/usr/src/app > .env.dev
-          cat .env
+          cat .env.dev
       - name: Build the services using docker-compose
         run: docker-compose up -d --build
       - name: Test
