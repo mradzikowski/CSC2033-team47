@@ -241,3 +241,20 @@ h1 {
   z-index: -1;
   color:rgb(200, 200, 200);
 }
+
+.upload-container {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.upload-title {
+  display: inline-block;
+}
+
+.upload-field {
+  margin: 10px;
+  position: relative;
+  left: 10;
+  text-align: left;
+}

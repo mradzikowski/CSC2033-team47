@@ -6,40 +6,41 @@ import PropTypes from "prop-types";
 
 const AddDataset = (props) => {
   return (
-    <div className="col-md-6">
-      <Paper elevation={10}>
-        <form>
-          <div className="form-group files">
-            <label>Upload Your Dataset </label>
+      <Paper elevation={10} className='upload-container'>
+        <form style={{padding: '20px'}}>
+          <div className="upload-title">
+            Upload Your Dataset
+          </div>
+          <div className="upload-field">
             <TextField
               type="file"
               name="file_name"
               className="form-control"
               onChange={props.handleChange}
+              style={{width: '100%'}}
             />
           </div>
-          <br />
           <div>
-            <div>
+            <div className="upload-field">
               <TextField
                 id="outlined-basic"
                 name="title"
                 onChange={props.handleChange}
-                variant="outlined"
+                variant="standard"
                 label="Title"
+                style={{width: '100%'}}
               />
             </div>
-            <hr />
-            <div>
+            <div className="upload-field">
               <TextField
                 id="outlined-basic"
                 name="category"
                 onChange={props.handleChange}
-                variant="outlined"
+                variant="standard"
                 label="Category"
+                style={{width: '100%'}}
               />
             </div>
-            <hr />
             <Button
               type="submit"
               className="btn btn-success btn-block"
@@ -51,8 +52,6 @@ const AddDataset = (props) => {
           </div>
         </form>
       </Paper>
-      <br />
-    </div>
   );
 };
 
