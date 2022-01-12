@@ -14,6 +14,6 @@ jobs:
       - name: Build the services using docker-compose
         run: docker-compose -f docker-compose.ci.yml up -d --build
       - name: Test
-        run: docker-compose exec -T api_users python -m pytest "src/tests" -p no:warnings
+        run: docker-compose -f docker-compose.ci.yml exec -T api_users python -m pytest "src/tests" -p no:warnings
       - name: Bring down the container
-        run: docker-compose down -v
+        run: docker-compose -f docker-compose.ci.yml down -v
