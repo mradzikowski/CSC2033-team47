@@ -11,6 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Create env file
+        run: |
+          touch .env.dev
+          echo FLASK_ENV=development > .env.dev
+          echo FLASK_SETTINGS > .env.dev
+          echo DATABASE_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_dev > .env.dev
+          echo DATABASE_TEST_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_test > .env.dev
+          echo APP_FOLDER=/usr/src/app > .env.dev
+          cat .env
       - name: Build the services using docker-compose
         run: docker-compose up -d --build
       - name: Test
