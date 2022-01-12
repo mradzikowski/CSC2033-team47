@@ -17,6 +17,10 @@ services:
       - DATABASE_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_dev
       - DATABASE_TEST_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_test
       - APP_FOLDER=/usr/src/app
+      - CONSUMER_KEY=
+      - CONSUMER_SECRET=
+      - ACCESS_TOKEN=
+      - ACCESS_SECRET=
     depends_on:
       - api_users_db
 
