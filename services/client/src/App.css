@@ -162,7 +162,7 @@ h1 {
 
 .nasa-data-container {
   flex: 0 0 auto;
-  width: 22%;
+  width: 300px;
   max-width: 100%;
   color: white;
   background-color: rgb(20, 20, 20);
