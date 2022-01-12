@@ -88,24 +88,28 @@ class UserStatus extends Component {
     }
     return (
       <Box>
-        <Paper>
-          <ul>
-            <li>
-              <strong>Email:</strong>&nbsp;
-              <span data-testid="user-email">{this.state.email}</span>
-            </li>
-            <li>
-              <strong>Username:</strong>&nbsp;
-              <span data-testid="user-username">{this.state.username}</span>
-            </li>
-            <li>
-              <strong>Date created</strong>&nbsp;
-              <span data-testid="user-date-created">
-                {this.state.date_created}
-              </span>
-            </li>
-            <li>{this.state.button}</li>
-          </ul>
+        <Paper style={{width: "600px"}}>
+          <img 
+            className='account-item' src={`${process.env.PUBLIC_URL}/Logo.png`} 
+            style={{ padding: '10px', width: '400px', height: '100px'}} 
+          />
+            <ul className='account-container'>
+              <li className='account-item'>
+                <strong>Email:</strong>&nbsp;
+                <span data-testid="user-email">{this.state.email}</span>
+              </li>
+              <li className='account-item'>
+                <strong>Username:</strong>&nbsp;
+                <span data-testid="user-username">{this.state.username}</span>
+              </li>
+              <li className='account-item'>
+                <strong>Date created</strong>&nbsp;
+                <span data-testid="user-date-created">
+                  {this.state.date_created.substr(0, 10)} | {this.state.date_created.substr(11, 5)}
+                </span>
+              </li>
+              <li className='account-item'>{this.state.button}</li>
+            </ul>
         </Paper>
       </Box>
     );

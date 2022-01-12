@@ -257,4 +257,15 @@ h1 {
   position: relative;
   left: 10;
   text-align: left;
+  justify-content: left;
+}
+
+.account-item {
+  list-style-type: none;
+  margin: 20px;
+}
+
+.account-container {
+  text-align: left;
+  padding: 20px;
 }
