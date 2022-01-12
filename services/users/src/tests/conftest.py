@@ -1,7 +1,7 @@
 import pytest
 from src import create_app, db
 from src.api.crud.crud_users import get_user_by_id, update_user_dataset_counter
-from src.api.models import Category, ClimateData, Dataset, User
+from src.api.models import Category, Dataset, User, WorldCountsData
 
 
 @pytest.fixture(scope="function")
@@ -99,7 +99,7 @@ def add_climate_data():
         percent_electricity_produced_from_renewable_sources="0",
         time_left_to_the_end_of_oil="",
     ):
-        climate_data = ClimateData(
+        climate_data = WorldCountsData(
             tons_of_co2,
             world_average_temperature,
             tons_of_melted_ice,
