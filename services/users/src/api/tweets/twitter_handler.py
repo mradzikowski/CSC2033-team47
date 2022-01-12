@@ -8,10 +8,10 @@ class TwitterHandler:
     def __init__(self):
         # Elevated Access Keys
         # Contact Joseph Krajewski at josephrhdk@gmail.com if these are not working
-        self.consumer_key = os.getenv("CONSUMER_KEY")
-        self.consumer_secret = os.getenv("CONSUMER_SECRET")
-        self.access_token = os.getenv("ACCESS_TOKEN")
-        self.access_secret = os.getenv("ACCESS_SECRET")
+        self.consumer_key = os.getenv("CONSUMER_KEY") or " "
+        self.consumer_secret = os.getenv("CONSUMER_SECRET") or " "
+        self.access_token = os.getenv("ACCESS_TOKEN") or " "
+        self.access_secret = os.getenv("ACCESS_SECRET") or " "
         # Authentications
         self.auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
         self.auth.set_access_token(self.access_token, self.access_secret)
