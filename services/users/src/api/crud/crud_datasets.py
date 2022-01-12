@@ -3,7 +3,7 @@ from typing import List, Union
 
 from sqlalchemy import desc
 from src import db
-from src.api.models import Category, Dataset
+from src.api.models import Category, Dataset, User, Vote
 
 
 def add_dataset(user_id: int, file_name: str, title: str, category: str) -> Dataset:
@@ -55,9 +55,19 @@ def increment_dataset_download_counter(dataset: Dataset):
     db.session.commit()
 
 
-def increment_dataset_ranking(dataset_id: int) -> Dataset:
-    dataset = get_dataset_by_id(dataset_id)
+def check_if_already_voted(user_id: int, dataset_id: int) -> bool:
+    votes = Vote.query.all()
+    for vote in votes:
+        if vote.user_id == user_id and vote.dataset_id == dataset_id:
+            return True
+    else:
+        return False
+
+
+def add_user_to_votes(user: User, dataset: Dataset) -> bool:
+    vote = Vote(user_id=user.user_id, dataset_id=dataset.dataset_id)
     dataset.rating += 1
+    db.session.add(vote)
     db.session.commit()
     return dataset
 

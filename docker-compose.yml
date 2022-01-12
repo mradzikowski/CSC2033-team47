@@ -11,12 +11,8 @@ services:
       - "./services/users/uploaded_datasets:/usr/src/datasets"
     ports:
       - 5004:5000
-    environment:
-      - FLASK_ENV=development
-      - APP_SETTINGS=src.config.DevelopmentConfig
-      - DATABASE_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_dev
-      - DATABASE_TEST_USERS_URL=postgresql://postgres:postgres@api_users_db:5432/api_users_test
-      - APP_FOLDER=/usr/src/app
+    env_file:
+      - ./.env.dev
     depends_on:
       - api_users_db
 

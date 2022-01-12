@@ -10,6 +10,7 @@ import axios from "axios";
 class DatasetsList extends Component {
 
   constructor(props) {
+<<<<<<< HEAD
     super(props)
 
     // if this.prpsconsole.log(this.props.location.state.state)
@@ -28,18 +29,44 @@ class DatasetsList extends Component {
     this.state = {
       targetCategories: targetCategoriesArray
     }
+=======
+    super(props);
+    this.state = {
+      datasets: [],
+    };
+  }
+
+  componentDidMount() {
+    this.getDatasetList();
+  }
+
+  getDatasetList() {
+    axios
+      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
+      .then((res) => {
+        this.setState({ datasets: res.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+>>>>>>> origin/main
   }
 
   handleUpVoteSubmit = (dataset_id) => {
-    const url =
-      `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/vote`.concat(
+    const options = {
+      url: `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/vote`.concat(
         "/",
         dataset_id
-      );
-    axios
-      .post(url)
+      ),
+      method: "post",
+      headers: {
+        Authorization: `Bearer ${this.props.accessToken}`,
+      },
+    };
+    axios(options)
       .then((res) => {
         console.log(res);
+        this.getDatasetList();
       })
       .catch((err) => {
         console.log(err);
@@ -50,6 +77,7 @@ class DatasetsList extends Component {
     if (this.props.isAuthenticated()) {
       return (
         <Box className="datasets-list">
+<<<<<<< HEAD
           {this.props.datasets.map((dataset) => {
 
             if (this.state.targetCategories.length == 0 || this.state.targetCategories.indexOf(dataset.category) > -1){
@@ -128,17 +156,114 @@ class DatasetsList extends Component {
                     </div>
                     <Button
                       sx={{backgroundColor: 'black'}}
+=======
+          {this.state.datasets.map((dataset) => {
+            return (
+              <Box key={dataset.dataset_id} className="dataset-container">
+                <Paper
+                  key={dataset.dataset_id}
+                  className="dataset"
+                  sx={{ display: "grid" }}
+                  elevation={10}
+                >
+                  <div className="dataset-item">
+                    <strong>Filename:</strong>
+                    {dataset.file_name}
+                  </div>
+                  <div className="dataset-item">
+                    <strong>Title:</strong>
+                    <span data-testid="dataset-title">{dataset.title}</span>
+                  </div>
+                  <div className="dataset-item">
+                    <strong>Category:</strong>
+                    <span data-testid="dataset-category">
+                      {dataset.category}
+                    </span>
+                  </div>
+                  <div style={{ display: "flex" }}>
+                    <Button
+                      style={{
+                        display: "inline-block",
+                        float: "left",
+                        width: "10%",
+                        transform: "translate(0, 5%)",
+                      }}
+                      onClick={
+                        (event) => this.handleUpVoteSubmit(dataset.dataset_id)
+                        // eslint-disable-next-line react/jsx-curly-newline
+                      }
+                    >
+                      <ThumbUpIcon />
+                      {dataset.rating}
+                    </Button>
+                    <Button
+                      style={{
+                        display: "inline-block",
+                        float: "left",
+                        width: "90%",
+                      }}
+                      sx={{ backgroundColor: "black" }}
+>>>>>>> origin/main
                       name={dataset.file_name}
                       onClick={this.props.handleClick}
                       variant="contained"
                     >
                       Download
                     </Button>
+<<<<<<< HEAD
                   </Paper>
                   <br />
                 </Box>
               );
             }
+=======
+                  </div>
+                </Paper>
+                <br />
+              </Box>
+            );
+          })}
+        </Box>
+      );
+    } else {
+      return (
+        <Box className="datasets-list">
+          {this.state.datasets.map((dataset) => {
+            return (
+              <Box key={dataset.dataset_id} className="dataset-container">
+                <Paper
+                  key={dataset.dataset_id}
+                  className="dataset"
+                  sx={{ display: "grid" }}
+                  elevation={10}
+                >
+                  <div className="dataset-item">
+                    <strong>Filename:</strong>&nbsp;
+                    {dataset.file_name}
+                  </div>
+                  <div className="dataset-item">
+                    <strong>Title:</strong>&nbsp;
+                    <span data-testid="dataset-title">{dataset.title}</span>
+                  </div>
+                  <div className="dataset-item">
+                    <strong>Category:</strong>&nbsp;
+                    <span data-testid="dataset-category">
+                      {dataset.category}
+                    </span>
+                  </div>
+                  <Button
+                    sx={{ backgroundColor: "black" }}
+                    name={dataset.file_name}
+                    onClick={this.props.handleClick}
+                    variant="contained"
+                  >
+                    Download
+                  </Button>
+                </Paper>
+                <br />
+              </Box>
+            );
+>>>>>>> origin/main
           })}
         </Box>
       );
@@ -147,7 +272,6 @@ class DatasetsList extends Component {
 }
 
 DatasetsList.propTypes = {
-  datasets: PropTypes.array.isRequired,
   isAuthenticated: PropTypes.func.isRequired,
 };
 

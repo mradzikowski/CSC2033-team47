@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import LandingPage from "./LandingPage";
 import axios from "axios";
 import UsersList from "./components/UsersList";
-import CategoryList from "./components/CategoryList";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -27,7 +26,6 @@ class App extends Component {
     this.state = {
       users: [],
       categories: [],
-      datasets: [],
       file_name: null,
       title: null,
       category: null,
@@ -38,8 +36,6 @@ class App extends Component {
 
   componentDidMount() {
     this.getUsers();
-    // this.getCategories();
-    this.getDatasetList();
   }
 
   getUsers() {
@@ -63,7 +59,6 @@ class App extends Component {
   //       console.log(err);
   //     });
   // }
-
 
 
   getDatasetList() {
@@ -268,21 +263,15 @@ class App extends Component {
                   />
                 )}
               />
-              {/* <Route
-                exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              /> */}
               <Route
                 exact
                 path="/datasets"
                 render={() => (
                   <DatasetsList
-                    datasets={this.state.datasets}
+                    // datasets={this.state.datasets}
                     handleClick={this.onClickDownloadFile}
                     isAuthenticated={this.isAuthenticated}
+                    accessToken={this.state.accessToken}
                   />
                 )}
               />
