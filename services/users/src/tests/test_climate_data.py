@@ -17,14 +17,14 @@ def test_climate_data_get(test_app, test_database, add_climate_data):
     client = test_app.test_client()
 
     resp = client.get(
-        "/climatedata/all",
+        "/climatedata/worldcounts",
     )
 
     data = json.loads(resp.data.decode())
 
     assert resp.status_code == 200
     assert len(data) == 1
-    assert data[0]["world_average_temperature"] == 14.9419
+    assert data[0]["world_average_temperature"] == 14.94
 
 
 # TODO: ADD TEST FOR CHECKING NEXT DAY (MOCK NEXT DAY)
