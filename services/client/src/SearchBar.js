@@ -61,6 +61,7 @@ class SearchBar extends Component {
           options={this.state.categories}
           className="searchBar"
           onChange={(e) => this.handleChange(e)}
+          placeholder='Select Dataset Categories'
         />
         {/* eslint-disable-next-line react/react-in-jsx-scope */}
         <Button
