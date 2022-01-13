@@ -43,7 +43,7 @@ class UserStatus extends Component {
         if (this.state.subscribe) {
           this.setState({
             button: (
-              <Button onClick={this.handleSubscribeButton} variant="outlined">
+              <Button onClick={this.handleSubscribeButton} variant="outlined" color="success">
                 Unsubscribe <MailIcon />
               </Button>
             ),
@@ -51,7 +51,7 @@ class UserStatus extends Component {
         } else {
           this.setState({
             button: (
-              <Button onClick={this.handleSubscribeButton} variant="outlined">
+              <Button onClick={this.handleSubscribeButton} variant="outlined" color="error">
                 Subscribe <MailIcon />
               </Button>
             ),
