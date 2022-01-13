@@ -21,7 +21,10 @@ class ClimateData extends React.Component {
     }
 
     componentDidMount() {
+        this.getCounterData();
+    }
 
+    getCounterData() {
         // Get World Counts
         fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/worldcounts`)
           .then((res) => res.json())
@@ -33,9 +36,29 @@ class ClimateData extends React.Component {
             }
 
             this.setState({worldCounts: worldCounts})
-            this.setState({retrieved: true})
+          })
+          .then(() => this.getBloomberg())
+          .then(() => {
+              console.log(this.state.worldCounts)
           })
     }
+
+    getBloomberg() {
+        // Get World Counts
+        fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/bloomberg`)
+          .then((res) => res.json())
+          .then((values) => {
+            let worldCounts = this.state.worldCounts
+            
+            for (let key in values[0]) {
+                if (key != 'id') worldCounts.push({title: key, data: values[0][key]});
+            }
+
+            this.setState({worldCounts: worldCounts})
+            this.setState({retrieved: true})
+        })
+    }
+    
 
     render(){
         if (this.state.retrieved){
@@ -92,7 +115,7 @@ class CounterData extends React.Component {
                 </Box>
                 <Box className='climatedata-container' key=''>
                     <Paper key='' className='climatedata'>
-                        <WaterIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
+                        <ArrowUpwardIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
                                 <strong>{parseInt(this.props.data['2'].data).toLocaleString('en-US')}</strong>
@@ -203,6 +226,58 @@ class CounterData extends React.Component {
                             </div>
                             <div key=''>
                                 Time left till the we run out oil
+                            </div>
+                        </div>
+                    </Paper>
+                </Box>
+                <Box className='climatedata-container' key=''>
+                    <Paper key='' className='climatedata'>
+                        <ArrowUpwardIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
+                        <div className='climatedata-item'>
+                            <div key=''>
+                                <strong>{parseInt(this.props.data['11'].data).toLocaleString('en-US')}</strong>
+                            </div>
+                            <div key=''>
+                                Million tons of greenhouse emissions
+                            </div>
+                        </div>
+                    </Paper>
+                </Box>
+                <Box className='climatedata-container' key=''>
+                    <Paper key='' className='climatedata'>
+                        <ArrowUpwardIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
+                        <div className='climatedata-item'>
+                            <div key=''>
+                                <strong>{this.props.data['13'].data}%</strong>
+                            </div>
+                            <div key=''>
+                                Todays artic ice vs historic average
+                            </div>
+                        </div>
+                    </Paper>
+                </Box>
+                <Box className='climatedata-container' key=''>
+                    <Paper key='' className='climatedata'>
+                        <ArrowUpwardIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
+                        <div className='climatedata-item'>
+                            <div key=''>
+                                <strong>{this.props.data['14'].data}%</strong>
+                            </div>
+                            <div key=''>
+                                Carbon-free power in Germany
+                            </div>
+                        </div>
+                    </Paper>
+                </Box>
+                <Box className='climatedata-container' key=''>
+                    <Paper key='' className='climatedata'>
+                        <ArrowUpwardIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
+                        <div className='climatedata-item'>
+                            <div key=''>
+                                <strong>${this.props.data['15'].data} Billion</strong>
+                            </div>
+                            <div key=''>
+                                Renewable power investments worldwide
                             </div>
                         </div>
                     </Paper>
