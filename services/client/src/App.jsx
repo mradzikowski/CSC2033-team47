@@ -12,6 +12,7 @@ import DatasetsList from "./components/DatasetsList";
 import AddDataset from "./components/AddDataset";
 import ClimateData from "./components/ClimateData";
 import NewsPage from "./components/NewsPage";
+import RankingUsersList from "./components/RankingUsersList";
 
 /*
     Function:
@@ -100,39 +101,6 @@ class App extends Component {
     }
   };
 
-  uploadFile = (event) => {
-    event.preventDefault();
-    let formData = new FormData();
-    console.log(this.state.file_name);
-    console.log(this.state.title);
-    console.log(this.state.category);
-
-    formData.append("file", this.state.file_name);
-    formData.append("title", this.state.title);
-    formData.append("category", this.state.category);
-
-    console.log(formData.get("file"));
-    console.log(formData.get("title"));
-    console.log(formData.get("category"));
-
-    axios
-      .post(
-        `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/upload`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${this.state.accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        this.getDatasetList();
-      })
-      .catch((err) => console.log(err));
-  };
-
   onClickDownloadFile = (event) => {
     const file_name = event.target.name;
     const options = {
@@ -179,18 +147,11 @@ class App extends Component {
               />
               <Route exact path="/data" render={() => <ClimateData />} />
               <Route exact path="/news" render={() => <NewsPage />} />
-              {/* <Route
+              <Route
                 exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              /> */}
-              {/* <Route
-                exact
-                path="/users"
-                render={() => <UsersList users={this.state.users} />}
-              /> */}
+                path="/rankings"
+                render={() => <RankingUsersList />}
+              />
               <Route
                 exact
                 path="/login"
@@ -240,9 +201,11 @@ class App extends Component {
                 path="/datasets/upload"
                 render={() => (
                   <AddDataset
-                    handleChange={this.onChangeHandler}
-                    handleClick={this.uploadFile}
+                    // handleChange={this.onChangeHandler}
+                    // handleClick={this.uploadFile}
+                    accessToken={this.state.accessToken}
                     isAuthenticated={this.isAuthenticated}
+                    // handleSelectChange={this.uploadCategoryHandler}
                   />
                 )}
               />

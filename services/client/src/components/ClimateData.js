@@ -20,6 +20,7 @@ class ClimateData extends React.Component {
   }
 
   componentDidMount() {
+
     // Get World Counts
     fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/worldcounts`)
       .then((res) => res.json())
@@ -35,6 +36,48 @@ class ClimateData extends React.Component {
         this.setState({ retrieved: true });
       });
   }
+
+
+    this.getCounterData();
+  }
+
+  getCounterData() {
+    // Get World Counts
+    fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/worldcounts`)
+      .then((res) => res.json())
+      .then((values) => {
+        let worldCounts = [];
+
+        for (let key in values[0]) {
+          if (key != "id")
+            worldCounts.push({ title: key, data: values[0][key] });
+        }
+
+        this.setState({ worldCounts: worldCounts });
+      })
+      .then(() => this.getBloomberg())
+      .then(() => {
+        console.log(this.state.worldCounts);
+      });
+  }
+
+  getBloomberg() {
+    // Get World Counts
+    fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/bloomberg`)
+      .then((res) => res.json())
+      .then((values) => {
+        let worldCounts = this.state.worldCounts;
+
+        for (let key in values[0]) {
+          if (key != "id")
+            worldCounts.push({ title: key, data: values[0][key] });
+        }
+
+        this.setState({ worldCounts: worldCounts });
+        this.setState({ retrieved: true });
+      });
+  }
+
 
   render() {
     if (this.state.retrieved) {
@@ -90,7 +133,7 @@ class CounterData extends React.Component {
         </Box>
         <Box className="climatedata-container" key="">
           <Paper key="" className="climatedata">
-            <WaterIcon
+            <ArrowUpwardIcon
               style={{ position: "relative", top: "10" }}
               className="climatedata-item"
             />
@@ -98,6 +141,22 @@ class CounterData extends React.Component {
               <div key="">
                 <strong>
                   {parseInt(this.props.data["2"].data).toLocaleString("en-US")}
+                </strong>
+              </div>
+              <div key="">Concentration of CO2</div>
+            </div>
+          </Paper>
+        </Box>
+        <Box className="climatedata-container" key="">
+          <Paper key="" className="climatedata">
+            <WaterIcon
+              style={{ position: "relative", top: "10" }}
+              className="climatedata-item"
+            />
+            <div className="climatedata-item">
+              <div key="">
+                <strong>
+                  {parseInt(this.props.data["3"].data).toLocaleString("en-US")}
                 </strong>
               </div>
               <div key="">Tons of melted ice</div>
@@ -112,7 +171,7 @@ class CounterData extends React.Component {
             />
             <div className="climatedata-item">
               <div key="">
-                <strong>{this.props.data["3"].data}</strong>
+                <strong>{this.props.data["4"].data}</strong>
               </div>
               <div key="">Rise in sea levels (cm)</div>
             </div>
@@ -127,7 +186,7 @@ class CounterData extends React.Component {
             <div className="climatedata-item">
               <div key="">
                 <strong>
-                  {parseInt(this.props.data["4"].data).toLocaleString("en-US")}
+                  {parseInt(this.props.data["5"].data).toLocaleString("en-US")}
                 </strong>
               </div>
               <div key="">Cost of not acting on climate change (US $)</div>
@@ -143,7 +202,7 @@ class CounterData extends React.Component {
             <div className="climatedata-item">
               <div key="">
                 <strong>
-                  {parseInt(this.props.data["5"].data).toLocaleString("en-US")}
+                  {parseInt(this.props.data["6"].data).toLocaleString("en-US")}
                 </strong>
               </div>
               <div key="">Terajoules of energy used</div>
@@ -159,7 +218,7 @@ class CounterData extends React.Component {
             <div className="climatedata-item">
               <div key="">
                 <strong>
-                  {parseInt(this.props.data["6"].data).toLocaleString("en-US")}
+                  {parseInt(this.props.data["7"].data).toLocaleString("en-US")}
                 </strong>
               </div>
               <div key="">Terajoules of solar energy striking earth</div>
@@ -175,7 +234,7 @@ class CounterData extends React.Component {
             <div className="climatedata-item">
               <div key="">
                 <strong>
-                  {parseInt(this.props.data["7"].data).toLocaleString("en-US")}
+                  {parseInt(this.props.data["8"].data).toLocaleString("en-US")}
                 </strong>
               </div>
               <div key="">Terajoules of electricity used</div>
@@ -190,7 +249,7 @@ class CounterData extends React.Component {
             />
             <div className="climatedata-item">
               <div key="">
-                <strong>{this.props.data["8"].data}</strong>
+                <strong>{this.props.data["9"].data}</strong>
               </div>
               <div key="">% of electricty produced from renewable sources</div>
             </div>
@@ -204,9 +263,67 @@ class CounterData extends React.Component {
             />
             <div className="climatedata-item">
               <div key="">
-                <strong>{this.props.data["8"].data}</strong>
+                <strong>{this.props.data["10"].data}</strong>
               </div>
               <div key="">Time left till the we run out oil</div>
+            </div>
+          </Paper>
+        </Box>
+        <Box className="climatedata-container" key="">
+          <Paper key="" className="climatedata">
+            <ArrowUpwardIcon
+              style={{ position: "relative", top: "10" }}
+              className="climatedata-item"
+            />
+            <div className="climatedata-item">
+              <div key="">
+                <strong>
+                  {parseInt(this.props.data["11"].data).toLocaleString("en-US")}
+                </strong>
+              </div>
+              <div key="">Million tons of greenhouse emissions</div>
+            </div>
+          </Paper>
+        </Box>
+        <Box className="climatedata-container" key="">
+          <Paper key="" className="climatedata">
+            <ArrowUpwardIcon
+              style={{ position: "relative", top: "10" }}
+              className="climatedata-item"
+            />
+            <div className="climatedata-item">
+              <div key="">
+                <strong>{this.props.data["13"].data}%</strong>
+              </div>
+              <div key="">Todays artic ice vs historic average</div>
+            </div>
+          </Paper>
+        </Box>
+        <Box className="climatedata-container" key="">
+          <Paper key="" className="climatedata">
+            <ArrowUpwardIcon
+              style={{ position: "relative", top: "10" }}
+              className="climatedata-item"
+            />
+            <div className="climatedata-item">
+              <div key="">
+                <strong>{this.props.data["14"].data}%</strong>
+              </div>
+              <div key="">Carbon-free power in Germany</div>
+            </div>
+          </Paper>
+        </Box>
+        <Box className="climatedata-container" key="">
+          <Paper key="" className="climatedata">
+            <ArrowUpwardIcon
+              style={{ position: "relative", top: "10" }}
+              className="climatedata-item"
+            />
+            <div className="climatedata-item">
+              <div key="">
+                <strong>${this.props.data["15"].data} Billion</strong>
+              </div>
+              <div key="">Renewable power investments worldwide</div>
             </div>
           </Paper>
         </Box>
