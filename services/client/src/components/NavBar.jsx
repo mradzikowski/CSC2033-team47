@@ -68,7 +68,6 @@ const NavBar = (props) => {
 };
 
 NavBar.propTypes = {
-  // title: PropTypes.string.isRequired,
   logoutUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.func.isRequired,
 };

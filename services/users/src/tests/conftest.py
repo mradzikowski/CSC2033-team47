@@ -90,6 +90,7 @@ def add_climate_data():
     def _add_climate_data(
         world_average_temperature="0",
         tons_of_co2="0",
+        co2_concentration="0",
         tons_of_melted_ice="0",
         rise_in_sea_levels_in_cm="0",
         cost_of_not_acting_on_climate_change="0",
@@ -101,6 +102,7 @@ def add_climate_data():
     ):
         climate_data = WorldCountsData(
             tons_of_co2,
+            co2_concentration,
             world_average_temperature,
             tons_of_melted_ice,
             rise_in_sea_levels_in_cm,

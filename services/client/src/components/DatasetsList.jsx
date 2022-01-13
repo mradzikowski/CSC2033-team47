@@ -11,8 +11,6 @@ class DatasetsList extends Component {
   constructor(props) {
     super(props);
 
-    // if this.prpsconsole.log(this.props.location.state.state)
-
     let targetCategoriesArray = [];
     if (this.props.location.state) {
       if (this.props.location.state.state) {
@@ -168,6 +166,10 @@ class DatasetsList extends Component {
                       <span data-testid="dataset-category">
                         {dataset.category}
                       </span>
+                    </div>
+                    <div>
+                      <ThumbUpIcon />
+                      {dataset.rating}
                     </div>
                     <Button
                       sx={{ backgroundColor: "black" }}

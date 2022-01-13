@@ -19,7 +19,7 @@ def add_dataset(user_id: int, file_name: str, title: str, category: str) -> Data
 
 
 def get_all_datasets() -> Union[List[Dataset], None]:
-    return Dataset.query.all()
+    return Dataset.query.order_by(desc(Dataset.rating)).all()
 
 
 def get_dataset_by_id(dataset_id: int) -> Dataset:

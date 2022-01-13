@@ -22,7 +22,7 @@ class TestingConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
-    url = os.environ.get("DATABASE_URL")
+    url = os.environ.get("DATABASE_USERS_URL")
 
     if url is not None and url.startswith("postgres://"):
         url = url.replace("postgres://", "postgresql://", 1)

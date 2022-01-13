@@ -12,9 +12,9 @@ world_counts_climate_data = climate_data_namespace.model(
     "WorldCountsClimateData",
     {
         "id": fields.Integer(required=True),
-        "world_average_temperature": fields.Float(required=True),
         "tons_of_co2": fields.Integer(required=True),
         "co2_concentration": fields.Float(required=True),
+        "world_average_temperature": fields.Float(required=True),
         "tons_of_melted_ice": fields.Integer(required=True),
         "rise_in_sea_levels_in_cm": fields.Float(required=True),
         "cost_of_not_acting_on_climate_change": fields.Integer(required=True),

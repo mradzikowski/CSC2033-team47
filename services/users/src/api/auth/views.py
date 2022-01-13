@@ -104,7 +104,7 @@ class Login(Resource):
 
 
 class Refresh(Resource):
-    @auth_namespace.expect(refresh_token)
+    @auth_namespace.marshal_with(tokens)
     @jwt_required(refresh=True)
     def post(self):
         """Refreshes a token"""

@@ -1,8 +1,7 @@
-import React, { state, setState, useState, useEffect, Component } from "react";
+import React, { Component } from "react";
 import { useHistory, withRouter } from "react-router-dom";
 import Select from "react-select";
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 
 /*
     Function:
@@ -72,12 +71,9 @@ class SearchBar extends Component {
         >
           Search
         </Button>
-        {/* {this.state.query != null ? this.state.query[0].value : 'null'} */}
       </div>
     );
   }
 }
-
-const style = {};
 
 export default withRouter(SearchBar);

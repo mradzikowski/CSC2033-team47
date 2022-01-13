@@ -4,7 +4,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import LandingPage from "./LandingPage";
 import axios from "axios";
-import UsersList from "./components/UsersList";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -26,53 +25,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      datasets: [],
-      users: [],
-      categories: [],
       file_name: null,
       title: null,
       category: null,
       title_website: "ClimateXtractor.com",
       accessToken: null,
     };
-  }
-
-  componentDidMount() {
-    this.getUsers();
-    this.getDatasetList();
-  }
-
-  getUsers() {
-    axios
-      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`)
-      .then((res) => {
-        this.setState({ users: res.data });
-      }) // updated
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  // getCategories() {
-  //   axios
-  //     .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
-  //     .then((res) => {
-  //       this.setState({ categories: res.data });
-  //     }) // updated
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-  getDatasetList() {
-    axios
-      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
-      .then((res) => {
-        this.setState({ datasets: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   handleRegisterFormSubmit = (data) => {
@@ -93,7 +51,6 @@ class App extends Component {
       .post(url, data)
       .then((res) => {
         this.setState({ accessToken: res.data.access_token });
-        this.getUsers();
         window.localStorage.setItem("refreshToken", res.data.refresh_token);
       })
       .catch((err) => {
@@ -102,20 +59,25 @@ class App extends Component {
   };
 
   isAuthenticated = () => {
-    return !!(this.state.accessToken || this.validRefresh());
+    if (this.state.accessToken || this.validRefresh()) {
+      return true;
+    }
+    return false;
   };
 
   validRefresh = () => {
-    const token = window.localStorage.getItem("refresh_token");
+    const token = window.localStorage.getItem("refreshToken");
     if (token) {
-      axios
-        .post(`${process.env.REACT_APP_USERS_SERVICE_URL}/auth/refresh`, {
-          refresh_token: token,
-        })
+      const options = {
+        url: `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/refresh`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "post",
+      };
+      axios(options)
         .then((res) => {
-          this.setState({ access_token: res.data.access_token });
-          this.getUsers();
-          window.localStorage.setItem("refresh_token", res.data.refresh_token);
+          this.setState({ accessToken: res.data.access_token });
           return true;
         })
         .catch((err) => {
@@ -138,40 +100,6 @@ class App extends Component {
       this.setState({ [event.target.name]: event.target.value });
     }
   };
-
-  // uploadFile = (event) => {
-  //   event.preventDefault();
-  //   let formData = new FormData();
-  //   console.log(this.state)
-  //   console.log(this.state.file_name);
-  //   console.log(this.state.title);
-  //   console.log(this.state.category);
-
-  //   formData.append("file", this.state.file_name);
-  //   formData.append("title", this.state.title);
-  //   formData.append("category", this.state.category);
-
-  //   console.log(formData.get("file"));
-  //   console.log(formData.get("title"));
-  //   console.log(formData.get("category"));
-
-  //   axios
-  //     .post(
-  //       `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/upload`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //           Authorization: `Bearer ${this.state.accessToken}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       this.getDatasetList();
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
 
   onClickDownloadFile = (event) => {
     const file_name = event.target.name;
@@ -224,18 +152,6 @@ class App extends Component {
                 path="/rankings"
                 render={() => <RankingUsersList />}
               />
-              {/* <Route
-                exact
-                path="/categories"
-                render={() => (
-                  <CategoryList categories={this.state.categories} />
-                )}
-              /> */}
-              {/* <Route
-                exact
-                path="/users"
-                render={() => <UsersList users={this.state.users} />}
-              /> */}
               <Route
                 exact
                 path="/login"
