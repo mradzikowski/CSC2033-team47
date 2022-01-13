@@ -12,9 +12,9 @@ const NavBar = (props) => {
       <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
         DATASETS
       </Link>
-      {/* <Link to="/users" data-testid="nav-categories" className="menuItem">
-        USERS
-      </Link> */}
+      <Link to="/rankings" className="menuItem">
+        RANKINGS
+      </Link>
       <Link to="/news" className="menuItem">
         NEWS
       </Link>
@@ -44,9 +44,9 @@ const NavBar = (props) => {
         <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
           DATASETS
         </Link>
-        {/* <Link to="/users" data-testid="nav-categories" className="menuItem">
-          USERS
-        </Link> */}
+        <Link to="/rankings" className="menuItem">
+          RANKINGS
+        </Link>
         <Link to="/data" className="menuItem">
           DATA
         </Link>

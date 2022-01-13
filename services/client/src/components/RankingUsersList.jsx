@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
+import axios from "axios"
 import {
   Box,
   Table,
@@ -11,36 +11,62 @@ import {
   TableRow,
 } from "@mui/material";
 
-const RankingUsersList = (props) => {
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 800 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Username</TableCell>
-            <TableCell align="right">Upload counter</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.usersRanking.map((user) => (
-            <TableRow
-              key={user.user_id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {user.username}
-              </TableCell>
-              <TableCell align="right">{user.dataset_upload_counter}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-};
+class RankingUsersList extends React.Component {
 
-RankingUsersList.propTypes = {
-  usersRanking: PropTypes.array.isRequired,
-};
+  constructor(props) {
+    super(props)
+
+    this.state={
+      userRanking: []
+    }
+  }
+
+  componentDidMount() {
+    this.getUserRankings()
+  }
+
+  getUserRankings() {
+    axios
+      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users/ranking`)
+      .then((res) => {
+        this.setState({ userRanking: res.data });
+      }) // updated
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  render(){
+    if (this.state.userRanking.length > 0){
+      return (
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 800 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Username</TableCell>
+                <TableCell align="right">Upload counter</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.userRanking.map((user) => (
+                <TableRow
+                  key={user.user_id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {user.username}
+                  </TableCell>
+                  <TableCell align="right">{user.dataset_upload_counter}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      );
+    } else {
+      return <div />
+    }
+  }
+}
 
 export default RankingUsersList;

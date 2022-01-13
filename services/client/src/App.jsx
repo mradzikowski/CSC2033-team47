@@ -13,7 +13,7 @@ import DatasetsList from "./components/DatasetsList";
 import AddDataset from "./components/AddDataset";
 import ClimateData from "./components/ClimateData";
 import NewsPage from "./components/NewsPage"
-
+import RankingUsersList from "./components/RankingUsersList"
 
 /*
     Function:
@@ -52,6 +52,7 @@ class App extends Component {
         console.log(err);
       });
   }
+
 
   // getCategories() {
   //   axios
@@ -227,6 +228,12 @@ class App extends Component {
                 exact path="/news"
                 render={() => (
                   <NewsPage />
+                )}
+              />
+              <Route
+                exact path="/rankings"
+                render={() => (
+                  <RankingUsersList />
                 )}
               />
               {/* <Route
