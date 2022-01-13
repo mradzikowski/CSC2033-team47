@@ -1,6 +1,6 @@
 import { state, Suspense, useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
-import {withRouter} from "react-router-dom"
+import { withRouter } from "react-router-dom";
 import DatasetsList from "./components/DatasetsList";
 import Select from "react-select";
 import Button from "@mui/material/Button";
@@ -9,7 +9,7 @@ import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import React from "react";
 import { checkPropTypes } from "prop-types";
-import NasaData from './components/NasaData';
+import NasaData from "./components/NasaData";
 
 // TODO: Replace search bar with dropdown that shows all categories as optional filters for searching.
 // TODO: Create a new filter component that is added somewhere to the screen when a filter is chosen.
@@ -26,15 +26,14 @@ import NasaData from './components/NasaData';
 */
 
 class LandingPage extends React.Component {
-
   constructor(props) {
     super(props);
-    console.log(this.props)
+    console.log(this.props);
   }
 
   callSearch = (query) => {
-    this.props.history.push("/datasets", {state: query})
-  }
+    this.props.history.push("/datasets", { state: query });
+  };
 
   render() {
     return (

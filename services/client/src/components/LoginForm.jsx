@@ -11,7 +11,7 @@ import PasswordIcon from "@mui/icons-material/Password";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import LoginIcon from "@mui/icons-material/Login";
-import FormHelperText from '@mui/material/FormHelperText';
+import FormHelperText from "@mui/material/FormHelperText";
 
 const LoginForm = (props) => {
   if (props.isAuthenticated()) {
@@ -47,8 +47,11 @@ const LoginForm = (props) => {
             handleSubmit,
           } = props;
           return (
-            <Paper elevation={10} className='formContainer'>
-              <img src={`${process.env.PUBLIC_URL}/Logo.png`} style={{ margin: '5%', width: '70%', height: '70%'}} />
+            <Paper elevation={10} className="formContainer">
+              <img
+                src={`${process.env.PUBLIC_URL}/Logo.png`}
+                style={{ margin: "5%", width: "70%", height: "70%" }}
+              />
               <form onSubmit={handleSubmit}>
                 <div className="field">
                   <TextField
@@ -72,7 +75,9 @@ const LoginForm = (props) => {
                     variant="standard"
                   />
                   {errors.email && touched.email && (
-                    <FormHelperText id="component-error-text">{errors.email}</FormHelperText>
+                    <FormHelperText id="component-error-text">
+                      {errors.email}
+                    </FormHelperText>
                   )}
                 </div>
                 <div className="field">
@@ -103,7 +108,9 @@ const LoginForm = (props) => {
                     variant="standard"
                   />
                   {errors.password && touched.password && (
-                    <FormHelperText id="component-error-text">{errors.password}</FormHelperText>
+                    <FormHelperText id="component-error-text">
+                      {errors.password}
+                    </FormHelperText>
                   )}
                 </div>
                 <Button
@@ -111,7 +118,7 @@ const LoginForm = (props) => {
                   value="Submit"
                   disabled={isSubmitting}
                   variant="contained"
-                  style={{ margin: '5%'}}
+                  style={{ margin: "5%" }}
                 >
                   Login
                   <LoginIcon />

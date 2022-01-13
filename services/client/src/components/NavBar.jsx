@@ -51,7 +51,7 @@ const NavBar = (props) => {
           DATA
         </Link>
         <Link to="/datasets/upload" className="menuItem">
-          UPLOAD 
+          UPLOAD
         </Link>
         <span
           // eslint-disable-next-line react/jsx-handler-names
@@ -64,15 +64,10 @@ const NavBar = (props) => {
       </div>
     );
   }
-  return (
-    <div>
-      {menu}
-    </div>
-  );
+  return <div>{menu}</div>;
 };
 
 NavBar.propTypes = {
-  // title: PropTypes.string.isRequired,
   logoutUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.func.isRequired,
 };
