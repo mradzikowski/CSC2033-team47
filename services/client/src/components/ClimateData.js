@@ -98,6 +98,19 @@ class CounterData extends React.Component {
                                 <strong>{parseInt(this.props.data['2'].data).toLocaleString('en-US')}</strong>
                             </div>
                             <div key=''>
+                                Concentration of CO2
+                            </div>
+                        </div>
+                    </Paper>
+                </Box>
+                <Box className='climatedata-container' key=''>
+                    <Paper key='' className='climatedata'>
+                        <WaterIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
+                        <div className='climatedata-item'>
+                            <div key=''>
+                                <strong>{parseInt(this.props.data['3'].data).toLocaleString('en-US')}</strong>
+                            </div>
+                            <div key=''>
                                 Tons of melted ice
                             </div>
                         </div>
@@ -108,7 +121,7 @@ class CounterData extends React.Component {
                         <WaterIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
-                                <strong>{this.props.data['3'].data}</strong>
+                                <strong>{this.props.data['4'].data}</strong>
                             </div>
                             <div key=''>
                                 Rise in sea levels (cm)
@@ -121,7 +134,7 @@ class CounterData extends React.Component {
                         <AttachMoneyIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
-                                <strong>{parseInt(this.props.data['4'].data).toLocaleString('en-US')}</strong>
+                                <strong>{parseInt(this.props.data['5'].data).toLocaleString('en-US')}</strong>
                             </div>
                             <div key=''>
                                 Cost of not acting on climate change (US $)
@@ -134,7 +147,7 @@ class CounterData extends React.Component {
                         <BoltIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
-                                <strong>{parseInt(this.props.data['5'].data).toLocaleString('en-US')}</strong>
+                                <strong>{parseInt(this.props.data['6'].data).toLocaleString('en-US')}</strong>
                             </div>
                             <div key=''>
                                 Terajoules of energy used
@@ -147,7 +160,7 @@ class CounterData extends React.Component {
                         <WbSunnyIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
-                                <strong>{parseInt(this.props.data['6'].data).toLocaleString('en-US')}</strong>
+                                <strong>{parseInt(this.props.data['7'].data).toLocaleString('en-US')}</strong>
                             </div>
                             <div key=''>
                                 Terajoules of solar energy striking earth
@@ -160,7 +173,7 @@ class CounterData extends React.Component {
                         <BoltIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
-                                <strong>{parseInt(this.props.data['7'].data).toLocaleString('en-US')}</strong>
+                                <strong>{parseInt(this.props.data['8'].data).toLocaleString('en-US')}</strong>
                             </div>
                             <div key=''>
                                 Terajoules of electricity used
@@ -173,7 +186,7 @@ class CounterData extends React.Component {
                         <BoltIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
-                                <strong>{this.props.data['8'].data}</strong>
+                                <strong>{this.props.data['9'].data}</strong>
                             </div>
                             <div key=''>
                                 % of electricty produced from renewable sources
@@ -186,7 +199,7 @@ class CounterData extends React.Component {
                         <BoltIcon style={{position: 'relative', top: '10'}} className='climatedata-item' />
                         <div className='climatedata-item'>
                             <div key=''>
-                                <strong>{this.props.data['8'].data}</strong>
+                                <strong>{this.props.data['10'].data}</strong>
                             </div>
                             <div key=''>
                                 Time left till the we run out oil
