@@ -4,7 +4,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import React, { Component } from "react";
 import LandingPage from "./LandingPage";
 import axios from "axios";
-import UsersList from "./components/UsersList";
 import NavBar from "./components/NavBar";
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
@@ -12,8 +11,7 @@ import UserStatus from "./components/UserStatus";
 import DatasetsList from "./components/DatasetsList";
 import AddDataset from "./components/AddDataset";
 import ClimateData from "./components/ClimateData";
-import NewsPage from "./components/NewsPage"
-
+import NewsPage from "./components/NewsPage";
 
 /*
     Function:
@@ -26,54 +24,12 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      datasets: [],
-      users: [],
-      categories: [],
       file_name: null,
       title: null,
       category: null,
       title_website: "ClimateXtractor.com",
       accessToken: null,
     };
-  }
-
-  componentDidMount() {
-    this.getUsers();
-    this.getDatasetList();
-  }
-
-  getUsers() {
-    axios
-      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`)
-      .then((res) => {
-        this.setState({ users: res.data });
-      }) // updated
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  // getCategories() {
-  //   axios
-  //     .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
-  //     .then((res) => {
-  //       this.setState({ categories: res.data });
-  //     }) // updated
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
-
-
-  getDatasetList() {
-    axios
-      .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
-      .then((res) => {
-        this.setState({ datasets: res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
   }
 
   handleRegisterFormSubmit = (data) => {
@@ -94,7 +50,6 @@ class App extends Component {
       .post(url, data)
       .then((res) => {
         this.setState({ accessToken: res.data.access_token });
-        this.getUsers();
         window.localStorage.setItem("refreshToken", res.data.refresh_token);
       })
       .catch((err) => {
@@ -103,20 +58,25 @@ class App extends Component {
   };
 
   isAuthenticated = () => {
-    return !!(this.state.accessToken || this.validRefresh());
+    if (this.state.accessToken || this.validRefresh()) {
+      return true;
+    }
+    return false;
   };
 
   validRefresh = () => {
-    const token = window.localStorage.getItem("refresh_token");
+    const token = window.localStorage.getItem("refreshToken");
     if (token) {
-      axios
-        .post(`${process.env.REACT_APP_USERS_SERVICE_URL}/auth/refresh`, {
-          refresh_token: token,
-        })
+      const options = {
+        url: `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/refresh`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        method: "post",
+      };
+      axios(options)
         .then((res) => {
-          this.setState({ access_token: res.data.access_token });
-          this.getUsers();
-          window.localStorage.setItem("refresh_token", res.data.refresh_token);
+          this.setState({ accessToken: res.data.access_token });
           return true;
         })
         .catch((err) => {
@@ -201,7 +161,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar
-          className='navbar'
+          className="navbar"
           title={this.state.title_website}
           logoutUser={this.logoutUser}
           isAuthenticated={this.isAuthenticated}
@@ -217,18 +177,8 @@ class App extends Component {
                   <LandingPage climate_data={this.state.climate_data} />
                 )}
               />
-              <Route 
-                exact path="/data"
-                render={() => (
-                  <ClimateData />
-                )}
-              />
-              <Route
-                exact path="/news"
-                render={() => (
-                  <NewsPage />
-                )}
-              />
+              <Route exact path="/data" render={() => <ClimateData />} />
+              <Route exact path="/news" render={() => <NewsPage />} />
               {/* <Route
                 exact
                 path="/categories"
