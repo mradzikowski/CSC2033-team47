@@ -64,7 +64,7 @@ class Dataset(db.Model):
         self.file_type = file_name.split(".", 0)[0].lower()
         self.rating = rating
         self.download_counter = download_counter
-        
+
 
 class Vote(db.Model):
     __tablename__ = "votes"
@@ -88,7 +88,6 @@ class Category(db.Model):
 
     category_name = db.Column(db.String(256), primary_key=True)
     datasets = db.relationship("Dataset", backref="category_name", lazy=True)
-
 
 
 class NasaData(db.Model):
@@ -157,13 +156,14 @@ class BloombergData(db.Model):
             ".",
         )
 
-        
+
 class WorldCountsData(db.Model):
     __tablename__ = "worldcountsdata"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
     tons_of_co2 = db.Column(db.BigInteger, default=0)
+    co2_concentration = db.Column(db.Float, default=0)
     world_average_temperature = db.Column(db.Float, default=0)
     tons_of_melted_ice = db.Column(db.BigInteger, default=0)
     rise_in_sea_levels_in_cm = db.Column(db.Float, default=0)
@@ -178,6 +178,7 @@ class WorldCountsData(db.Model):
     def __init__(
         self,
         tons_of_co2="0",
+        co2_concentration="0",
         world_average_temperature="0",
         tons_of_melted_ice="0",
         rise_in_sea_levels_in_cm="0",
@@ -189,6 +190,7 @@ class WorldCountsData(db.Model):
         time_left_to_the_end_of_oil="",
     ):
         self.tons_of_co2 = replace_string_to_number(tons_of_co2, ",")
+        self.co2_concentration = replace_string_to_number(co2_concentration, ".")
         self.world_average_temperature = replace_string_to_number(
             world_average_temperature,
             ".",
