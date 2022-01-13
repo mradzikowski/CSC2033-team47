@@ -26,8 +26,24 @@ class DatasetsList extends Component {
     }
 
     this.state = {
-      targetCategories: targetCategoriesArray
+      targetCategories: targetCategoriesArray,
+      datasets: []
     }
+  }
+
+  componentDidMount() {
+    this.getDatasetList();
+  }
+
+  getDatasetList() {
+    fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
+      .then((res) => res.json())
+      .then(data => {
+        this.setState({datasets: data})
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
   handleUpVoteSubmit = (dataset_id) => {
@@ -53,9 +69,10 @@ class DatasetsList extends Component {
 
   render() {
     if (this.props.isAuthenticated()) {
+      console.log(this.state)
       return (
         <Box className="datasets-list">
-          {this.props.datasets.map((dataset) => {
+          {this.state.datasets.map((dataset) => {
 
             if (this.state.targetCategories.length == 0 || this.state.targetCategories.indexOf(dataset.category) > -1){
               return (
@@ -82,11 +99,15 @@ class DatasetsList extends Component {
                       <Button
                         style={{display:'inline-block', float: 'left', width: '10%', transform: "translate(0, 5%)"}}
                         onClick={
-                          (event) => this.handleUpVoteSubmit(dataset.dataset_id)
+                          (event) => {
+                            this.handleUpVoteSubmit(dataset.dataset_id)
+                            console.log(dataset.dataset_id)
+                          }
                           // eslint-disable-next-line react/jsx-curly-newline
                         }
                       >
                         <ThumbUpIcon />
+                        {dataset.rating}
                       </Button>
                       <Button
                         style={{display: 'inline-block', float: 'left', width: '90%'}}
@@ -109,7 +130,7 @@ class DatasetsList extends Component {
     } else {
       return (
         <Box className="datasets-list">
-          {this.props.datasets.map((dataset) => {
+          {this.state.datasets.map((dataset) => {
             if (this.state.targetCategories.length == 0 || this.state.targetCategories.indexOf(dataset.category) > -1){
               return (
                 <Box key={dataset.dataset_id} className='dataset-container'>
