@@ -5,6 +5,7 @@ def test_climate_data_get(test_app, test_database, add_climate_data):
     add_climate_data(
         "14.9419",
         "529737463",
+        "421.22",
         " 9193591948",
         "26.4164",
         "16506141243376",
