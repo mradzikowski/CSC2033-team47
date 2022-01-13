@@ -1,4 +1,4 @@
-import React, {useState, setState} from "react";
+import React, { useState, setState } from "react";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import { Formik } from "formik";
@@ -12,11 +12,10 @@ import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PasswordIcon from "@mui/icons-material/Password";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
-import FormHelperText from '@mui/material/FormHelperText';
+import FormHelperText from "@mui/material/FormHelperText";
 
 const RegisterForm = (props) => {
-
-  const [validSubmit, setValidSubmit] = useState(false)
+  const [validSubmit, setValidSubmit] = useState(false);
 
   if (props.isAuthenticated()) {
     return <Redirect to="/" />;
@@ -64,10 +63,13 @@ const RegisterForm = (props) => {
             handleSubmit,
           } = props;
           return (
-            <Paper elevation={10} className='formContainer'>
-              <img src={`${process.env.PUBLIC_URL}/Logo.png`} style={{ margin: '5%', width: '70%', height: '70%'}} />
+            <Paper elevation={10} className="formContainer">
+              <img
+                src={`${process.env.PUBLIC_URL}/Logo.png`}
+                style={{ margin: "5%", width: "70%", height: "70%" }}
+              />
               <form onSubmit={handleSubmit}>
-                <div className='field'>
+                <div className="field">
                   <TextField
                     name="username"
                     id="username-field"
@@ -91,7 +93,9 @@ const RegisterForm = (props) => {
                     variant="standard"
                   />
                   {errors.username && touched.username && (
-                    <FormHelperText id="component-error-text">{errors.username}</FormHelperText>
+                    <FormHelperText id="component-error-text">
+                      {errors.username}
+                    </FormHelperText>
                   )}
                 </div>
                 <div className="field">
@@ -116,7 +120,9 @@ const RegisterForm = (props) => {
                     variant="standard"
                   />
                   {errors.email && touched.email && (
-                    <FormHelperText id="component-error-text">{errors.email}</FormHelperText>
+                    <FormHelperText id="component-error-text">
+                      {errors.email}
+                    </FormHelperText>
                   )}
                 </div>
                 <div className="field">
@@ -144,18 +150,20 @@ const RegisterForm = (props) => {
                     variant="standard"
                   />
                   {errors.password && touched.password && (
-                    <FormHelperText id="component-error-text">{errors.password}</FormHelperText>
+                    <FormHelperText id="component-error-text">
+                      {errors.password}
+                    </FormHelperText>
                   )}
                   <Button
                     type="submit"
                     value="Submit"
                     disabled={isSubmitting}
                     variant="contained"
-                    style={{ margin: '5%'}}
+                    style={{ margin: "5%" }}
                   >
                     Register <HowToRegIcon />
                   </Button>
-                </div>  
+                </div>
               </form>
             </Paper>
           );

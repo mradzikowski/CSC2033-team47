@@ -1,5 +1,5 @@
 import React, { Component, state, setState } from "react";
-import {withRouter} from "react-router-dom"
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -8,27 +8,26 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import axios from "axios";
 
 class DatasetsList extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     // if this.prpsconsole.log(this.props.location.state.state)
 
-    let targetCategoriesArray = []
-    if (this.props.location.state){
-      if (this.props.location.state.state){
-        if (this.props.location.state.state.length > 0){
-          this.props.location.state.state.forEach(e => {
-            targetCategoriesArray.push(Object.values(e)[1])
-          })
+    let targetCategoriesArray = [];
+    if (this.props.location.state) {
+      if (this.props.location.state.state) {
+        if (this.props.location.state.state.length > 0) {
+          this.props.location.state.state.forEach((e) => {
+            targetCategoriesArray.push(Object.values(e)[1]);
+          });
         }
       }
     }
 
     this.state = {
       targetCategories: targetCategoriesArray,
-      datasets: []
-    }
+      datasets: [],
+    };
   }
 
   componentDidMount() {
@@ -38,12 +37,12 @@ class DatasetsList extends Component {
   getDatasetList() {
     fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets`)
       .then((res) => res.json())
-      .then(data => {
-        this.setState({datasets: data})
+      .then((data) => {
+        this.setState({ datasets: data });
       })
       .catch((err) => {
-        console.log(err)
-      })
+        console.log(err);
+      });
   }
 
   handleUpVoteSubmit = (dataset_id) => {
@@ -69,14 +68,16 @@ class DatasetsList extends Component {
 
   render() {
     if (this.props.isAuthenticated()) {
-      console.log(this.state)
+      console.log(this.state);
       return (
         <Box className="datasets-list">
           {this.state.datasets.map((dataset) => {
-
-            if (this.state.targetCategories.length == 0 || this.state.targetCategories.indexOf(dataset.category) > -1){
+            if (
+              this.state.targetCategories.length == 0 ||
+              this.state.targetCategories.indexOf(dataset.category) > -1
+            ) {
               return (
-                <Box key={dataset.dataset_id} className='dataset-container'>
+                <Box key={dataset.dataset_id} className="dataset-container">
                   <Paper
                     key={dataset.dataset_id}
                     className="dataset"
@@ -87,21 +88,28 @@ class DatasetsList extends Component {
                       <strong>Filename:</strong>
                       {dataset.file_name}
                     </div>
-                    <div className='dataset-item'>
+                    <div className="dataset-item">
                       <strong>Title:</strong>
                       <span data-testid="dataset-title">{dataset.title}</span>
                     </div>
-                    <div className='dataset-item'>
+                    <div className="dataset-item">
                       <strong>Category:</strong>
-                      <span data-testid="dataset-category">{dataset.category}</span>
+                      <span data-testid="dataset-category">
+                        {dataset.category}
+                      </span>
                     </div>
-                    <div style={{display: 'flex'}}>
+                    <div style={{ display: "flex" }}>
                       <Button
-                        style={{display:'inline-block', float: 'left', width: '10%', transform: "translate(0, 5%)"}}
+                        style={{
+                          display: "inline-block",
+                          float: "left",
+                          width: "10%",
+                          transform: "translate(0, 5%)",
+                        }}
                         onClick={
                           (event) => {
-                            this.handleUpVoteSubmit(dataset.dataset_id)
-                            console.log(dataset.dataset_id)
+                            this.handleUpVoteSubmit(dataset.dataset_id);
+                            console.log(dataset.dataset_id);
                           }
                           // eslint-disable-next-line react/jsx-curly-newline
                         }
@@ -110,8 +118,12 @@ class DatasetsList extends Component {
                         {dataset.rating}
                       </Button>
                       <Button
-                        style={{display: 'inline-block', float: 'left', width: '90%'}}
-                        sx={{backgroundColor: 'black'}}
+                        style={{
+                          display: "inline-block",
+                          float: "left",
+                          width: "90%",
+                        }}
+                        sx={{ backgroundColor: "black" }}
                         name={dataset.file_name}
                         onClick={this.props.handleClick}
                         variant="contained"
@@ -131,29 +143,34 @@ class DatasetsList extends Component {
       return (
         <Box className="datasets-list">
           {this.state.datasets.map((dataset) => {
-            if (this.state.targetCategories.length == 0 || this.state.targetCategories.indexOf(dataset.category) > -1){
+            if (
+              this.state.targetCategories.length == 0 ||
+              this.state.targetCategories.indexOf(dataset.category) > -1
+            ) {
               return (
-                <Box key={dataset.dataset_id} className='dataset-container'>
+                <Box key={dataset.dataset_id} className="dataset-container">
                   <Paper
                     key={dataset.dataset_id}
                     className="dataset"
                     sx={{ display: "grid" }}
                     elevation={10}
-                  >  
-                    <div className='dataset-item'>
+                  >
+                    <div className="dataset-item">
                       <strong>Filename:</strong>&nbsp;
                       {dataset.file_name}
                     </div>
-                    <div className='dataset-item'>
+                    <div className="dataset-item">
                       <strong>Title:</strong>&nbsp;
                       <span data-testid="dataset-title">{dataset.title}</span>
                     </div>
-                    <div className='dataset-item'>
+                    <div className="dataset-item">
                       <strong>Category:</strong>&nbsp;
-                      <span data-testid="dataset-category">{dataset.category}</span>
+                      <span data-testid="dataset-category">
+                        {dataset.category}
+                      </span>
                     </div>
                     <Button
-                      sx={{backgroundColor: 'black'}}
+                      sx={{ backgroundColor: "black" }}
                       name={dataset.file_name}
                       onClick={this.props.handleClick}
                       variant="contained"

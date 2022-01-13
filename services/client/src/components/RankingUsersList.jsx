@@ -1,6 +1,6 @@
 import React from "react";
 import Paper from "@mui/material/Paper";
-import axios from "axios"
+import axios from "axios";
 import {
   Box,
   Table,
@@ -12,17 +12,16 @@ import {
 } from "@mui/material";
 
 class RankingUsersList extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.state={
-      userRanking: []
-    }
+    this.state = {
+      userRanking: [],
+    };
   }
 
   componentDidMount() {
-    this.getUserRankings()
+    this.getUserRankings();
   }
 
   getUserRankings() {
@@ -36,8 +35,8 @@ class RankingUsersList extends React.Component {
       });
   }
 
-  render(){
-    if (this.state.userRanking.length > 0){
+  render() {
+    if (this.state.userRanking.length > 0) {
       return (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 800 }} aria-label="simple table">
@@ -56,7 +55,9 @@ class RankingUsersList extends React.Component {
                   <TableCell component="th" scope="row">
                     {user.username}
                   </TableCell>
-                  <TableCell align="right">{user.dataset_upload_counter}</TableCell>
+                  <TableCell align="right">
+                    {user.dataset_upload_counter}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -64,7 +65,7 @@ class RankingUsersList extends React.Component {
         </TableContainer>
       );
     } else {
-      return <div />
+      return <div />;
     }
   }
 }

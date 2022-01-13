@@ -12,8 +12,8 @@ import UserStatus from "./components/UserStatus";
 import DatasetsList from "./components/DatasetsList";
 import AddDataset from "./components/AddDataset";
 import ClimateData from "./components/ClimateData";
-import NewsPage from "./components/NewsPage"
-import RankingUsersList from "./components/RankingUsersList"
+import NewsPage from "./components/NewsPage";
+import RankingUsersList from "./components/RankingUsersList";
 
 /*
     Function:
@@ -53,7 +53,6 @@ class App extends Component {
       });
   }
 
-
   // getCategories() {
   //   axios
   //     .get(`${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/category`)
@@ -64,7 +63,6 @@ class App extends Component {
   //       console.log(err);
   //     });
   // }
-
 
   getDatasetList() {
     axios
@@ -141,7 +139,6 @@ class App extends Component {
     }
   };
 
-
   // uploadFile = (event) => {
   //   event.preventDefault();
   //   let formData = new FormData();
@@ -204,7 +201,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar
-          className='navbar'
+          className="navbar"
           title={this.state.title_website}
           logoutUser={this.logoutUser}
           isAuthenticated={this.isAuthenticated}
@@ -220,23 +217,12 @@ class App extends Component {
                   <LandingPage climate_data={this.state.climate_data} />
                 )}
               />
-              <Route 
-                exact path="/data"
-                render={() => (
-                  <ClimateData />
-                )}
-              />
+              <Route exact path="/data" render={() => <ClimateData />} />
+              <Route exact path="/news" render={() => <NewsPage />} />
               <Route
-                exact path="/news"
-                render={() => (
-                  <NewsPage />
-                )}
-              />
-              <Route
-                exact path="/rankings"
-                render={() => (
-                  <RankingUsersList />
-                )}
+                exact
+                path="/rankings"
+                render={() => <RankingUsersList />}
               />
               {/* <Route
                 exact

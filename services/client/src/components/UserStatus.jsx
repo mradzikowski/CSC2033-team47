@@ -43,7 +43,11 @@ class UserStatus extends Component {
         if (this.state.subscribe) {
           this.setState({
             button: (
-              <Button onClick={this.handleSubscribeButton} variant="outlined" color="success">
+              <Button
+                onClick={this.handleSubscribeButton}
+                variant="outlined"
+                color="success"
+              >
                 Unsubscribe <MailIcon />
               </Button>
             ),
@@ -51,7 +55,11 @@ class UserStatus extends Component {
         } else {
           this.setState({
             button: (
-              <Button onClick={this.handleSubscribeButton} variant="outlined" color="error">
+              <Button
+                onClick={this.handleSubscribeButton}
+                variant="outlined"
+                color="error"
+              >
                 Subscribe <MailIcon />
               </Button>
             ),
@@ -88,28 +96,30 @@ class UserStatus extends Component {
     }
     return (
       <Box>
-        <Paper style={{width: "600px"}}>
-          <img 
-            className='account-item' src={`${process.env.PUBLIC_URL}/Logo.png`} 
-            style={{ padding: '10px', width: '400px', height: '100px'}} 
+        <Paper style={{ width: "600px" }}>
+          <img
+            className="account-item"
+            src={`${process.env.PUBLIC_URL}/Logo.png`}
+            style={{ padding: "10px", width: "400px", height: "100px" }}
           />
-            <ul className='account-container'>
-              <li className='account-item'>
-                <strong>Email:</strong>&nbsp;
-                <span data-testid="user-email">{this.state.email}</span>
-              </li>
-              <li className='account-item'>
-                <strong>Username:</strong>&nbsp;
-                <span data-testid="user-username">{this.state.username}</span>
-              </li>
-              <li className='account-item'>
-                <strong>Date created</strong>&nbsp;
-                <span data-testid="user-date-created">
-                  {this.state.date_created.substr(0, 10)} | {this.state.date_created.substr(11, 5)}
-                </span>
-              </li>
-              <li className='account-item'>{this.state.button}</li>
-            </ul>
+          <ul className="account-container">
+            <li className="account-item">
+              <strong>Email:</strong>&nbsp;
+              <span data-testid="user-email">{this.state.email}</span>
+            </li>
+            <li className="account-item">
+              <strong>Username:</strong>&nbsp;
+              <span data-testid="user-username">{this.state.username}</span>
+            </li>
+            <li className="account-item">
+              <strong>Date created</strong>&nbsp;
+              <span data-testid="user-date-created">
+                {this.state.date_created.substr(0, 10)} |{" "}
+                {this.state.date_created.substr(11, 5)}
+              </span>
+            </li>
+            <li className="account-item">{this.state.button}</li>
+          </ul>
         </Paper>
       </Box>
     );
