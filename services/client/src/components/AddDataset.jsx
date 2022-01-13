@@ -145,7 +145,12 @@ class AddDataset extends React.Component {
                 isClearable
                 isSearchable={false}
                 options={this.state.categories}
-                onChange={(e) => {this.setState({category: e.label})}}
+                onChange={(e) => {
+                    if (e!=null)
+                      this.setState({category: e.label})
+                    else 
+                      this.setState({category: null})
+                }}
                 placeholder='Category'
                 styles={this.getStyles()}
               />
