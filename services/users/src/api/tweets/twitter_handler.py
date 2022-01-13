@@ -63,7 +63,7 @@ class TwitterHandler:
                 tweet = self.get_recent_tweet(account)
                 # print(tweet)
                 print(tweet.id)
-                self.tweets_ids.append(tweet.id)
+                self.tweets_ids.append(str(tweet.id))
         else:
             date_to_check = self.last_retrieved + timedelta(hours=12)
             print(self.last_retrieved)
@@ -74,7 +74,7 @@ class TwitterHandler:
                 for account in self.subscriptions:
                     tweet = self.get_recent_tweet(account)
                     print(tweet.id)
-                    new_tweets_ids.append(tweet.id)
+                    new_tweets_ids.append(str(tweet.id))
                 self.tweets_ids = new_tweets_ids
 
         return self.tweets_ids
