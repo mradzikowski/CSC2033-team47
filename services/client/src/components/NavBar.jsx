@@ -9,9 +9,9 @@ const NavBar = (props) => {
       <Link to="/" className="menuItem">
         CLIMATEXTRACTOR
       </Link>
-      {/* <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
+      <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
         DATASETS
-      </Link> */}
+      </Link>
       {/* <Link to="/users" data-testid="nav-categories" className="menuItem">
         USERS
       </Link> */}
@@ -41,9 +41,9 @@ const NavBar = (props) => {
         <Link to="/news" className="menuItem">
           NEWS
         </Link>
-        {/* <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
+        <Link to="/datasets" data-testid="nav-datasets" className="menuItem">
           DATASETS
-        </Link> */}
+        </Link>
         {/* <Link to="/users" data-testid="nav-categories" className="menuItem">
           USERS
         </Link> */}
