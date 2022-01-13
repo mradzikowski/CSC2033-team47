@@ -167,18 +167,39 @@ class DatasetsList extends Component {
                         {dataset.category}
                       </span>
                     </div>
-                    <div>
-                      <ThumbUpIcon />
-                      {dataset.rating}
+                    <div style={{ display: "flex" }}>
+                      <Button
+                        style={{
+                          display: "inline-block",
+                          float: "left",
+                          width: "10%",
+                          transform: "translate(0, 5%)",
+                        }}
+                        onClick={
+                          (event) => {
+                            this.handleUpVoteSubmit(dataset.dataset_id);
+                            console.log(dataset.dataset_id);
+                          }
+                          // eslint-disable-next-line react/jsx-curly-newline
+                        }
+                      >
+                        <ThumbUpIcon />
+                        {dataset.rating}
+                      </Button>
+                      <Button
+                        style={{
+                          display: "inline-block",
+                          float: "left",
+                          width: "90%",
+                        }}
+                        sx={{ backgroundColor: "black" }}
+                        name={dataset.file_name}
+                        onClick={this.props.handleClick}
+                        variant="contained"
+                      >
+                        Download
+                      </Button>
                     </div>
-                    <Button
-                      sx={{ backgroundColor: "black" }}
-                      name={dataset.file_name}
-                      onClick={this.props.handleClick}
-                      variant="contained"
-                    >
-                      Download
-                    </Button>
                   </Paper>
                   <br />
                 </Box>

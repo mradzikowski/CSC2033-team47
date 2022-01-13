@@ -35,11 +35,11 @@ class ClimateData extends React.Component {
         this.setState({ worldCounts: worldCounts });
         this.setState({ retrieved: true });
       });
+      
+      this.getCounterData();
   }
 
 
-    this.getCounterData();
-  }
 
   getCounterData() {
     // Get World Counts

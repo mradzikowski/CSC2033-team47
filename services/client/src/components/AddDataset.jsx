@@ -8,57 +8,58 @@ import Select from "react-select";
 import axios from "axios";
 
 
-const AddDataset = (props) => {
-  if (!props.isAuthenticated()) {
-    return <Redirect to="/login" />;
-  }
+// const AddDataset = (props) => {
+//   if (!props.isAuthenticated()) {
+//     return <Redirect to="/login" />;
+//   }
 
-  return (
-    <Paper elevation={10} className="upload-container">
-      <form style={{ padding: "20px" }}>
-        <div className="upload-title">Upload Your Dataset</div>
-        <div className="upload-field">
-          <TextField
-            type="file"
-            name="file_name"
-            className="form-control"
-            onChange={props.handleChange}
-            style={{ width: "100%" }}
-          />
-        </div>
-        <div>
-          <div className="upload-field">
-            <TextField
-              id="outlined-basic"
-              name="title"
-              onChange={props.handleChange}
-              variant="standard"
-              label="Title"
-              style={{ width: "100%" }}
-            />
-          </div>
-          <div className="upload-field">
-            <TextField
-              id="outlined-basic"
-              name="category"
-              onChange={props.handleChange}
-              variant="standard"
-              label="Category"
-              style={{ width: "100%" }}
-            />
-          </div>
-          <Button
-            type="submit"
-            className="btn btn-success btn-block"
-            onClick={props.handleClick}
-            variant="contained"
-          >
-            Upload
-          </Button>
-        </div>
-      </form>
-    </Paper>
-  );
+//   return (
+//     <Paper elevation={10} className="upload-container">
+//       <form style={{ padding: "20px" }}>
+//         <div className="upload-title">Upload Your Dataset</div>
+//         <div className="upload-field">
+//           <TextField
+//             type="file"
+//             name="file_name"
+//             className="form-control"
+//             onChange={props.handleChange}
+//             style={{ width: "100%" }}
+//           />
+//         </div>
+//         <div>
+//           <div className="upload-field">
+//             <TextField
+//               id="outlined-basic"
+//               name="title"
+//               onChange={props.handleChange}
+//               variant="standard"
+//               label="Title"
+//               style={{ width: "100%" }}
+//             />
+//           </div>
+//           <div className="upload-field">
+//             <TextField
+//               id="outlined-basic"
+//               name="category"
+//               onChange={props.handleChange}
+//               variant="standard"
+//               label="Category"
+//               style={{ width: "100%" }}
+//             />
+//           </div>
+//           <Button
+//             type="submit"
+//             className="btn btn-success btn-block"
+//             onClick={props.handleClick}
+//             variant="contained"
+//           >
+//             Upload
+//           </Button>
+//         </div>
+//       </form>
+//     </Paper>
+//   );
+// }
 
 class AddDataset extends React.Component {
   constructor(props) {
