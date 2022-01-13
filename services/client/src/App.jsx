@@ -141,46 +141,40 @@ class App extends Component {
     }
   };
 
-  uploadCategoryHandler = (e) => {
-    if (e != null)
-      this.setState({ category: e.label })
-    else 
-      this.setState({category: null})
-  }
 
-  uploadFile = (event) => {
-    event.preventDefault();
-    let formData = new FormData();
-    console.log(this.state)
-    console.log(this.state.file_name);
-    console.log(this.state.title);
-    console.log(this.state.category);
+  // uploadFile = (event) => {
+  //   event.preventDefault();
+  //   let formData = new FormData();
+  //   console.log(this.state)
+  //   console.log(this.state.file_name);
+  //   console.log(this.state.title);
+  //   console.log(this.state.category);
 
-    formData.append("file", this.state.file_name);
-    formData.append("title", this.state.title);
-    formData.append("category", this.state.category);
+  //   formData.append("file", this.state.file_name);
+  //   formData.append("title", this.state.title);
+  //   formData.append("category", this.state.category);
 
-    console.log(formData.get("file"));
-    console.log(formData.get("title"));
-    console.log(formData.get("category"));
+  //   console.log(formData.get("file"));
+  //   console.log(formData.get("title"));
+  //   console.log(formData.get("category"));
 
-    axios
-      .post(
-        `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/upload`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${this.state.accessToken}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        this.getDatasetList();
-      })
-      .catch((err) => console.log(err));
-  };
+  //   axios
+  //     .post(
+  //       `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/upload`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //           Authorization: `Bearer ${this.state.accessToken}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       this.getDatasetList();
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   onClickDownloadFile = (event) => {
     const file_name = event.target.name;
