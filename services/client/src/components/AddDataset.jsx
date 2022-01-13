@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 import Select from "react-select";
+import axios from "axios";
 
 class AddDataset extends React.Component {
 
@@ -13,7 +14,11 @@ class AddDataset extends React.Component {
 
     this.state={
       categories:[],
-      query: ''
+      uploaded: false,
+      category: null,
+      title: null,
+      file_name: null,
+      failed: false,
     }
   }
 
@@ -34,8 +39,40 @@ class AddDataset extends React.Component {
     .then(() => {console.log(this.state)});
   }
 
-  handleChange = (e) => {
-    this.setState({query: e})
+  handleUpload = (event) => {
+    event.preventDefault();
+    let formData = new FormData();
+    console.log(this.state.file_name);
+    console.log(this.state.title);
+    console.log(this.state.category);
+
+    formData.append("file", this.state.file_name);
+    formData.append("title", this.state.title);
+    formData.append("category", this.state.category);
+
+    console.log(formData.get("file"));
+    console.log(formData.get("title"));
+    console.log(formData.get("category"));
+
+    axios
+      .post(
+        `${process.env.REACT_APP_USERS_SERVICE_URL}/datasets/upload`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${this.props.accessToken}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.statusText == 'CREATED') {
+          this.setState({uploaded: true})
+        } else {
+          this.setState({failed: true})
+        }
+      })
+      .catch((err) => this.setState({failed: true}));
   }
 
   getStyles = () => {
@@ -68,8 +105,13 @@ class AddDataset extends React.Component {
   }
 
   render() {
+
     if (!this.props.isAuthenticated()) {
       return <Redirect to="/login" />;
+    }
+
+    if (this.state.uploaded) {
+      return <Redirect to="/datasets" />
     }
       
     return (
@@ -83,7 +125,7 @@ class AddDataset extends React.Component {
                 type="file"
                 name="file_name"
                 className="form-control"
-                onChange={this.props.handleChange}
+                onChange={(e) => {this.setState({ file_name: event.target.files[0] });}}
                 style={{width: '100%'}}
               />
             </div>
@@ -92,7 +134,7 @@ class AddDataset extends React.Component {
                 <TextField
                   id="outlined-basic"
                   name="title"
-                  onChange={this.props.handleChange}
+                  onChange={(e) => {this.setState({title: e.target.value})}}
                   variant="standard"
                   label="Title"
                   style={{width: '100%'}}
@@ -103,18 +145,19 @@ class AddDataset extends React.Component {
                 isClearable
                 isSearchable={false}
                 options={this.state.categories}
-                onChange={this.props.handleSelectChange}
+                onChange={(e) => {this.setState({category: e.label})}}
                 placeholder='Category'
                 styles={this.getStyles()}
               />
               <Button
                 type="submit"
                 className="btn btn-success btn-block"
-                onClick={this.props.handleClick}
+                onClick={this.handleUpload}
                 variant="contained"
               >
                 Upload
               </Button>
+              <Error failed={this.state.failed} />
             </div>
           </form>
         </Paper>
@@ -122,11 +165,20 @@ class AddDataset extends React.Component {
   }
 }
 
+const Error = (props) => {
+  if (props.failed) {
+    return (<div style={{fontSize: 'small', color: 'red'}}>failed, please try again</div>)
+  } else {
+    return (<div />)
+  }
+}
+
 AddDataset.propTypes = {
-  handleSelectChange: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  // handleSelectChange: PropTypes.func.isRequired,
+  // handleChange: PropTypes.func.isRequired,
+  // handleClick: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.func.isRequired,
+  accessToken: PropTypes.string.isRequired,
 };
 
 export default AddDataset;

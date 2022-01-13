@@ -142,7 +142,10 @@ class App extends Component {
   };
 
   uploadCategoryHandler = (e) => {
-    this.setState({ category: e.label })
+    if (e != null)
+      this.setState({ category: e.label })
+    else 
+      this.setState({category: null})
   }
 
   uploadFile = (event) => {
@@ -302,10 +305,11 @@ class App extends Component {
                 path="/datasets/upload"
                 render={() => (
                   <AddDataset
-                    handleChange={this.onChangeHandler}
-                    handleClick={this.uploadFile}
+                    // handleChange={this.onChangeHandler}
+                    // handleClick={this.uploadFile}
+                    accessToken={this.state.accessToken}
                     isAuthenticated={this.isAuthenticated}
-                    handleSelectChange={this.uploadCategoryHandler}
+                    // handleSelectChange={this.uploadCategoryHandler}
                   />
                 )}
               />
