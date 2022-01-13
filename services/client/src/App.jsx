@@ -141,9 +141,14 @@ class App extends Component {
     }
   };
 
+  uploadCategoryHandler = (e) => {
+    this.setState({ category: e.label })
+  }
+
   uploadFile = (event) => {
     event.preventDefault();
     let formData = new FormData();
+    console.log(this.state)
     console.log(this.state.file_name);
     console.log(this.state.title);
     console.log(this.state.category);
@@ -300,6 +305,7 @@ class App extends Component {
                     handleChange={this.onChangeHandler}
                     handleClick={this.uploadFile}
                     isAuthenticated={this.isAuthenticated}
+                    handleSelectChange={this.uploadCategoryHandler}
                   />
                 )}
               />
