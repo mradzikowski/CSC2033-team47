@@ -33,7 +33,6 @@ def add_world_counts_data():
 
     if "Loading ..." not in counters:
         climate_data = WorldCountsData(*counters)
-        print(climate_data)
 
         db.session.add(climate_data)
         db.session.commit()
@@ -57,7 +56,6 @@ def add_nasa_climate_data():
     vitals = soup.find_all("div", {"class": "change_number"}, limit=6)
 
     vitals = [vital.text.strip() for vital in vitals]
-    print(vitals)
 
     # Vitals corresponding meaning (as of time of writing)
     # [0] - Arctic Sea Ice Extent (Percent per decade since 1979)(Down Arrow)
@@ -69,7 +67,6 @@ def add_nasa_climate_data():
 
     if "Loading ..." not in vitals:
         climate_data = NasaData(*vitals)
-        print(climate_data)
 
         db.session.add(climate_data)
         db.session.commit()
