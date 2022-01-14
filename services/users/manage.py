@@ -27,6 +27,13 @@ def seed_db():
     db.session.add(Category(category_name="greenhouse-gas-emission"))
     db.session.add(Category(category_name="global-warming"))
 
+    db.session.add(Title(title_name="Climate change and extinction"))
+    db.session.add(Title(title_name="Greenhouse emission 2005"))
+    db.session.add(Title(title_name="Hurricanes and global warming"))
+    db.session.add(Title(title_name="Measuring global climate change"))
+    db.session.add(Title(title_name="Water and climate change"))
+
+
     db.session.add(
         Dataset(
             user_id=1,
