@@ -7,7 +7,6 @@ import { Redirect } from "react-router-dom";
 import Select from "react-select";
 import axios from "axios";
 
-
 // const AddDataset = (props) => {
 //   if (!props.isAuthenticated()) {
 //     return <Redirect to="/login" />;
@@ -234,7 +233,6 @@ const Error = (props) => {
   } else {
     return <div />;
   }
-
 };
 
 AddDataset.propTypes = {

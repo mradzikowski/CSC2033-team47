@@ -8,6 +8,9 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import WaterIcon from "@mui/icons-material/Water";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BoltIcon from "@mui/icons-material/Bolt";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import ThermostatIcon from "@mui/icons-material/Thermostat";
+import PercentIcon from "@mui/icons-material/Percent";
 
 class ClimateData extends React.Component {
   constructor(props) {
@@ -79,235 +82,152 @@ class CounterData extends React.Component {
     super(props);
   }
 
+  getInfo = (d) => {
+    let info = { data: d.data };
+
+    // Get and data
+    if (
+      ["tons_of_co2", "co2_concentration", "greenhouse_emissions"].indexOf(
+        d.title
+      ) >= 0
+    ) {
+      info["icon"] = (
+        <ArrowUpwardIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+      info["data"] = parseInt(d.data).toLocaleString("en-US");
+    } else if (["solar_energy_striking_earth"].indexOf(d.title) >= 0) {
+      info["icon"] = (
+        <WbSunnyIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+      info["data"] = `${parseInt(d.data).toLocaleString("en-US")} Terajoules`;
+    } else if (["world_average_temperature"].indexOf(d.title) >= 0) {
+      info["icon"] = (
+        <ThermostatIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+      info["data"] = `${d.data}°C`;
+    } else if (
+      ["tons_of_melted_ice", "rise_in_sea_levels_in_cm"].indexOf(d.title) >= 0
+    ) {
+      info["icon"] = (
+        <WaterIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+      info["data"] = parseInt(d.data).toLocaleString("en-US");
+    } else if (
+      [
+        "cost_of_not_acting_on_climate_change",
+        "renewable_power_investments",
+      ].indexOf(d.title) >= 0
+    ) {
+      info["icon"] = (
+        <AttachMoneyIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+      if (d.title == "renewable_power_investments")
+        info["data"] = `$${d.data} Billion`;
+      else info["data"] = `$${parseInt(d.data).toLocaleString("en-US")}`;
+    } else if (["energy_used", "electricity_used"].indexOf(d.title) >= 0) {
+      info["icon"] = (
+        <BoltIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+      info["data"] = `${parseInt(d.data).toLocaleString("en-US")} Terajoules`;
+    } else if (["time_left_to_the_end_of_oil"].indexOf(d.title) >= 0) {
+      info["icon"] = (
+        <AccessTimeIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+    } else if (
+      [
+        "carbon_free_power",
+        "percent_electricity_produced_from_renewable_sources",
+        "today_arctic_ice",
+      ].indexOf(d.title) >= 0
+    ) {
+      info["icon"] = (
+        <PercentIcon
+          key={`${d.title}.3`}
+          style={{ position: "relative", top: "10" }}
+          className="climatedata-item"
+        />
+      );
+      info["data"] = `${d.data}%`;
+    }
+
+    // get label
+    if (d.title == "tons_of_co2")
+      info["label"] = "Tons of CO2 released into the atmosphere";
+    else if (d.title == "rise_in_sea_levels_in_cm")
+      info["label"] = "Rise in sea levels (cm)";
+    else if (d.title == "percent_electricity_produced_from_renewable_source")
+      info["label"] = "Electricty produced from renewable sources";
+    else if (d.title == "time_left_to_the_end_of_oil")
+      info["label"] = "Time left till the we run out oil";
+    else if (d.title == "greenhouse_emissions")
+      info["label"] = "Million tons of greenhouse emissions";
+    else if (d.title == "today_arctic_ice")
+      info["label"] = "Todays artic ice vs historic average";
+    else if (d.title == "carbon_free_power")
+      info["label"] = "Carbon-free power in Germany";
+    else if (d.title == "renewable_power_investments")
+      info["label"] = "Renewable power investments worldwide";
+    else {
+      let label = d.title.split("_").join(" ");
+      label = label.charAt(0).toUpperCase() + label.slice(1);
+      info["label"] = label;
+    }
+
+    return info;
+  };
+
   render() {
     return (
       <Box className="climatedata-list">
-        <Box className="climatedata-container">
-          <Paper className="climatedata">
-            <ArrowUpwardIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["0"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Tons of CO2 released into the atmosphere</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <ArrowUpwardIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["1"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Concentration of CO2</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper className="climatedata">
-            <WbSunnyIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div>
-                <strong>{this.props.data["2"].data}</strong>
-              </div>
-              <div>World Average Temperature (°C)</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <WaterIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["3"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Tons of melted ice</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <WaterIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>{this.props.data["4"].data}</strong>
-              </div>
-              <div key="">Rise in sea levels (cm)</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <AttachMoneyIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["5"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Cost of not acting on climate change (US $)</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <BoltIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["6"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Terajoules of energy used</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <WbSunnyIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["7"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Terajoules of solar energy striking earth</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <BoltIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["8"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Terajoules of electricity used</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <BoltIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>{this.props.data["9"].data}</strong>
-              </div>
-              <div key="">% of electricty produced from renewable sources</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <BoltIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>{this.props.data["10"].data}</strong>
-              </div>
-              <div key="">Time left till the we run out oil</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <ArrowUpwardIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>
-                  {parseInt(this.props.data["11"].data).toLocaleString("en-US")}
-                </strong>
-              </div>
-              <div key="">Million tons of greenhouse emissions</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <ArrowUpwardIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>{this.props.data["13"].data}%</strong>
-              </div>
-              <div key="">Todays artic ice vs historic average</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <ArrowUpwardIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>{this.props.data["14"].data}%</strong>
-              </div>
-              <div key="">Carbon-free power in Germany</div>
-            </div>
-          </Paper>
-        </Box>
-        <Box className="climatedata-container" key="">
-          <Paper key="" className="climatedata">
-            <ArrowUpwardIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div key="">
-                <strong>${this.props.data["15"].data} Billion</strong>
-              </div>
-              <div key="">Renewable power investments worldwide</div>
-            </div>
-          </Paper>
-        </Box>
+        {this.props.data.map((d) => {
+          if (d.title == "nov_increase_temp") return;
+          let info = this.getInfo(d);
+          console.log(info);
+          return (
+            <Box className="climatedata-container" key={`${d.title}.1`}>
+              <Paper className="climatedata" key={`${d.title}.2`}>
+                {info.icon}
+                <div className="climatedata-item">
+                  <div key="">
+                    <strong>
+                      {/* {parseInt(this.props.data["0"].data).toLocaleString("en-US")} */}
+                      {info.data}
+                    </strong>
+                  </div>
+                  <div key="">{info.label}</div>
+                </div>
+              </Paper>
+            </Box>
+          );
+        })}
       </Box>
     );
   }
