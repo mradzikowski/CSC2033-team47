@@ -60,7 +60,6 @@ class ClimateData extends React.Component {
       });
   }
 
-
   render() {
     if (this.state.retrieved) {
       return (
@@ -83,20 +82,6 @@ class CounterData extends React.Component {
   render() {
     return (
       <Box className="climatedata-list">
-        <Box className="climatedata-container" key="">
-          <Paper className="climatedata">
-            <WbSunnyIcon
-              style={{ position: "relative", top: "10" }}
-              className="climatedata-item"
-            />
-            <div className="climatedata-item">
-              <div>
-                <strong>{this.props.data["0"].data}</strong>
-              </div>
-              <div>World Average Temperature (°C)</div>
-            </div>
-          </Paper>
-        </Box>
         <Box className="climatedata-container">
           <Paper className="climatedata">
             <ArrowUpwardIcon
@@ -106,7 +91,7 @@ class CounterData extends React.Component {
             <div className="climatedata-item">
               <div key="">
                 <strong>
-                  {parseInt(this.props.data["1"].data).toLocaleString("en-US")}
+                  {parseInt(this.props.data["0"].data).toLocaleString("en-US")}
                 </strong>
               </div>
               <div key="">Tons of CO2 released into the atmosphere</div>
@@ -122,10 +107,24 @@ class CounterData extends React.Component {
             <div className="climatedata-item">
               <div key="">
                 <strong>
-                  {parseInt(this.props.data["2"].data).toLocaleString("en-US")}
+                  {parseInt(this.props.data["1"].data).toLocaleString("en-US")}
                 </strong>
               </div>
               <div key="">Concentration of CO2</div>
+            </div>
+          </Paper>
+        </Box>
+        <Box className="climatedata-container" key="">
+          <Paper className="climatedata">
+            <WbSunnyIcon
+              style={{ position: "relative", top: "10" }}
+              className="climatedata-item"
+            />
+            <div className="climatedata-item">
+              <div>
+                <strong>{this.props.data["2"].data}</strong>
+              </div>
+              <div>World Average Temperature (°C)</div>
             </div>
           </Paper>
         </Box>
