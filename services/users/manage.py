@@ -108,6 +108,47 @@ def seed_db():
         ),
     )
 
+    db.session.add(
+        Dataset(
+            user_id=5,
+            file_name="climate_change_and_extinction.pdf",
+            title="Climate change and extinction",
+            category="global-warming",
+        ),
+    )
+    db.session.add(
+        Dataset(
+            user_id=5,
+            file_name="greenhouse_emission.pdf",
+            title="Greenhouse emission 2005",
+            category="greenhouse-gas-emission",
+        ),
+    )
+    db.session.add(
+        Dataset(
+            user_id=5,
+            file_name="hurricanes_and_global_warming.pdf",
+            title="Hurricanes and global warming",
+            category="global-warming",
+        ),
+    )
+    db.session.add(
+        Dataset(
+            user_id=5,
+            file_name="measuring_global_climate_change.pdf",
+            title="Measuring global climate change",
+            category="global-warming",
+        ),
+    )
+    db.session.add(
+        Dataset(
+            user_id=5,
+            file_name="water_and_climate_change.pdf",
+            title="Water and climate change",
+            category="global-warming",
+        ),
+    )
+
     db.session.commit()
 
 
