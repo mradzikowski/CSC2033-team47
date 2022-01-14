@@ -20,26 +20,8 @@ class ClimateData extends React.Component {
   }
 
   componentDidMount() {
-
-    // Get World Counts
-    fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/climatedata/worldcounts`)
-      .then((res) => res.json())
-      .then((values) => {
-        let worldCounts = [];
-
-        for (let key in values[0]) {
-          if (key != "id")
-            worldCounts.push({ title: key, data: values[0][key] });
-        }
-
-        this.setState({ worldCounts: worldCounts });
-        this.setState({ retrieved: true });
-      });
-      
-      this.getCounterData();
+    this.getCounterData();
   }
-
-
 
   getCounterData() {
     // Get World Counts
