@@ -1,0 +1,50 @@
+FROM python:3.9
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV GECKODRIVER_VER v0.29.0
+ENV FIREFOX_VER 87.0
+
+ARG CONSUMER_KEY
+ARG CONSUMER_SECRET
+ARG ACCESS_TOKEN
+ARG ACCESS_SECRET
+ARG DATABASE_URL
+ARG PORT
+
+# Setting working directory
+WORKDIR /usr/src/app
+
+# Environmental variables related to python
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+ENV FLASK_ENV production
+ENV APP_SETTINGS src.config.ProductionConfig
+ENV CONSUMER_KEY ${CONSUMER_KEY}
+ENV CONSUMER_SECRET ${CONSUMER_SECRET}
+ENV ACCESS_TOKEN ${ACCESS_TOKEN}
+ENV ACCESS_SECRET ${ACCESS_SECRET}
+ENV DATABASE_URL ${DATABASE_URL}
+ENV APP_FOLDER /usr/src/app
+ENV PORT ${PORT}
+
+RUN apt update \
+   && apt upgrade -y \
+   && apt install -y \
+       firefox-esr \
+   && apt-get -y install netcat gcc postgresql
+
+RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VER}/geckodriver-${GECKODRIVER_VER}-linux64.tar.gz \
+   && tar zxf geckodriver-*.tar.gz \
+   && mv geckodriver /usr/bin/
+
+# Installing dependencies
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+
+RUN adduser --disabled-password myuser
+USER myuser
+
+CMD gunicorn --bind 0.0.0.0:$PORT manage:app
