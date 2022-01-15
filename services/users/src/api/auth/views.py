@@ -1,14 +1,11 @@
-import redis
 import werkzeug.security
-from flask import jsonify, request
+from flask import request
 from flask_restx import Namespace, Resource, fields
-from src import jwt
 from src.api.crud.crud_users import add_user, get_user_by_email, get_user_by_id
 
 from flask_jwt_extended import (  # isort:skip
     create_access_token,
     create_refresh_token,
-    get_jwt,
     get_jwt_identity,
     jwt_required,
 )
@@ -127,30 +124,7 @@ class Status(Resource):
         return user, 200
 
 
-jwt_redis_blocklist = redis.StrictRedis(
-    host="redis",
-    port=6379,
-)
-
-
-@jwt.token_in_blocklist_loader
-def check_if_token_is_revoked(jwt_header, jwt_payload):
-    jti = jwt_payload["jti"]
-    token_in_redis = jwt_redis_blocklist.get(jti)
-    return token_in_redis is not None
-
-
-class Logout(Resource):
-    @jwt_required()
-    def delete(self):
-        """Logouts the user and deletes a token"""
-        jti = get_jwt()["jti"]
-        jwt_redis_blocklist.set(jti, "", ex=3600)
-        return jsonify(msg="Access token revoked")
-
-
 auth_namespace.add_resource(Register, "/register")
 auth_namespace.add_resource(Login, "/login")
 auth_namespace.add_resource(Refresh, "/refresh")
 auth_namespace.add_resource(Status, "/status")
-auth_namespace.add_resource(Logout, "/logout")
