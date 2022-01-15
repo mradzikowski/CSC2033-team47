@@ -1,7 +1,7 @@
 /* imports */
 @import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200&display=swap");
 /* -------- */
 
 body {
@@ -146,8 +146,7 @@ h1 {
   text-align: left;
 }
 
-
-.nasa-data-bar{
+.nasa-data-bar {
   position: fixed;
   bottom: 0%;
   left: 0%;
@@ -176,12 +175,12 @@ h1 {
   font-style: bold;
   font-size: 18px;
   display: inline-block;
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
 }
 
 .nasa-data-value {
   display: inline-block;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 .climatedata-container {
@@ -194,7 +193,7 @@ h1 {
   width: 30vw !important;
   display: table;
   clear: both;
-  content:"";
+  content: "";
 }
 
 .climatedata-item {
@@ -213,7 +212,7 @@ h1 {
   border-radius: 10px;
   padding-bottom: 200px;
   padding-top: 200px;
-  overflow: scroll
+  overflow: scroll;
   /* float: left; */
 }
 
@@ -237,9 +236,9 @@ h1 {
 .tweet-loading {
   position: relative;
   top: 50%;
-  text-align: 'center';
+  text-align: "center";
   z-index: -1;
-  color:rgb(200, 200, 200);
+  color: rgb(200, 200, 200);
 }
 
 .upload-container {
