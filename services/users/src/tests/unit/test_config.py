@@ -29,7 +29,7 @@ def test_production_config(test_app):
     assert test_app.config["JWT_SECRET_KEY"] == "my_secret_key"
     assert not test_app.config["TESTING"]
     assert test_app.config["SQLALCHEMY_DATABASE_URI"] == os.environ.get(
-        "DATABASE_USERS_URL",
+        "DATABASE_URL",
     )
     assert test_app.config["JWT_ACCESS_TOKEN_EXPIRES"] == 900
     assert test_app.config["JWT_REFRESH_TOKEN_EXPIRES"] == 2592000
