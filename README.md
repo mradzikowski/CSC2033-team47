@@ -23,7 +23,7 @@ datasets (downloading, uploading files in different formats, routes for trening 
 It serves as a RESTApi between backend and database (PostgreSQL).
 client (This microservice will be a frontend app that will interact with other microservices).
 
-#### Some of the functionalities are not finished up or are started and not finalised.
+#### Some functionalities are not finished up or are started and not finalised.
 
 We have some routes in the backend that are not yet implemented in the frontend, so that we know that if had more time, we
 would be able to finish them to meet the requirements.
@@ -164,13 +164,14 @@ docker-compose logs
 ```
 
 Once started you will need to:
-####Before developing you need to create the database for development
+
+#### Before developing you need to create the database for development
 
 ```shell
 docker-compose exec api_users python manage.py recreate_db
 ```
 
-####You can seed the database with given users by
+#### You can seed the database with given users by
 
 ```shell
 docker-compose exec api_users python manage.py seed_db
@@ -179,7 +180,8 @@ docker-compose exec api_users python manage.py seed_db
 Then if you would like to visit the app and develop locally go to [http://localhost:3007/](http://localhost:3007/) web app.
 To see the routes visit [API DOCUMENTATION DEV](http://localhost:5004/doc).
 
-###Running linters and formatters in backend service
+### Running linters and formatters in backend service
+
 To lint with **flake8** you can run:
 
 ```shell
@@ -227,7 +229,8 @@ docker-compose down -v
 
 # Basic testing commands
 
-###Testing Backend
+### Testing Backend
+
 With test coverage
 
 ```shell
@@ -258,7 +261,8 @@ google-chrome services/users/htmlcov/index.html
 - When developing visit [API DOC DEV](http://localhost:5004/doc)
 - Production visit [API DOC PROD](<(https://climatextractor-backend.herokuapp.com/doc)>)
 
-##Workflow
+## Workflow
+
 These are added commands that might be useful while developing, debugging
 
 ```shell
