@@ -176,6 +176,9 @@ docker-compose exec api_users python manage.py recreate_db
 docker-compose exec api_users python manage.py seed_db
 ```
 
+Then if you would like to visit the app and develop locally go to [http://localhost:3007/](http://localhost:3007/) web app.
+To see the routes visit [API DOCUMENTATION DEV](http://localhost:5004/doc).
+
 ###Running linters and formatters in backend service
 To lint with **flake8** you can run:
 
