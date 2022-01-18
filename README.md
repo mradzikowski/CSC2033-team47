@@ -252,7 +252,7 @@ docker-compose exec api_users python -m pytest "src/tests" -p no:warnings --cov=
 To see the coverage in html run and use the browser of your type or right-click on the file and click `open in -> browser -> your choice`
 
 ```shell
-docker-compose exec api_users python -m pytests "src/tests" -p "no:warnings" --cov="src" --cov-report html
+docker-compose exec api_users python -m pytest "src/tests" -p "no:warnings" --cov="src" --cov-report html
 google-chrome services/users/htmlcov/index.html
 ```
 
