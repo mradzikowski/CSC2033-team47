@@ -259,7 +259,7 @@ google-chrome services/users/htmlcov/index.html
 # API documentation
 
 - When developing visit [API DOC DEV](http://localhost:5004/doc)
-- Production visit [API DOC PROD](<(https://climatextractor-backend.herokuapp.com/doc)>)
+- Production visit [API DOC PROD](https://climatextractor-backend.herokuapp.com/doc)
 
 ## Workflow
 
