@@ -1,7 +1,15 @@
 import pytest
 from src import create_app, db
 from src.api.crud.crud_users import get_user_by_id, update_user_dataset_counter
-from src.api.models import Category, Dataset, User, WorldCountsData
+
+from src.api.models import (  # isort:skip
+    BloombergData,
+    Category,
+    Dataset,
+    NasaData,
+    User,
+    WorldCountsData,
+)
 
 
 @pytest.fixture(scope="function")
@@ -86,8 +94,8 @@ def add_category():
 
 
 @pytest.fixture(scope="function")
-def add_climate_data():
-    def _add_climate_data(
+def add_world_count_climate_data():
+    def _add_world_count_climate_data(
         world_average_temperature="0",
         tons_of_co2="0",
         co2_concentration="0",
@@ -117,7 +125,55 @@ def add_climate_data():
         db.session.commit()
         return climate_data
 
-    return _add_climate_data
+    return _add_world_count_climate_data
+
+
+@pytest.fixture(scope="function")
+def add_nasa_climate_data():
+    def _add_nasa_climate_data(
+        down_arctic_ice_percent="0",
+        down_ice_sheets_tons="0",
+        up_sea_level="0",
+        up_ocean_heat="0",
+        up_carbon_dioxide="0",
+        up_global_temperature="0",
+    ):
+        nasa_data = NasaData(
+            down_arctic_ice_percent,
+            down_ice_sheets_tons,
+            up_sea_level,
+            up_ocean_heat,
+            up_carbon_dioxide,
+            up_global_temperature,
+        )
+        db.session.add(nasa_data)
+        db.session.commit()
+        return nasa_data
+
+    return _add_nasa_climate_data
+
+
+@pytest.fixture(scope="function")
+def add_bloomberg_climate_data():
+    def _add_bloomberg_climate_data(
+        greenhouse_emissions="0",
+        nov_increase_temp="0",
+        today_arctic_ice="0",
+        carbon_free_power="0",
+        renewable_power_investments="0",
+    ):
+        bloomberg_data = BloombergData(
+            greenhouse_emissions,
+            nov_increase_temp,
+            today_arctic_ice,
+            carbon_free_power,
+            renewable_power_investments,
+        )
+        db.session.add(bloomberg_data)
+        db.session.commit()
+        return bloomberg_data
+
+    return _add_bloomberg_climate_data
 
 
 @pytest.fixture(scope="module")
