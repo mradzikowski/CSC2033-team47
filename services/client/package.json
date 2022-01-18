@@ -20,7 +20,7 @@
     "@react-three/postprocessing": "^2.0.5",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.21.0",
+    "axios": ">=0.21.2",
     "eslint-config-standard-jsx": "^10.0.0",
     "formik": "^2.2.8",
     "prop-types": "^15.7.2",
