@@ -313,6 +313,27 @@ docker-compose exec api_users_db psql -U postgres
 \dt
 ```
 
+## DEPLOYMENT COMMANDS
+
+For deploying the frontend you need to be in the /services/client folder
+
+```shell
+
+docker build -f Dockerfile.prod -t registry.heroku.com/climatextractor-frontend/web  .
+docker push registry.heroku.com/climatextractor-frontend/web:latest
+heroku container:release web --app climatextractor-frontend
+```
+
+For deploying the backned you need to be in /services/users folder
+
+```shell
+docker build --build-arg CONSUMER_KEY=YOUR_CONSUMER_KEY --build-arg ACCESS_TOKEN=YOUR_ACCESS_TOKEN --build-arg ACCESS_SECRET=YOUR_ACCESS_SECRET --build-arg DATABASE_URL=YOUR_DATABASE_URL --build-arg CONSUMER_SECRET=YOUR_CONSUMER_SECRET --build-arg PORT=8765 -f Dockerfile.prod -t registry.heroku.com/climatextractor-backend/web  .
+docker push registry.heroku.com/climatextractor-backend/web:latest
+heroku container:release web --app climatextractor-backend
+```
+
+Variables might be found in original source file in /services/users/.env.prod.backend. There you can find the first command to the deployment of backend used.
+
 ## FOLDERS EXPLAINED
 
 ## REFERENCES
