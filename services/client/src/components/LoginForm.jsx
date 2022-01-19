@@ -13,6 +13,9 @@ import Button from "@mui/material/Button";
 import LoginIcon from "@mui/icons-material/Login";
 import FormHelperText from "@mui/material/FormHelperText";
 
+// Main component for the login form. 
+// Contains functions for making GET requests and renders depending on success or failure.
+
 const LoginForm = (props) => {
   if (props.isAuthenticated()) {
     return <Redirect to="/" />;

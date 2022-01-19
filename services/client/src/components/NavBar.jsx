@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+// Main component for the navbar
+// Contains functionality for rendering different pages depending on levels of authentication
+
 const NavBar = (props) => {
   let menu = (
     <div className="menu">

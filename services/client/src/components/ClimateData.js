@@ -12,6 +12,11 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import PercentIcon from "@mui/icons-material/Percent";
 
+
+// Main component for the Data page.
+// Contains functions for getting world counter data from the API and renders depending on successful retrieval
+
+
 class ClimateData extends React.Component {
   constructor(props) {
     super(props);

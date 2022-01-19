@@ -1,6 +1,10 @@
 import React from "react";
 import { Tweet } from "react-twitter-widgets";
 
+// Main component for the news page.
+// Contains functions that retrieve twitter ids from the api.
+// Also contains functionality for only rendering new tweets if the bottom of the div is reached.
+
 class NewsPage extends React.Component {
   constructor(props) {
     super(props);

@@ -7,6 +7,10 @@ import { Redirect } from "react-router-dom";
 import Select from "react-select";
 import axios from "axios";
 
+
+// Main component for the upload page.
+// Contains function that makes a POST request and alters what is rendered depending on success or error.
+
 class AddDataset extends React.Component {
   constructor(props) {
     super(props);

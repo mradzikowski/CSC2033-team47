@@ -14,12 +14,8 @@ import ClimateData from "./components/ClimateData";
 import NewsPage from "./components/NewsPage";
 import RankingUsersList from "./components/RankingUsersList";
 
-/*
-    Function:
-        - The main app function which defines routes all the different pages within the web page.
-
-    (written by Toby Dixon and Mateusz Radzikowski)
-*/
+// Main app component of the website
+// Contains functions for getting data from the api and routing pages to different urls
 
 class App extends Component {
   constructor(props) {

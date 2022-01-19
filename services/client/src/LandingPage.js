@@ -11,19 +11,7 @@ import React from "react";
 import { checkPropTypes } from "prop-types";
 import NasaData from "./components/NasaData";
 
-// TODO: Replace search bar with dropdown that shows all categories as optional filters for searching.
-// TODO: Create a new filter component that is added somewhere to the screen when a filter is chosen.
-// TODO: Create a new page that displays gathered information on info-cards or some other format
-// When a search is initiated, filtered by categories.
-// TODO: Either hardcode categories or come up with a more efficient way to grab them (at the moment i am grabbing all data)
-
-/*
-    Function:
-        - Main function for the landing page. Returns all components that will be displayed
-        when user accesses the landing page.
-
-    (written by Toby Dixon)
-*/
+// The main component for the landing page.
 
 class LandingPage extends React.Component {
   constructor(props) {
@@ -45,12 +33,7 @@ class LandingPage extends React.Component {
   }
 }
 
-/*
-    Function:
-        - The scene in which the 3D earth model is displayed on in the background.
-
-    (written by Toby Dixon)
-*/
+// The three-fiber scene container for displaying the 3d model
 
 const Scene = () => {
   return (
@@ -73,13 +56,7 @@ const Scene = () => {
   );
 };
 
-/*
-    Function:
-        - Creation of the Earth model
-
-    (written by Toby Dixon)
-*/
-
+// Earth 3d model. Loads images and builds mesh
 const Earth = () => {
   const [base, disp] = useLoader(TextureLoader, [
     `${process.env.PUBLIC_URL}/earth-map.jpg`,

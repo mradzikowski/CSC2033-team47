@@ -10,6 +10,9 @@ import {
   TableRow,
 } from "@mui/material";
 
+// Main component for the ranking page.
+// Contains functions for getting user rankings and rendering them
+
 class RankingUsersList extends React.Component {
   constructor(props) {
     super(props);

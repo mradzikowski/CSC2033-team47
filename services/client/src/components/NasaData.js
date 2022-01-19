@@ -2,6 +2,10 @@ import React, { state, setState } from "react";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
+
+// Main component for the nasa data bar (displayed at the bottom of the news page.)
+// Contains functions for getting the data and displaying it on success.
+
 class NasaData extends React.Component {
   constructor(props) {
     super(props);
@@ -28,22 +32,6 @@ class NasaData extends React.Component {
   }
 
   render() {
-    // return(
-    //     <div className='nasa-data-bar'>
-    //         {this.props.climate_data.map(dataset => {
-    //             return(
-    //                 <div key='1' className='nasa-data-container'>
-    //                     <div key='2' className='nasa-data-title'>
-    //                         {dataset.title}
-    //                     </div>
-    //                     <div key='3' className='nasa-data-value'>
-    //                         {dataset.data}
-    //                     </div>
-    //                 </div>
-    //             )
-    //         })}
-    //     </div>
-    // )
     if (this.state.retrieved) {
       return (
         <div className="nasa-data-bar">

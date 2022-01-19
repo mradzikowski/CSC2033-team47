@@ -7,6 +7,9 @@ import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import MailIcon from "@mui/icons-material/Mail";
 
+// Main component for the account page.
+// Contains functionality for getting current user status and data, and rendering it.
+
 class UserStatus extends Component {
   constructor(props) {
     super(props);

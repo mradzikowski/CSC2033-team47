@@ -3,12 +3,9 @@ import { useHistory, withRouter } from "react-router-dom";
 import Select from "react-select";
 import Button from "@mui/material/Button";
 
-/*
-    Function:
-        - Main function for the search bar that is implemented in the landing page.
 
-    (written by Toby Dixon)
-*/
+// Main component for the search bar on the landing page.
+// Contains functions to get possible categories from the API and to pass the search query.
 
 class SearchBar extends Component {
   constructor(props) {

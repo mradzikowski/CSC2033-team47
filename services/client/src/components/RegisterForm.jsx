@@ -14,6 +14,9 @@ import PasswordIcon from "@mui/icons-material/Password";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import FormHelperText from "@mui/material/FormHelperText";
 
+// Main component for the register page
+// Contains functionality for making POST request to api and redirects or renders error depending on success
+
 const RegisterForm = (props) => {
   const [validSubmit, setValidSubmit] = useState(false);
 

@@ -7,6 +7,9 @@ import Paper from "@mui/material/Paper";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import axios from "axios";
 
+// Main component for the datasets page
+// Contains functions for retrieving and displaying datasets, and also handle upvotes and downloads.
+
 class DatasetsList extends Component {
   constructor(props) {
     super(props);

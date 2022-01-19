@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 
+
+// Unused component that displayed all possible categories
+
 const CategoryList = (props) => {
   return (
     <Box>

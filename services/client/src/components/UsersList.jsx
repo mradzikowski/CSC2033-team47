@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
 
+// Unused component for displaying a list of all users
+
 const UsersList = (props) => {
   return (
     <div>
