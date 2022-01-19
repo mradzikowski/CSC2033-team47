@@ -1,3 +1,4 @@
+"""Endpoints and resources for users"""
 from flask import request
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restx import Namespace, Resource, fields

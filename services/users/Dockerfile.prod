@@ -1,9 +1,11 @@
+# Docker image prepared for production
 FROM python:3.9
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV GECKODRIVER_VER v0.29.0
 ENV FIREFOX_VER 87.0
 
+# Storing vulnerable data in arguments that are passed with commandline
 ARG CONSUMER_KEY
 ARG CONSUMER_SECRET
 ARG ACCESS_TOKEN

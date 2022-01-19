@@ -1,9 +1,12 @@
+"""Database tables mapped using classes"""
 from sqlalchemy.sql import func
 from src import db
 from werkzeug.security import generate_password_hash
 
 
 class User(db.Model):
+    """Class to represent users and their properties"""
+
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -33,6 +36,8 @@ class User(db.Model):
 
 
 class Dataset(db.Model):
+    """Class to represent datasets and their properties"""
+
     __tablename__ = "datasets"
 
     dataset_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -67,6 +72,8 @@ class Dataset(db.Model):
 
 
 class Vote(db.Model):
+    """Class to represent votes"""
+
     __tablename__ = "votes"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -84,6 +91,8 @@ class Vote(db.Model):
 
 
 class Category(db.Model):
+    """Class to represent category"""
+
     __tablename__ = "categories"
 
     category_name = db.Column(db.String(256), primary_key=True)
@@ -91,6 +100,8 @@ class Category(db.Model):
 
 
 class NasaData(db.Model):
+    """Nasa data model that represents data from https://climate.nasa.gov/"""
+
     __tablename__ = "nasadata"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -128,6 +139,9 @@ class NasaData(db.Model):
 
 
 class BloombergData(db.Model):
+    """Bloomberg data model class that uses data from
+    https://www.bloomberg.com/graphics/climate-change-data-green/"""
+
     __tablename__ = "bloombergdata"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -158,6 +172,9 @@ class BloombergData(db.Model):
 
 
 class WorldCountsData(db.Model):
+    """World count model class that uses data from
+    https://www.theworldcounts.com/challenges/climate-change"""
+
     __tablename__ = "worldcountsdata"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -220,6 +237,7 @@ class WorldCountsData(db.Model):
 
 
 def replace_string_to_number(word: str, punctuation: str):
+    """Helper method to replace punctuations in retrieved data"""
     word = word.strip()
     if punctuation == ".":
         return round(float(word), 2)

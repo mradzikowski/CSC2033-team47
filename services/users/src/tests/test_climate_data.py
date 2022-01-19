@@ -1,3 +1,4 @@
+"""Testing climate data api routes"""
 import json
 
 from freezegun import freeze_time

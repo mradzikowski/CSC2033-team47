@@ -317,6 +317,8 @@ docker-compose exec api_users_db psql -U postgres
 
 ## REFERENCES
 
+https://flask.palletsprojects.com/en/2.0.x/patterns/appfactories/
+
 ## LICENSE
 
 Copyright, 2022, Newcastle University

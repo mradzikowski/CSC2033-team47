@@ -1,3 +1,4 @@
+"""CLI commands for managing the database"""
 from flask.cli import FlaskGroup
 from src import create_app, db
 from src.api.models import Category, Dataset, User
@@ -8,6 +9,7 @@ cli = FlaskGroup(create_app=create_app)
 
 @cli.command("recreate_db")
 def recreate_db():
+    """Recreating the database"""
     db.drop_all()
     db.create_all()
     db.session.commit()
@@ -15,6 +17,7 @@ def recreate_db():
 
 @cli.command("seed_db")
 def seed_db():
+    """Adding the mocked data to the dev database"""
     db.session.add(User(username="Mateusz", email="mateusz@email.com"))
     db.session.add(User(username="Toby", email="toby@email.com"))
     db.session.add(User(username="Mellisa", email="melissa@email.com"))

@@ -1,3 +1,4 @@
+"""Adding the namespaces that would be registered in factory application"""
 from flask_restx import Api
 from src.api.auth.views import auth_namespace
 from src.api.climate_data.views import climate_data_namespace

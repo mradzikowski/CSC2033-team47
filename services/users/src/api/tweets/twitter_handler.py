@@ -1,3 +1,4 @@
+"""Twitter Handler class to manage retrieve of tweets using API"""
 import os
 from datetime import datetime, timedelta
 

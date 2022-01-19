@@ -1,3 +1,4 @@
+"""Flask application factory with initialisation of extensions"""
 import os
 
 from flask import Flask

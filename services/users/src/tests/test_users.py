@@ -1,3 +1,4 @@
+"""Testing user api routes"""
 import json
 
 import pytest

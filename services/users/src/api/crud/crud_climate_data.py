@@ -1,3 +1,4 @@
+"""CRUD operations related to climate data"""
 import time
 from datetime import date, timedelta
 
@@ -7,6 +8,7 @@ from helium import kill_browser, start_firefox
 from src import db
 from src.api.models import BloombergData, NasaData, WorldCountsData
 
+# Processes that stays in the list of processes during the execution
 PROCNAMES = ["geckodriver", "Web Content", "firefox-esr"]
 
 
@@ -21,6 +23,7 @@ def killing_geckodrivers_processes():
 
 # Retrieve data from https://www.theworldcounts.com/challenges/climate-change
 def add_world_counts_data():
+    """Web scraping data from world counts website"""
     url = "https://www.theworldcounts.com/challenges/climate-change"
     browser = start_firefox(url, headless=True)
     time.sleep(1)
@@ -47,6 +50,7 @@ def add_world_counts_data():
 
 # Retrieve data from https://climate.nasa.gov/
 def add_nasa_climate_data():
+    """Web scraping data from nasa website"""
     url = "https://climate.nasa.gov"
     browser = start_firefox(url, headless=True)
     time.sleep(1)
@@ -81,6 +85,7 @@ def add_nasa_climate_data():
 
 # Retrieve data from https://www.bloomberg.com/graphics/climate-change-data-green/
 def add_bloomberg_data():
+    """Web scraping data from bloomberg website"""
     url = "https://www.bloomberg.com/graphics/climate-change-data-green/"
     browser = start_firefox(url, headless=True)
     time.sleep(1)
@@ -118,6 +123,7 @@ def add_bloomberg_data():
 
 
 def get_bloomberg_data_today():
+    """Method to check if the data has been updated and retrieve a new if not"""
     start_range = date.today()
     end_range = date.today() + timedelta(days=1)
     climate_data = BloombergData.query.filter(
@@ -134,6 +140,7 @@ def get_bloomberg_data_today():
 
 
 def get_nasa_data_today():
+    """Method to check if the data has been updated and retrieve a new if not"""
     start_range = date.today()
     end_range = date.today() + timedelta(days=1)
     climate_data = NasaData.query.filter(
@@ -150,6 +157,7 @@ def get_nasa_data_today():
 
 
 def get_world_counts_data_today():
+    """Method to check if the data has been updated and retrieve a new if not"""
     start_range = date.today()
     end_range = date.today() + timedelta(days=1)
     climate_data = WorldCountsData.query.filter(
@@ -166,6 +174,7 @@ def get_world_counts_data_today():
 
 
 def clearing_bloomberg_data(bloomberg_data):
+    """Helper method that preprocess data from bloomberg website"""
     data_before_clearing = [d.split()[0].replace("\u200b", "") for d in bloomberg_data]
 
     # Clearing the data
