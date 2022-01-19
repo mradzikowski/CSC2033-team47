@@ -8,7 +8,7 @@ services:
     entrypoint: ["bash", "/usr/src/app/entrypoint.sh"]
     volumes:
       - "./services/users:/usr/src/app"
-      - "./services/users/uploaded_datasets:/usr/src/datasets"
+      - "./services/users/src/media:/usr/src/datasets"
     ports:
       - 5004:5000
     env_file:
