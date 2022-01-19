@@ -1,3 +1,4 @@
+"""Tests for configuration settings"""
 import os
 
 

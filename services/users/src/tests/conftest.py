@@ -95,6 +95,12 @@ def add_category():
 
 @pytest.fixture(scope="function")
 def add_world_count_climate_data():
+    """
+    Pytest fixture to add world count data during the test
+
+    :return: callable to add world count data
+    """
+
     def _add_world_count_climate_data(
         world_average_temperature="0",
         tons_of_co2="0",
@@ -130,6 +136,12 @@ def add_world_count_climate_data():
 
 @pytest.fixture(scope="function")
 def add_nasa_climate_data():
+    """
+    Pytest fixture to add nasa data during the test
+
+    :return: callable to add nasa data
+    """
+
     def _add_nasa_climate_data(
         down_arctic_ice_percent="0",
         down_ice_sheets_tons="0",
@@ -155,6 +167,12 @@ def add_nasa_climate_data():
 
 @pytest.fixture(scope="function")
 def add_bloomberg_climate_data():
+    """
+    Pytest fixture to add bloomberg data during the test
+
+    :return: callable to add bloomberg data
+    """
+
     def _add_bloomberg_climate_data(
         greenhouse_emissions="0",
         nov_increase_temp="0",

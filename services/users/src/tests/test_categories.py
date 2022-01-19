@@ -1,3 +1,4 @@
+"""Testing category api routes"""
 import json
 
 

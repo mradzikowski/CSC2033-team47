@@ -1,3 +1,4 @@
+"""Testing users model, passwords and encoding tokens"""
 from flask_jwt_extended import create_access_token
 
 

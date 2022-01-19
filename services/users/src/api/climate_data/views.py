@@ -1,3 +1,4 @@
+"""Endpoints and resources for climate data retreival"""
 from flask_restx import Namespace, Resource, fields
 
 from src.api.crud.crud_climate_data import (  # isort:skip

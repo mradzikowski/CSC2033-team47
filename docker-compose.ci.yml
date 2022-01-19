@@ -1,3 +1,4 @@
+# Docker Compose file that is used in CI pipeline
 version: "3.8"
 
 services:

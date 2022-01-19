@@ -1,3 +1,4 @@
+"""Configuration file for dev, testing and production environment"""
 import os
 
 

@@ -1,3 +1,4 @@
+# Docker image used for development of the backend service
 FROM python:3.9
 
 ENV DEBIAN_FRONTEND noninteractive

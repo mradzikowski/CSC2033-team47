@@ -1,3 +1,4 @@
+"""Endpoints and resources for twitter ids"""
 from flask_restx import Namespace, Resource
 
 from .twitter_handler import TWITTER_HANDLER

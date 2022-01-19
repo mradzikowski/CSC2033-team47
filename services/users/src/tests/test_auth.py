@@ -1,3 +1,4 @@
+"""Testing auth api routes"""
 import json
 
 import pytest
