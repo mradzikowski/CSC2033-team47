@@ -18,7 +18,7 @@ import RankingUsersList from "./components/RankingUsersList";
     Function:
         - The main app function which defines routes all the different pages within the web page.
 
-    (written by Toby Dixon)
+    (written by Toby Dixon and Mateusz Radzikowski)
 */
 
 class App extends Component {
@@ -37,9 +37,7 @@ class App extends Component {
     const url = `${process.env.REACT_APP_USERS_SERVICE_URL}/auth/register`;
     axios
       .post(url, data)
-      .then((res) => {
-        console.log(res.data);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -94,7 +92,6 @@ class App extends Component {
 
   onChangeHandler = (event) => {
     if (event.target.files) {
-      console.log(event.target.files[0]);
       this.setState({ [event.target.name]: event.target.files[0] });
     } else {
       this.setState({ [event.target.name]: event.target.value });

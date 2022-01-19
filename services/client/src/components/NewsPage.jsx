@@ -1,4 +1,4 @@
-import React, { state, setState } from "react";
+import React from "react";
 import { Tweet } from "react-twitter-widgets";
 
 class NewsPage extends React.Component {
@@ -15,7 +15,6 @@ class NewsPage extends React.Component {
     fetch(`${process.env.REACT_APP_USERS_SERVICE_URL}/tweets/recent`)
       .then((res) => res.json())
       .then((values) => {
-        console.log(values);
         this.setState({ tweets: values });
       });
   }

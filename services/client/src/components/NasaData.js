@@ -24,7 +24,6 @@ class NasaData extends React.Component {
 
         this.setState({ data: nasa });
         this.setState({ retrieved: true });
-        console.log(this.state.data);
       });
   }
 

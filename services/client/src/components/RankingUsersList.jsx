@@ -2,7 +2,6 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import {
-  Box,
   Table,
   TableBody,
   TableCell,

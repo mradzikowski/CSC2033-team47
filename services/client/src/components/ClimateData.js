@@ -41,9 +41,7 @@ class ClimateData extends React.Component {
         this.setState({ worldCounts: worldCounts });
       })
       .then(() => this.getBloomberg())
-      .then(() => {
-        console.log(this.state.worldCounts);
-      });
+      .then(() => {});
   }
 
   getBloomberg() {
@@ -210,7 +208,6 @@ class CounterData extends React.Component {
         {this.props.data.map((d) => {
           if (d.title == "nov_increase_temp") return;
           let info = this.getInfo(d);
-          console.log(info);
           return (
             <Box className="climatedata-container" key={`${d.title}.1`}>
               <Paper className="climatedata" key={`${d.title}.2`}>

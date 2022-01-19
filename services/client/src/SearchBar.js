@@ -17,8 +17,6 @@ class SearchBar extends Component {
       categories: null,
       query: null,
     };
-
-    console.log(this.props);
   }
 
   componentDidMount() {
@@ -32,20 +30,13 @@ class SearchBar extends Component {
             label: Object.values(c)[0],
           });
         }
-        console.log(tempArray);
         this.setState({ categories: tempArray });
       })
-      .then(() => {
-        console.log(this.state);
-      });
+      .then(() => {});
   }
 
   handleChange = (e) => {
     this.setState({ query: e });
-  };
-
-  callSearch = () => {
-    console.log(typeof this.props.search);
   };
 
   render() {
