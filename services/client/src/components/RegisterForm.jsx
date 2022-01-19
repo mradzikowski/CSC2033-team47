@@ -1,4 +1,4 @@
-import React, { useState, setState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import { Formik } from "formik";
@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 import "./form.css";
 import { Redirect } from "react-router-dom";
-import { FormControl, InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";

@@ -28,7 +28,6 @@ import NasaData from "./components/NasaData";
 class LandingPage extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
 
   callSearch = (query) => {

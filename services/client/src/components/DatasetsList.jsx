@@ -56,7 +56,6 @@ class DatasetsList extends Component {
     };
     axios(options)
       .then((res) => {
-        console.log(res);
         this.getDatasetList();
       })
       .catch((err) => {
@@ -66,7 +65,6 @@ class DatasetsList extends Component {
 
   render() {
     if (this.props.isAuthenticated()) {
-      console.log(this.state);
       return (
         <Box className="datasets-list">
           {this.state.datasets.map((dataset) => {
@@ -107,7 +105,6 @@ class DatasetsList extends Component {
                         onClick={
                           (event) => {
                             this.handleUpVoteSubmit(dataset.dataset_id);
-                            console.log(dataset.dataset_id);
                           }
                           // eslint-disable-next-line react/jsx-curly-newline
                         }
@@ -178,7 +175,6 @@ class DatasetsList extends Component {
                         onClick={
                           (event) => {
                             this.handleUpVoteSubmit(dataset.dataset_id);
-                            console.log(dataset.dataset_id);
                           }
                           // eslint-disable-next-line react/jsx-curly-newline
                         }
