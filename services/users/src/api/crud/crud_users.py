@@ -58,3 +58,4 @@ def update_user_subscription(user_id: int) -> Union[bool, None]:
             user.subscribed = True
         db.session.commit()
         return user.subscribed
+    return None
