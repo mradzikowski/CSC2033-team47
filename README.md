@@ -17,9 +17,9 @@ Encouraging people by keeping the ranking of the users with the most uploaded fi
 # Structure of code
 
 We have divided our system for extracting the data into two services (for now), because it would speed up the
-development in our team and it will help to keep the code clean and modularised.
+development in our team, and it will help to keep the code clean and modularised.
 There are services: users (for managing logging, adding users, deleting, updating),
-datasets (downloading, uploading files in different formats, routes for trening datasets, upvoting the datasets, categories, retrieving datasets).
+datasets (downloading, uploading files in different formats, routes for trending datasets, upvoting the datasets, categories, retrieving datasets).
 It serves as a RESTApi between backend and database (PostgreSQL).
 client (This microservice will be a frontend app that will interact with other microservices).
 
