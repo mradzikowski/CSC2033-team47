@@ -20,34 +20,10 @@ def test_user_registration(test_app, test_database):
     )
 
     data = json.loads(resp.data.decode())
-    print(data)
     assert resp.status_code == 201
     assert "testuser" in data["username"]
     assert "testemail@email.com" in data["email"]
     assert "password" not in data
-
-
-def test_add_user_duplicate_email(test_app, test_database, add_user):
-    add_user("Mateusz", "mateusz@email.com", "test_password")
-
-    client = test_app.test_client()
-    resp = client.post(
-        "/auth/register",
-        data=json.dumps(
-            {
-                "username": "Mateusz",
-                "email": "mateusz@email.com",
-                "password": "simple_password",
-            },
-        ),
-        content_type="application/json",
-    )
-
-    data = json.loads(resp.data.decode())
-    print(data)
-    assert resp.status_code == 400
-    assert resp.content_type == "application/json"
-    assert "The email already exists." in data["message"]
 
 
 @pytest.mark.parametrize(
@@ -71,7 +47,6 @@ def test_invalid_json(test_app, test_database, payload):
     )
 
     data = json.loads(resp.data.decode())
-    print(data)
     assert resp.status_code == 400
     assert "Input payload validation failed" in data["message"]
 
@@ -102,7 +77,6 @@ def test_registered_user(test_app, test_database, add_user):
     )
 
     data = json.loads(resp.data.decode())
-    print(data)
 
     assert resp.status_code == 200
     assert resp.content_type == "application/json"
