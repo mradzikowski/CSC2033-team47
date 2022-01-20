@@ -321,8 +321,6 @@ def test_get_users_ranking(
 
     data = json.loads(resp.data.decode())
 
-    print(data)
-
     assert resp.status_code == 200
     assert len(data) == 4
     assert user_second.username == data[0]["username"]

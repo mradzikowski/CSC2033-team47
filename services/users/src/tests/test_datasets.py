@@ -95,7 +95,6 @@ def test_voting_for_dataset_unauthorized(
     )
 
     data = json.loads(resp.data.decode())
-    print(data)
     assert "Missing Authorization Header" in data["msg"]
     assert resp.status_code == 401
 
