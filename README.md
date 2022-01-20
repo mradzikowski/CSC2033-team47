@@ -125,6 +125,13 @@ Then you can install the project dependencies
 pip install -r requirements.txt
 ```
 
+# Installing the npm dependencies
+
+```shell
+cd /services/client
+npm install
+```
+
 # Starting the project
 
 ### Simple workflow
