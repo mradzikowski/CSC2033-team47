@@ -145,6 +145,24 @@ Set the environmental variables used in **docker-compose.yaml** file, it will be
 export REACT_APP_USERS_SERVICE_URL=http://localhost:5004
 ```
 
+You will also need a file with environmental variables, you can find them in source code
+
+Example of .env.dev file needed would be:
+
+```shell
+### FOR BACKEND SYSTEM
+FLASK_ENV=
+APP_SETTINGS=
+DATABASE_USERS_URL=
+DATABASE_TEST_USERS_URL=
+APP_FOLDER=
+### FROM TWITTER API
+CONSUMER_KEY=
+CONSUMER_SECRET=
+ACCESS_TOKEN=
+ACCESS_SECRET=
+```
+
 Build the docker images and spin them in the detached mode:
 
 ```shell
@@ -178,7 +196,7 @@ docker-compose exec api_users python manage.py seed_db
 ```
 
 Then if you would like to visit the app and develop locally go to [http://localhost:3007/](http://localhost:3007/) web app.
-To see the routes visit [API DOCUMENTATION DEV](http://localhost:5004/doc).
+To see the routes visit [API DOCUMENTATION DEVELOPMENT](http://localhost:5004/doc). Backend would be available on [http://localhost:5004/]. Check routes in API DOCS for further information.
 
 ### Running linters and formatters in backend service
 
